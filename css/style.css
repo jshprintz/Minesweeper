@@ -1,3 +1,75 @@
+
 h1 {
+    grid-column-start: 44;
     text-align: center;
+};
+
+#board {
+    display: grid;
+    grid-auto-columns: 1%;
+    grid-auto-rows: 1%;
 }
+
+#row1 {
+    display: grid;
+    grid-auto-columns: 5%;
+    grid-auto-rows: 5%;
+    gap: 0px 0px;
+    margin-right: 10%;
+    margin-left: 10%;
+    height: 40px;
+    background-color: blueviolet;
+}
+#sq001 {
+    grid-column-start: 6;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq002 {
+    grid-column-start: 7;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq003 {
+    grid-column-start: 8;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq004 {
+    grid-column-start: 9;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq005 {
+    grid-column-start: 10;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq006 {
+    grid-column-start: 11;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq007 {
+    grid-column-start: 12;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq008 {
+    grid-column-start: 13;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq009 {
+    grid-column-start: 14;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+#sq010 {
+    grid-column-start: 15;
+    grid-row-start: 1;
+    border: 5px groove silver;
+}
+
+
+
