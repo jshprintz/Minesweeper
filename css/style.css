@@ -1,170 +1,75 @@
-/* Might need to change all pixels into percents 
-to keep it scalable. */
-
+body {
+    background-image: url('../images/grassyField.png');
+}
 
 h1 {
-    grid-column-start: 44;
     text-align: center;
-};
+    background-color: aquamarine;
+}
+
+h2 {
+    text-align: center;
+    background-color: aquamarine;
+}
 
 #board {
     display: grid;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
+    grid-auto-columns: 1%;
+    grid-auto-rows: 1%;
+    height: 500px;
 }
 
 #row1 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 25;
 }
 #row2 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 30;
 }
 #row3 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 35;
 }
 #row4 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 40;
 }
 #row5 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 45;
 }
 #row6 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 50;
 }
 
 #row7 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 55;
 }
 
 #row8 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 60;
 }
 
 #row9 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 65;
 }
 
 #row10 {
-    display: grid;
-    justify-content: center;
-    grid-auto-columns: 5%;
-    grid-auto-rows: 5%;
-    gap: 0px 0px;
-    margin-right: 10%;
-    margin-left: 10%;
-    height: 40px;
+    display: inline-flex;
+    grid-column-start: 37;
+    grid-row-start: 70;
 }
-
-#sq010 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq020 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq030 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq040 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq050 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq060 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq070 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq080 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq090 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-#sq100 {
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
