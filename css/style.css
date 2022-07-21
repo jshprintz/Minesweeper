@@ -1,3 +1,6 @@
+/* Might need to change all pixels into percents 
+to keep it scalable. */
+
 
 h1 {
     grid-column-start: 44;
