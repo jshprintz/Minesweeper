@@ -75,6 +75,9 @@ function render(e){
 // Checks if User is CLEARING or MARKING
 //--------------------------------------------------------
 function clearCheck(obj, id){
+    // Convert ID to number matching array
+    id = convertID(id);
+
     if (toggleEl.innerText === 'CLEAR') {
         // Change to cleared spot
         obj.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
@@ -84,10 +87,16 @@ function clearCheck(obj, id){
             checkPick(id);
         };
     } else {
-        // Change to marked spot
-        obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
-        remainingMines--;
-        remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`
+        // Checks if already marked
+        if (blockArray[id].marked === true) {
+            console.log("Already marked idiot")
+        } else {
+            // Change to marked spot
+            blockArray[id].marked = true;
+            obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+            remainingMines--;
+            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`
+        };
     };
 };
 
@@ -109,36 +118,26 @@ function clearMark(e){
 //---------------------------------------------------
 function firstPick(id){
     firstPicked = true;
-    // Convert ID to number matching array
-    id = convertID(id);
     // Mark first pick square as cleared
     blockArray[id].cleared = true;
-    console.log(blockArray[id]);
-    console.log(blockArray);
-
     // Randomize mines throughout the board
-
+    randomMines(id);
     // Run computerClear()
-
+    computerClear(id);
 };
 
 //---------------------------------------------------
 // CHECK PICK to see if it's a mine, a winner, or a clear
 //---------------------------------------------------
 function checkPick(id){
-    // Convert ID to number matching array
-    id = convertID(id);
-    console.log(`Next pick: ${id}`);
     // run checkMine()
-
+    checkMine(id);
     // mark picked square as cleared
     blockArray[id].cleared = true;
-    console.log(blockArray[id]);
-    console.log(blockArray);
-
     // Run checkWin()
-
+    checkWin();
     // Run computerClear()
+    computerClear(id);
 };
 
 //-----------------------------------------------------
@@ -164,6 +163,71 @@ function newSquare(){
         mine: false,
         cleared: false,
         surroundingMines: 0,
+        marked: false,
     };
     return newBlock;
+};
+
+//----------------------------------------------------
+//  Randomizes the placement of mines on the board
+//----------------------------------------------------
+
+function randomMines(id){
+    for (let i=0; i < 20; i++){
+        let randNum = Math.floor(Math.random() * 100);
+        if (randNum !== id){
+            // Change square to containing mine
+            blockArray[randNum].mine = true;
+        } else {
+            // If the random number is equal to the first
+            // mine selected, just run again.
+            i -= 1;
+        }
+    }
+    console.log(blockArray);
+};
+
+//-----------------------------------------------
+// Checks to see if the user has won
+// ----------------------------------------------
+function checkWin(){
+    let winCount = 0;
+    // Checks each object to see if it's cleared
+    for(const i in blockArray){
+        if ((blockArray[i].cleared === true) && 
+            (blockArray[i].mine === false)) {
+                winCount += 1;
+            }
+    };
+    // Checks if user won
+    if (winCount === 80) bigWinner();
+};
+
+//-----------------------------------------------------
+// Checks if user clicked on mine
+//-----------------------------------------------------
+function checkMine(id){
+    if (blockArray[id].mine === true) bigLoser();
+};
+
+//-----------------------------------------------------
+// User lost!
+//-----------------------------------------------------
+
+function bigLoser(){
+    console.log("You Lost!");
+};
+
+//-----------------------------------------------------
+// User won!
+//-----------------------------------------------------
+function bigWinner(){
+    console.log("You Won!");
+};
+
+//-----------------------------------------------------
+// Computer clears adjacent free squares
+//-----------------------------------------------------
+function computerClear(id){
+
 };
