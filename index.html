@@ -13,127 +13,138 @@
 <body>
     <h1>Minesweeper</h1>
     <h2>Soldier! We need you to clear this field immediately!</h2>
-    <div id="board">
-        <div id="row1">
-            <button id="sq001" class="block"></button>
-            <button id="sq002" class="block"></button>
-            <button id="sq003" class="block"></button>
-            <button id="sq004" class="block"></button>
-            <button id="sq005" class="block"></button>
-            <button id="sq006" class="block"></button>
-            <button id="sq007" class="block"></button>
-            <button id="sq008" class="block"></button>
-            <button id="sq009" class="block"></button>
-            <button id="sq010" class="block"></button>
+    <nav>
+        <button id="toggle">CLEAR</button>
+
+        <div id="remainingmines">Total Mines Remaining</div>
+        <div id="timer">00:00</div>
+    </nav>
+    <main>
+    <div></div>
+        <div id="board">
+            <div id="row1">
+                <button id="sq001" class="block"></button>
+                <button id="sq002" class="block"></button>
+                <button id="sq003" class="block"></button>
+                <button id="sq004" class="block"></button>
+                <button id="sq005" class="block"></button>
+                <button id="sq006" class="block"></button>
+                <button id="sq007" class="block"></button>
+                <button id="sq008" class="block"></button>
+                <button id="sq009" class="block"></button>
+                <button id="sq010" class="block"></button>
+            </div>
+            <div id="row2">
+                <button id="sq011" class="block"></button>
+                <button id="sq012" class="block"></button>
+                <button id="sq013" class="block"></button>
+                <button id="sq014" class="block"></button>
+                <button id="sq015" class="block"></button>
+                <button id="sq016" class="block"></button>
+                <button id="sq017" class="block"></button>
+                <button id="sq018" class="block"></button>
+                <button id="sq019" class="block"></button>
+                <button id="sq020" class="block"></button>
+            </div>
+            <div id="row3">
+                <button id="sq021" class="block"></button>
+                <button id="sq022" class="block"></button>
+                <button id="sq023" class="block"></button>
+                <button id="sq024" class="block"></button>
+                <button id="sq025" class="block"></button>
+                <button id="sq026" class="block"></button>
+                <button id="sq027" class="block"></button>
+                <button id="sq028" class="block"></button>
+                <button id="sq029" class="block"></button>
+                <button id="sq030" class="block"></button>
+            </div>
+            <div id="row4">
+                <button id="sq031" class="block"></button>
+                <button id="sq032" class="block"></button>
+                <button id="sq033" class="block"></button>
+                <button id="sq034" class="block"></button>
+                <button id="sq035" class="block"></button>
+                <button id="sq036" class="block"></button>
+                <button id="sq037" class="block"></button>
+                <button id="sq038" class="block"></button>
+                <button id="sq039" class="block"></button>
+                <button id="sq040" class="block"></button>
+            </div>
+            <div id="row5">
+                <button id="sq041" class="block"></button>
+                <button id="sq042" class="block"></button>
+                <button id="sq043" class="block"></button>
+                <button id="sq044" class="block"></button>
+                <button id="sq045" class="block"></button>
+                <button id="sq046" class="block"></button>
+                <button id="sq047" class="block"></button>
+                <button id="sq048" class="block"></button>
+                <button id="sq049" class="block"></button>
+                <button id="sq050" class="block"></button>
+            </div>
+            <div id="row6">
+                <button id="sq051" class="block"></button>
+                <button id="sq052" class="block"></button>
+                <button id="sq053" class="block"></button>
+                <button id="sq054" class="block"></button>
+                <button id="sq055" class="block"></button>
+                <button id="sq056" class="block"></button>
+                <button id="sq057" class="block"></button>
+                <button id="sq058" class="block"></button>
+                <button id="sq059" class="block"></button>
+                <button id="sq060" class="block"></button>
+            </div>
+            <div id="row7">
+                <button id="sq061" class="block"></button>
+                <button id="sq062" class="block"></button>
+                <button id="sq063" class="block"></button>
+                <button id="sq064" class="block"></button>
+                <button id="sq065" class="block"></button>
+                <button id="sq066" class="block"></button>
+                <button id="sq067" class="block"></button>
+                <button id="sq068" class="block"></button>
+                <button id="sq069" class="block"></button>
+                <button id="sq070" class="block"></button>
+            </div>
+            <div id="row8">
+                <button id="sq071" class="block"></button>
+                <button id="sq072" class="block"></button>
+                <button id="sq073" class="block"></button>
+                <button id="sq074" class="block"></button>
+                <button id="sq075" class="block"></button>
+                <button id="sq076" class="block"></button>
+                <button id="sq077" class="block"></button>
+                <button id="sq078" class="block"></button>
+                <button id="sq079" class="block"></button>
+                <button id="sq080" class="block"></button>
+            </div>
+            <div id="row9">
+                <button id="sq081" class="block"></button>
+                <button id="sq082" class="block"></button>
+                <button id="sq083" class="block"></button>
+                <button id="sq084" class="block"></button>
+                <button id="sq085" class="block"></button>
+                <button id="sq086" class="block"></button>
+                <button id="sq087" class="block"></button>
+                <button id="sq088" class="block"></button>
+                <button id="sq089" class="block"></button>
+                <button id="sq090" class="block"></button>
+            </div>
+            <div id="row10">
+                <button id="sq091" class="block"></button>
+                <button id="sq092" class="block"></button>
+                <button id="sq093" class="block"></button>
+                <button id="sq094" class="block"></button>
+                <button id="sq095" class="block"></button>
+                <button id="sq096" class="block"></button>
+                <button id="sq097" class="block"></button>
+                <button id="sq098" class="block"></button>
+                <button id="sq099" class="block"></button>
+                <button id="sq100" class="block"></button>
+            </div>
         </div>
-        <div id="row2">
-            <button id="sq011" class="block"></button>
-            <button id="sq012" class="block"></button>
-            <button id="sq013" class="block"></button>
-            <button id="sq014" class="block"></button>
-            <button id="sq015" class="block"></button>
-            <button id="sq016" class="block"></button>
-            <button id="sq017" class="block"></button>
-            <button id="sq018" class="block"></button>
-            <button id="sq019" class="block"></button>
-            <button id="sq020" class="block"></button>
-        </div>
-        <div id="row3">
-            <button id="sq021" class="block"></button>
-            <button id="sq022" class="block"></button>
-            <button id="sq023" class="block"></button>
-            <button id="sq024" class="block"></button>
-            <button id="sq025" class="block"></button>
-            <button id="sq026" class="block"></button>
-            <button id="sq027" class="block"></button>
-            <button id="sq028" class="block"></button>
-            <button id="sq029" class="block"></button>
-            <button id="sq030" class="block"></button>
-        </div>
-        <div id="row4">
-            <button id="sq031" class="block"></button>
-            <button id="sq032" class="block"></button>
-            <button id="sq033" class="block"></button>
-            <button id="sq034" class="block"></button>
-            <button id="sq035" class="block"></button>
-            <button id="sq036" class="block"></button>
-            <button id="sq037" class="block"></button>
-            <button id="sq038" class="block"></button>
-            <button id="sq039" class="block"></button>
-            <button id="sq040" class="block"></button>
-        </div>
-        <div id="row5">
-            <button id="sq041" class="block"></button>
-            <button id="sq042" class="block"></button>
-            <button id="sq043" class="block"></button>
-            <button id="sq044" class="block"></button>
-            <button id="sq045" class="block"></button>
-            <button id="sq046" class="block"></button>
-            <button id="sq047" class="block"></button>
-            <button id="sq048" class="block"></button>
-            <button id="sq049" class="block"></button>
-            <button id="sq050" class="block"></button>
-        </div>
-        <div id="row6">
-            <button id="sq051" class="block"></button>
-            <button id="sq052" class="block"></button>
-            <button id="sq053" class="block"></button>
-            <button id="sq054" class="block"></button>
-            <button id="sq055" class="block"></button>
-            <button id="sq056" class="block"></button>
-            <button id="sq057" class="block"></button>
-            <button id="sq058" class="block"></button>
-            <button id="sq059" class="block"></button>
-            <button id="sq060" class="block"></button>
-        </div>
-        <div id="row7">
-            <button id="sq061" class="block"></button>
-            <button id="sq062" class="block"></button>
-            <button id="sq063" class="block"></button>
-            <button id="sq064" class="block"></button>
-            <button id="sq065" class="block"></button>
-            <button id="sq066" class="block"></button>
-            <button id="sq067" class="block"></button>
-            <button id="sq068" class="block"></button>
-            <button id="sq069" class="block"></button>
-            <button id="sq070" class="block"></button>
-        </div>
-        <div id="row8">
-            <button id="sq071" class="block"></button>
-            <button id="sq072" class="block"></button>
-            <button id="sq073" class="block"></button>
-            <button id="sq074" class="block"></button>
-            <button id="sq075" class="block"></button>
-            <button id="sq076" class="block"></button>
-            <button id="sq077" class="block"></button>
-            <button id="sq078" class="block"></button>
-            <button id="sq079" class="block"></button>
-            <button id="sq080" class="block"></button>
-        </div>
-        <div id="row9">
-            <button id="sq081" class="block"></button>
-            <button id="sq082" class="block"></button>
-            <button id="sq083" class="block"></button>
-            <button id="sq084" class="block"></button>
-            <button id="sq085" class="block"></button>
-            <button id="sq086" class="block"></button>
-            <button id="sq087" class="block"></button>
-            <button id="sq088" class="block"></button>
-            <button id="sq089" class="block"></button>
-            <button id="sq090" class="block"></button>
-        </div>
-        <div id="row10">
-            <button id="sq091" class="block"></button>
-            <button id="sq092" class="block"></button>
-            <button id="sq093" class="block"></button>
-            <button id="sq094" class="block"></button>
-            <button id="sq095" class="block"></button>
-            <button id="sq096" class="block"></button>
-            <button id="sq097" class="block"></button>
-            <button id="sq098" class="block"></button>
-            <button id="sq099" class="block"></button>
-            <button id="sq100" class="block"></button>
-        </div>
-    </div>
+    <div></div>
+    </main>
+
 </body>
 </html>
