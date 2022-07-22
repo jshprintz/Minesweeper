@@ -60,15 +60,18 @@ function init(){
 // Render changes
 //----------------------------------------------------
 function render(e){
+
     // Capture the block ID
     let blockID = e.target.id;
-
     // Capture the block object
     let blockObj = e.target;
 
+
+    if (blockID !== 'board'){
     // checks to see if user is clearing a square or 
     // marking a square
-    clearCheck(blockObj, blockID);
+        clearCheck(blockObj, blockID);
+    }
 };
 
 //--------------------------------------------------------
