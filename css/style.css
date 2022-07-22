@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-  }
+}
 
 body {
     background-image: url('../images/grassyField.png');
@@ -9,7 +9,7 @@ body {
 
 h1 {
     text-align: center;
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 10px ridge;
@@ -17,7 +17,7 @@ h1 {
 
 h2 {
     text-align: center;
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 10px;
@@ -37,7 +37,7 @@ main {
 }
 
 #toggle {
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 5px solid;
@@ -46,7 +46,7 @@ main {
 }
 
 #remainingmines {
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 5px solid;
@@ -55,7 +55,7 @@ main {
 }
 
 #timer {
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 5px solid;
@@ -69,7 +69,7 @@ main {
     grid-auto-rows: 1%;
     height: 500px;
     width: 500px;;
-    background-color:#FFEFCA;
+    background-image: radial-gradient(circle, #e2d094, #e4d5a2, #e6d9af, #e7debd, #e9e2cb, #e9e2cb, #e9e2cb, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     border:#9B823F 10px ridge;
     justify-content: center;
     margin-top: 20%;
