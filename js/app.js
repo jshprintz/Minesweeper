@@ -16,7 +16,6 @@ let boardEl = document.getElementById('board');
 let toggleEl = document.getElementById('toggle');
 let dispMessageEl = document.querySelector('h2');
 let remainingMinesEl = document.getElementById('remainingmines');
-let squareEl = document.getElementById('sq1');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -189,7 +188,8 @@ function randomMines(id){
             i -= 1;
         }
     }
-    console.log(blockArray);
+    //Determines the amount of mines surrounding each square
+    assignSurrounding();
 };
 
 //-----------------------------------------------
@@ -234,65 +234,126 @@ function bigWinner(){
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id){
-    console.log(`Block Selected: ${id}`);
-    // -------NOT INCLUDING CORNERS------
-    // Top Row
-    if ((id > 0) && (id < 9)){
-        console.log("top row not including corners");
-    } 
-    // Bottom Row
-    else if ((id > 90) && (id < 99)){
-        console.log("bottom row not including corners");
-    } 
-    // Left Row
-    else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
-        console.log("left row not including corners");
-    } 
-    // Right Row
-    else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-        console.log("right row not including corners");
-    } 
-    // -----------CORNERS-----------
-    // Top Left
-    else if (id === 0){
-        console.log("top left corner");
-    } 
-    // Top Right
-    else if (id === 9){
-        console.log("top right corner");
-    } 
-    // Bottom Left
-    else if (id === 90){
-        console.log("bottom left corner");
-    } 
-    // Bottom Right
-    else if (id === 99){
-        console.log("bottom right corner");
-    } 
-    // Middle of grid
-    else{
-        console.log("middle of grid");
-        if (blockArray[id-11].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id-10].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id-9].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id-1].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id+1].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id+9].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id+10].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        if (blockArray[id+11].mine === true) 
-            blockArray[id].surroundingMines += 1;
-        
-            //Display number of surrounding mines
-        if (blockArray[id].surroundingMines !== 0);
-            //
-    };
-    console.log(blockArray[id].surroundingMines);
 
+};
+
+//-----------------------------------------------------
+// Assigns each square with the number of surrounding
+// mines
+//-----------------------------------------------------
+function assignSurrounding(){
+    // Loop through array assigning the amount of
+    // surrounding mines
+    for (let id = 0; id < blockArray.length; id++){
+        // -------NOT INCLUDING CORNERS------
+        // Top Row
+        if ((id > 0) && (id < 9)){
+            if (blockArray[id-1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+        } 
+        // Bottom Row
+        else if ((id > 90) && (id < 99)){
+            if (blockArray[id-11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+        } 
+        // Left Row
+        else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
+            if (blockArray[id-10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+        } 
+        // Right Row
+        else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
+            if (blockArray[id-11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+        } 
+        // -----------CORNERS-----------
+        // Top Left
+        else if (id === 0){
+            if (blockArray[1].mine === true) 
+                blockArray[0].surroundingMines += 1;
+            if (blockArray[10].mine === true) 
+                blockArray[0].surroundingMines += 1;
+            if (blockArray[11].mine === true) 
+                blockArray[0].surroundingMines += 1;
+        } 
+        // Top Right
+        else if (id === 9){
+            if (blockArray[8].mine === true) 
+                blockArray[9].surroundingMines += 1;
+            if (blockArray[19].mine === true) 
+                blockArray[9].surroundingMines += 1;
+            if (blockArray[18].mine === true) 
+                blockArray[9].surroundingMines += 1;
+        } 
+        // Bottom Left
+        else if (id === 90){
+            if (blockArray[80].mine === true) 
+                blockArray[90].surroundingMines += 1;
+            if (blockArray[81].mine === true) 
+                blockArray[90].surroundingMines += 1;
+            if (blockArray[91].mine === true) 
+                blockArray[90].surroundingMines += 1;
+        } 
+        // Bottom Right
+        else if (id === 99){
+            if (blockArray[98].mine === true) 
+                blockArray[99].surroundingMines += 1;
+            if (blockArray[88].mine === true) 
+                blockArray[99].surroundingMines += 1;
+            if (blockArray[89].mine === true) 
+                blockArray[99].surroundingMines += 1;
+        } 
+        // Middle of grid
+        else{
+            if (blockArray[id-11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id-1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+1].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+9].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+10].mine === true) 
+                blockArray[id].surroundingMines += 1;
+            if (blockArray[id+11].mine === true) 
+                blockArray[id].surroundingMines += 1;
+        };
+    };
+console.log(blockArray);
 };
