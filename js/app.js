@@ -6,6 +6,7 @@ let remainingMines;
 let timer;
 let blockArray = [];
 let firstPicked;
+let newId;
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -61,31 +62,30 @@ function init(){
 function render(e){
     // Capture the block ID
     let blockID = e.target.id;
-    console.log(blockID)
 
     // Capture the block object
     let blockObj = e.target;
 
     // checks to see if user is clearing a square or 
     // marking a square
-    clearCheck(blockObj);
+    clearCheck(blockObj, blockID);
 };
 
 //--------------------------------------------------------
 // Checks if User is CLEARING or MARKING
 //--------------------------------------------------------
-function clearCheck(block){
+function clearCheck(obj, id){
     if (toggleEl.innerText === 'CLEAR') {
         // Change to cleared spot
-        block.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        obj.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         if (firstPicked === false){
-            firstPick();
+            firstPick(id);
         } else {
-            checkPick();
+            checkPick(id);
         };
     } else {
         // Change to marked spot
-        block.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         remainingMines--;
         remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`
     };
@@ -107,8 +107,14 @@ function clearMark(e){
 //---------------------------------------------------
 // FIRST SELECTION of the game
 //---------------------------------------------------
-function firstPick(){
+function firstPick(id){
+    firstPicked = true;
+    // Convert ID to number matching array
+    id = convertID(id);
     // Mark first pick square as cleared
+    blockArray[id].cleared = true;
+    console.log(blockArray[id]);
+    console.log(blockArray);
 
     // Randomize mines throughout the board
 
@@ -119,14 +125,34 @@ function firstPick(){
 //---------------------------------------------------
 // CHECK PICK to see if it's a mine, a winner, or a clear
 //---------------------------------------------------
-function checkPick(){
+function checkPick(id){
+    // Convert ID to number matching array
+    id = convertID(id);
+    console.log(`Next pick: ${id}`);
     // run checkMine()
 
     // mark picked square as cleared
+    blockArray[id].cleared = true;
+    console.log(blockArray[id]);
+    console.log(blockArray);
 
     // Run checkWin()
 
     // Run computerClear()
+};
+
+//-----------------------------------------------------
+// Converts the string ID to a numerical form that 
+// matches with the array
+//-----------------------------------------------------
+function convertID(id){
+    // Extract the number from the rest of the string
+    id = id.substring(2,id.length);
+    // Convert the remaining string into a number
+    // and subtract 1 so it matches the array
+    id = Number(id) - 1;
+    // return array index
+    return id;
 };
 
 //-----------------------------------------------------
