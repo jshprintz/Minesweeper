@@ -16,6 +16,7 @@ let boardEl = document.getElementById('board');
 let toggleEl = document.getElementById('toggle');
 let dispMessageEl = document.querySelector('h2');
 let remainingMinesEl = document.getElementById('remainingmines');
+let squareEl = document.getElementById('sq1');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -89,8 +90,12 @@ function clearCheck(obj, id){
     } else {
         // Checks if already marked
         if (blockArray[id].marked === true) {
-            console.log("Already marked idiot")
-        } else {
+            console.log("Already marked idiot");
+        } 
+        else if (blockArray[id].cleared === true){
+            console.log("Already cleared idiot");
+        }
+        else {
             // Change to marked spot
             blockArray[id].marked = true;
             obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
@@ -149,7 +154,7 @@ function convertID(id){
     id = id.substring(2,id.length);
     // Convert the remaining string into a number
     // and subtract 1 so it matches the array
-    id = Number(id) - 1;
+    id = Number(id);
     // return array index
     return id;
 };
@@ -229,5 +234,65 @@ function bigWinner(){
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id){
+    console.log(`Block Selected: ${id}`);
+    // -------NOT INCLUDING CORNERS------
+    // Top Row
+    if ((id > 0) && (id < 9)){
+        console.log("top row not including corners");
+    } 
+    // Bottom Row
+    else if ((id > 90) && (id < 99)){
+        console.log("bottom row not including corners");
+    } 
+    // Left Row
+    else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
+        console.log("left row not including corners");
+    } 
+    // Right Row
+    else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
+        console.log("right row not including corners");
+    } 
+    // -----------CORNERS-----------
+    // Top Left
+    else if (id === 0){
+        console.log("top left corner");
+    } 
+    // Top Right
+    else if (id === 9){
+        console.log("top right corner");
+    } 
+    // Bottom Left
+    else if (id === 90){
+        console.log("bottom left corner");
+    } 
+    // Bottom Right
+    else if (id === 99){
+        console.log("bottom right corner");
+    } 
+    // Middle of grid
+    else{
+        console.log("middle of grid");
+        if (blockArray[id-11].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id-10].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id-9].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id-1].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id+1].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id+9].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id+10].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        if (blockArray[id+11].mine === true) 
+            blockArray[id].surroundingMines += 1;
+        
+            //Display number of surrounding mines
+        if (blockArray[id].surroundingMines !== 0);
+            //
+    };
+    console.log(blockArray[id].surroundingMines);
 
 };
