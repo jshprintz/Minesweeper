@@ -1,4 +1,4 @@
-console.log("Javascript works")
+console.log('Javascript works')
 //-----------------------------------------------------
 // Declare state variables
 //-----------------------------------------------------
@@ -84,18 +84,21 @@ function clearCheck(obj, id){
     if (toggleEl.innerText === 'CLEAR') {
         // Change to cleared spot
         obj.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        // Checks if this is the first action
         if (firstPicked === false){
+            // randomizes mines after selection
             firstPick(id);
         } else {
+            // determine if pick is a loser, winner, or cleared
             checkPick(id);
         };
     } else {
         // Checks if already marked
         if (blockArray[id].marked === true) {
-            console.log("Already marked idiot");
-        } 
+            console.log('Already marked idiot');
+        } // Checks if already cleared
         else if (blockArray[id].cleared === true){
-            console.log("Already cleared idiot");
+            console.log('Already cleared idiot');
         }
         else {
             // Change to marked spot
@@ -223,20 +226,140 @@ function checkMine(id){
 //-----------------------------------------------------
 
 function bigLoser(){
-    console.log("You Lost!");
+    console.log('You Lost!');
 };
 
 //-----------------------------------------------------
 // User won!
 //-----------------------------------------------------
 function bigWinner(){
-    console.log("You Won!");
+    console.log('You Won!');
 };
 
 //-----------------------------------------------------
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id){
+    console.log('Computer Clear')
+
+    // Determine what blocks, if any, that surround the
+    // current selection should be cleared by the
+    // computer.
+
+    // If adjacent square does not contain a mine, clear it.
+
+    if ((id > 0) && (id < 9)){
+        if (blockArray[id-1].mine === false) 
+            clearSquare(id-1);
+        if (blockArray[id+1].mine === false) 
+            clearSquare(id+1);
+        if (blockArray[id+9].mine === false) 
+            clearSquare(id+9);
+        if (blockArray[id+10].mine === false) 
+            clearSquare(id+10);
+        if (blockArray[id+11].mine === false) 
+            clearSquare(id+11);
+    } 
+    // Bottom Row
+    else if ((id > 90) && (id < 99)){
+        if (blockArray[id-11].mine === false) 
+            clearSquare(id-11);
+        if (blockArray[id-10].mine === false) 
+            clearSquare(id-10);
+        if (blockArray[id-9].mine === false) 
+            clearSquare(id-9);
+        if (blockArray[id-1].mine === false) 
+            clearSquare(id-1);
+        if (blockArray[id+1].mine === false) 
+            clearSquare(id+1);
+    } 
+    // Left Row
+    else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
+        if (blockArray[id-10].mine === false) 
+            clearSquare(id-10);
+        if (blockArray[id-9].mine === false) 
+            clearSquare(id-9);
+        if (blockArray[id+1].mine === false) 
+            clearSquare(id+1);
+        if (blockArray[id+10].mine === false) 
+            clearSquare(id+10);
+        if (blockArray[id+11].mine === false) 
+            clearSquare(id+11);
+    } 
+    // Right Row
+    else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
+        if (blockArray[id-11].mine === false) 
+            clearSquare(id-11);
+        if (blockArray[id-10].mine === false) 
+            clearSquare(id-10);
+        if (blockArray[id-1].mine === false) 
+            clearSquare(id-1);
+        if (blockArray[id+9].mine === false) 
+            clearSquare(id+9);
+        if (blockArray[id+10].mine === false) 
+            clearSquare(id+10);
+    } 
+    // -----------CORNERS-----------
+    // Top Left
+    else if (id === 0){
+        if (blockArray[1].mine === false) 
+            clearSquare(1);
+        if (blockArray[10].mine === false) 
+            clearSquare(10);
+        if (blockArray[11].mine === false) 
+            clearSquare(11);
+    } 
+    // Top Right
+    else if (id === 9){
+        if (blockArray[8].mine === false) 
+            clearSquare(8);
+        if (blockArray[19].mine === false) 
+            clearSquare(19);
+        if (blockArray[18].mine === false) 
+            clearSquare(18);
+    } 
+    // Bottom Left
+    else if (id === 90){
+        if (blockArray[80].mine === false) 
+            clearSquare(80);
+        if (blockArray[81].mine === false) 
+            clearSquare(81);
+        if (blockArray[91].mine === false) 
+            clearSquare(91);
+    } 
+    // Bottom Right
+    else if (id === 99){
+        if (blockArray[98].mine === false) 
+            clearSquare(98);
+        if (blockArray[88].mine === false) 
+            clearSquare(88);
+        if (blockArray[89].mine === false) 
+            clearSquare(89);
+    } 
+    // Middle of grid
+    else{
+        if (blockArray[id-11].mine === false) 
+            clearSquare(id-11);
+        if (blockArray[id-10].mine === false) 
+            clearSquare(id-10);
+        if (blockArray[id-9].mine === false) 
+            clearSquare(id-9);
+        if (blockArray[id-1].mine === false) 
+            clearSquare(id-1);
+        if (blockArray[id+1].mine === false) 
+            clearSquare(id+1);
+        if (blockArray[id+9].mine === false) 
+            clearSquare(id+9);
+        if (blockArray[id+10].mine === false) 
+            clearSquare(id+10);
+        if (blockArray[id+11].mine === false) 
+            clearSquare(id+11);
+    };
+
+
+    // DO NOT CLEAR MINES
+    // DO NOT CLEAR ANYTHING THAT ISN'T CONNECTED TO
+    //        INITIAL USER ID
 
 };
 
@@ -360,3 +483,13 @@ function assignSurrounding(){
     };
 console.log(blockArray);
 };
+//---------------------------------------------------------
+// Clears a square cleared by the computer
+//---------------------------------------------------------
+
+function clearSquare(id){
+    blockArray[id].cleared = true;
+    // Change to cleared spot
+    let squareEl = document.querySelectorAll('sq' + id);
+    squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+}
