@@ -1,5 +1,13 @@
 console.log('Javascript works')
 //-----------------------------------------------------
+// Images obtained:
+// Explosion: https://www.pngwing.com/en/free-png-vdqes/download
+//
+//
+
+
+
+//-----------------------------------------------------
 // Declare state variables
 //-----------------------------------------------------
 let remainingMines;
@@ -14,6 +22,25 @@ let masterArray = [];
 let noMine = true;
 let clockMaster;
 let timerDisp = '';
+
+//-----------------------------------------------------
+// Declare constant variables
+//-----------------------------------------------------
+const posHeadline = [`Great job! I knew you could do it!`,
+`That's the square I would have picked!`, `You'll get promoted for this.`,
+`Phenominal! Only ${remainingMines} to go!`,`We're all counting on you!`,
+`Can you clear any faster?`, `We'll win this war yet!`, `Great work!`,
+`There was never a doubt in my mind!`];
+
+const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you weren't ready.`,
+`No wonder machines do this now.`,`Don't you know how numbers work?`,
+`That was the worst square you could have picked.`, `Horrible choice. Just horrible.`,
+`If you want to help us, you can join our enemy.`];
+
+const spriteWidth = 180;
+const spriteHeight = 240;
+
+
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -47,14 +74,10 @@ init();
 // Initialize program
 //------------------------------------------------------
 function init(){
-    // Create the board (TRY TO CSS THIS LATER)
+    
+    // Create the array containing objects
     blockEl.forEach(function(el){
-        // // Create the board
-        // el.style.border = '5px groove #FFEFCA';
-        // el.style.padding = '15px';
-        // el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
-        
-        // Create the array containing objects
+        // Push new object
         blockArray.push(newSquare());
     });
 
@@ -104,7 +127,7 @@ function clearCheck(obj, id){
         if (blockArray[id].marked === true) {
             blockArray[id].marked = false;
             remainingMines++;
-            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`;
+            remainingMinesEl.innerText = `Mines: ${remainingMines}`;
             obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         } // Checks if already cleared
         else if (blockArray[id].cleared === true){
@@ -115,7 +138,7 @@ function clearCheck(obj, id){
             blockArray[id].marked = true;
             obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
             remainingMines--;
-            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`;
+            remainingMinesEl.innerText = `Mines: ${remainingMines}`;
             checkWin();
         };
     };
@@ -149,6 +172,7 @@ function firstPick(id){
     computerClear(id);
     // Start clock
     clockMaster = setInterval(clock, 1000);
+    headline(true);
 
     console.log(checkArray, "CheckArray");
 };
@@ -167,6 +191,8 @@ function checkPick(id){
         checkWin();
         // Run computerClear()
         computerClear(id);
+        // Positive headline
+        headline(true);
     } else if (noMine === false){
         clearInterval(clockMaster);
         revealBoard();
@@ -514,8 +540,11 @@ function newSquare(){
 //-----------------------------------------------------
 function checkMine(id){
     if (blockArray[id].mine === true) {
-        //squareEl[id].innerText = 'M';
+        
         console.log("You Lose!")
+        remainingMines++;
+        headline(false);
+        explosion(id);
         return false;
     } else {
         return true;
@@ -528,7 +557,7 @@ function checkMine(id){
 function bigWinner(){
     dispMessageEl.innerText = `You did it! Congratualtions!
                 Now see if you can do it in under ${timerDisp}.`
-
+    remainingMines = 0;
     revealBoard();
 };
 
@@ -573,19 +602,22 @@ function checkWin(){
 //--------------------------------------------------------
 function revealBoard(){
     boardEl.removeEventListener('click', render);
+    toggleEl.addEventListener('click', clearMark);
+
     clearInterval(clockMaster);
-    console.log(timer);
+    remainingMinesEl.innerText = `Mines: ${remainingMines}`;
 
     for (let i=0; i<blockArray.length; i++){
         if (blockArray[i].cleared === false) {
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
         }
         
-        if (blockArray[i].mine === true){
+        if ((blockArray[i].mine === true) && (blockArray[i].marked === true)){
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
+        } else if (blockArray[i].mine === true) {
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
         }
     };
-
 };
 
 //------------------------------------------------------
@@ -593,6 +625,7 @@ function revealBoard(){
 //------------------------------------------------------
 function clock(){
     seconds++;
+
     //convert to minutes
     if (seconds === 60){
         seconds = 0;
@@ -610,4 +643,26 @@ function clock(){
     };
 
     timerEl.innerText = timerDisp;
+};
+
+//---------------------------------------------
+// Populates a message in the h2
+//---------------------------------------------
+
+function headline(pos){
+    if (pos === true){
+        dispMessageEl.innerText = posHeadline[Math.floor(Math.random() * posHeadline.length)];
+    } else {
+        dispMessageEl.innerText = negHeadline[Math.floor(Math.random() * negHeadline.length)];
+    };
+};
+
+//----------------------------------------------
+// Sprite image explosion
+//----------------------------------------------
+
+function explosion(id){
+    blockEl[id].style.spriteWidth = spriteWidth;
+    blockEl[id].style.height = spriteHeight;
+    blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
 };

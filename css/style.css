@@ -4,6 +4,7 @@
 
 body {
     background-image: url('../images/grassyField.png');
+    background-size: cover;
     display: grid;
     
 }
@@ -18,6 +19,8 @@ h1 {
 }
 
 h2 {
+    display: grid;
+    align-items: center;
     text-align: center;
     background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
@@ -25,6 +28,7 @@ h2 {
     border:#9B823F 10px;
     border-style: double;
     font-family: 'Black Ops One', cursive;
+    min-height: 100px;
 }
 
 nav {
@@ -46,6 +50,7 @@ main {
     margin-bottom: 5%;
     margin-top: 5%;
     font-size: 20pt;
+    min-width: 125px;
 }
 
 #remainingmines {
@@ -56,6 +61,7 @@ main {
     margin-bottom: 5%;
     margin-top: 5%;
     font-size: 20pt;
+    min-width: 175px;
 }
 
 #timer {
@@ -79,6 +85,7 @@ main {
     background-image: radial-gradient(circle, #e2d094, #e4d5a2, #e6d9af, #e7debd, #e9e2cb, #e9e2cb, #e9e2cb, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     border:#9B823F 10px ridge;
     justify-content: center;
+    margin-bottom: 20%;
 }
 
 .block {
