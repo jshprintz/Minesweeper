@@ -114,6 +114,7 @@ function clearCheck(obj, id){
             obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
             remainingMines--;
             remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`;
+            checkWin();
         };
     };
 };
@@ -523,8 +524,10 @@ function checkMine(id){
 // User won!
 //-----------------------------------------------------
 function bigWinner(){
-    console.log('You Won!');
-    clearInterval(clockMaster);
+    dispMessageEl.innerText = `You did it! Congratualtions!
+                        Now see if you can do it in under ${timer}.`
+
+    revealBoard();
 };
 
 //----------------------------------------------------
@@ -549,6 +552,7 @@ function randomMines(id){
 // Checks to see if the user has won
 // ----------------------------------------------
 function checkWin(){
+    console.log("Check win");
     let winCount = 0;
     // Checks each object to see if it's cleared
     for(const i in blockArray){
@@ -558,6 +562,7 @@ function checkWin(){
             }
     };
     // Checks if user won
+    console.log(winCount, "Win Count")
     if (winCount === 80) bigWinner();
 };
 
@@ -565,8 +570,9 @@ function checkWin(){
 // Reveal the board
 //--------------------------------------------------------
 function revealBoard(){
-    console.log("board reveal");
     boardEl.removeEventListener('click', render);
+    clearInterval(clockMaster);
+    console.log(timer);
 
     for (let i=0; i<blockArray.length; i++){
         if (blockArray[i].cleared === false) {
@@ -577,6 +583,7 @@ function revealBoard(){
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
         }
     };
+
 };
 
 //------------------------------------------------------

@@ -27,8 +27,6 @@ h2 {
 nav {
     display: flex;
     justify-content: space-evenly;
-    margin-top: 5%;
-    margin-bottom: 0%;
 }
 
 main {
@@ -74,7 +72,6 @@ main {
     background-image: radial-gradient(circle, #e2d094, #e4d5a2, #e6d9af, #e7debd, #e9e2cb, #e9e2cb, #e9e2cb, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     border:#9B823F 10px ridge;
     justify-content: center;
-    margin-top: 20%;
 }
 
 .block {
@@ -150,6 +147,20 @@ main {
     display: inline-flex;
     grid-column-start: 3;
     grid-row-start: 83;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    text-align: left;
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
+    color: #9B823F;
+    border:#9B823F 10px ridge;
+    font-weight: bold;
+    font-size: 36pt;
 }
 
 
