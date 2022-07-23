@@ -10,6 +10,7 @@ let firstPicked;
 let newId;
 let clearArray;
 let masterArray = [];
+let noMine = true;
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -57,6 +58,7 @@ function init(){
     remainingMines = 20;
     timer = 0;
     firstPicked = false;
+    noMine = true;
 };
 
 //----------------------------------------------------
@@ -149,13 +151,18 @@ function firstPick(id){
 //---------------------------------------------------
 function checkPick(id){
     // run checkMine()
-    checkMine(id);
-    // Clears the current square
-    clearSquare(id);
-    // Run checkWin()
-    checkWin();
-    // Run computerClear()
-    computerClear(id);
+    noMine = checkMine(id);
+    // If user did not click on a mine
+    if ((noMine === true) && (blockArray[id].cleared === false)){
+        // Clears the current square
+        clearSquare(id);
+        // Run checkWin()
+        checkWin();
+        // Run computerClear()
+        computerClear(id);
+    } else if (noMine === false){
+        revealBoard();
+    }
 };
 
 //-----------------------------------------------------
@@ -498,15 +505,13 @@ function newSquare(){
 // Checks if user clicked on mine
 //-----------------------------------------------------
 function checkMine(id){
-    if (blockArray[id].mine === true) bigLoser();
-};
-
-//-----------------------------------------------------
-// User lost!
-//-----------------------------------------------------
-
-function bigLoser(){
-    console.log('You Lost!');
+    if (blockArray[id].mine === true) {
+        //squareEl[id].innerText = 'M';
+        console.log("You Lose!")
+        return false;
+    } else {
+        return true;
+    }
 };
 
 //-----------------------------------------------------
@@ -548,4 +553,22 @@ function checkWin(){
     };
     // Checks if user won
     if (winCount === 80) bigWinner();
+};
+
+//--------------------------------------------------------
+// Reveal the board
+//--------------------------------------------------------
+function revealBoard(){
+    console.log("board reveal");
+    boardEl.removeEventListener('click', render);
+
+    for (let i=0; i<blockArray.length; i++){
+        if (blockArray[i].cleared === false) {
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
+        }
+        
+        if (blockArray[i].mine === true){
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
+        }
+    };
 };
