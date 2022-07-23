@@ -97,6 +97,8 @@ function clearCheck(obj, id){
         // Checks if already marked
         if (blockArray[id].marked === true) {
             blockArray[id].marked = false;
+            remainingMines++;
+            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`;
             obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         } // Checks if already cleared
         else if (blockArray[id].cleared === true){
@@ -107,7 +109,7 @@ function clearCheck(obj, id){
             blockArray[id].marked = true;
             obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
             remainingMines--;
-            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`
+            remainingMinesEl.innerText = `Mines Remaining: ${remainingMines}`;
         };
     };
 };
@@ -295,9 +297,30 @@ function clearSquare(id){
     // Change to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    
+    //Updates inner square with number and color
     if (blockArray[id].surroundingMines !== 0){
         squareEl.innerText = blockArray[id].surroundingMines;
+        if (squareEl.innerText === '1'){
+            squareEl.style.color = 'blue';
+        } else if (squareEl.innerText === '2'){
+            squareEl.style.color = 'green';
+        } else if (squareEl.innerText === '3'){
+            squareEl.style.color = 'orange';
+        } else if (squareEl.innerText === '4'){
+            squareEl.style.color = 'purple';
+        } else if (squareEl.innerText === '5'){
+            squareEl.style.color = 'red';
+        } else if (squareEl.innerText === '6'){
+            squareEl.style.color = 'yellow';
+        } else if (squareEl.innerText === '7'){
+            squareEl.style.color = 'brown';
+        } else {
+            squareEl.style.color = 'white';
+        };
     };
+
+
     // Keep a record of all zeroes
     if (blockArray[id].surroundingMines === 0){
         masterArray.push(id); // Master record of zeros
