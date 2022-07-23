@@ -44,10 +44,10 @@ init();
 function init(){
     // Create the board (TRY TO CSS THIS LATER)
     blockEl.forEach(function(el){
-        // Create the board
-        el.style.border = '5px groove #FFEFCA';
-        el.style.padding = '15px';
-        el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
+        // // Create the board
+        // el.style.border = '5px groove #FFEFCA';
+        // el.style.padding = '15px';
+        // el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         
         // Create the array containing objects
         blockArray.push(newSquare());
@@ -96,7 +96,8 @@ function clearCheck(obj, id){
     } else {
         // Checks if already marked
         if (blockArray[id].marked === true) {
-            console.log('Already marked idiot');
+            blockArray[id].marked = false;
+            obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         } // Checks if already cleared
         else if (blockArray[id].cleared === true){
             console.log('Already cleared idiot');
@@ -283,7 +284,7 @@ function computerClear(id){
         }
         // Check remaining squares
         checkArrayClear();
-    }
+    };
 };
 
 //---------------------------------------------------------
@@ -294,8 +295,9 @@ function clearSquare(id){
     // Change to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
-    squareEl.innerText = blockArray[id].surroundingMines;
-    
+    if (blockArray[id].surroundingMines !== 0){
+        squareEl.innerText = blockArray[id].surroundingMines;
+    };
     // Keep a record of all zeroes
     if (blockArray[id].surroundingMines === 0){
         masterArray.push(id); // Master record of zeros
@@ -498,7 +500,7 @@ function bigWinner(){
 function randomMines(id){
     for (let i=0; i < 20; i++){
         let randNum = Math.floor(Math.random() * 100);
-        if (randNum !== id){
+        if ((randNum !== id) && (blockArray[randNum].mine === false)){
             // Change square to containing mine
             blockArray[randNum].mine = true;
         } else {

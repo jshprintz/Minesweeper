@@ -75,6 +75,14 @@ main {
     margin-top: 20%;
 }
 
+.block {
+    border: 5px groove #FFEFCA;
+    padding: 15px;
+    background-image: radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f);
+    min-width: 15px;
+    max-width: 15px;
+}
+
 #row1 {
     justify-content: center;
     display: inline-flex;
@@ -139,6 +147,7 @@ main {
     grid-column-start: 3;
     grid-row-start: 83;
 }
+
 
 @media only screen and (min-width: 768px) {
     #board {
