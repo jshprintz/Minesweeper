@@ -3,8 +3,7 @@
 }
 
 body {
-    background-image: url('../images/grassyField.png');
-    background-size: cover;
+    background-image: url('../images/camo3.jpg');
     display: grid;
     
 }
@@ -166,6 +165,7 @@ main {
 
 footer {
     position: fixed;
+    display: flex;
     left: 0;
     bottom: 0;
     height: 100px;
@@ -175,8 +175,9 @@ footer {
     color: #9B823F;
     border:#9B823F 10px ridge;
     font-weight: bold;
-    font-size: 36pt;
+    font-size: 16pt;
     font-family: 'Black Ops One', cursive;
+    justify-content: center;
 }
 
 

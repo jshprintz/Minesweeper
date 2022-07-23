@@ -3,9 +3,11 @@ console.log('Javascript works')
 // Images obtained:
 // Explosion: https://www.pngwing.com/en/free-png-vdqes/download
 //
+// Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
 //
-
-
+// Music Gustav Holst: The Planets — “Mars, the Bringer of War”
+//https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg
+//----------------------------------------------------
 
 //-----------------------------------------------------
 // Declare state variables
@@ -39,18 +41,20 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 
 const spriteWidth = 180;
 const spriteHeight = 240;
+const player = new Audio();
 
 
 
 //-----------------------------------------------------
 // Cache my DOM elements
 //-----------------------------------------------------
-let blockEl = document.querySelectorAll('.block');
-let boardEl = document.getElementById('board');
-let toggleEl = document.getElementById('toggle');
-let dispMessageEl = document.querySelector('h2');
-let remainingMinesEl = document.getElementById('remainingmines');
-let timerEl = document.getElementById('timer');
+const blockEl = document.querySelectorAll('.block');
+const boardEl = document.getElementById('board');
+const toggleEl = document.getElementById('toggle');
+const dispMessageEl = document.querySelector('h2');
+const remainingMinesEl = document.getElementById('remainingmines');
+const timerEl = document.getElementById('timer');
+const bgCheckbox = document.querySelector('input[type="checkbox"]');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -58,8 +62,8 @@ let timerEl = document.getElementById('timer');
 //-----------------------------------------------------
 boardEl.addEventListener('click', render);
 toggleEl.addEventListener('click', clearMark);
+bgCheckbox.addEventListener('change', switchMusic);
 //-----------------------------------------------------
-
 
 //-----------------------------------------------------
 // Initialize program
@@ -172,7 +176,12 @@ function firstPick(id){
     computerClear(id);
     // Start clock
     clockMaster = setInterval(clock, 1000);
+    // Display positive headline
     headline(true);
+    // Autoplay music
+    player.src = 'https://upload.wikimedia.org/wikipedia/commons/5/54/Gustav_Holst_-_the_planets%2C_op._32_-_i._mars%2C_the_bringer_of_war.ogg';
+    player.setAttribute('preload', 'auto');
+    player.play();
 
     console.log(checkArray, "CheckArray");
 };
@@ -187,12 +196,12 @@ function checkPick(id){
     if ((noMine === true) && (blockArray[id].cleared === false)){
         // Clears the current square
         clearSquare(id);
+        // Positive headline
+        headline(true);
         // Run checkWin()
         checkWin();
         // Run computerClear()
         computerClear(id);
-        // Positive headline
-        headline(true);
     } else if (noMine === false){
         clearInterval(clockMaster);
         revealBoard();
@@ -666,3 +675,11 @@ function explosion(id){
     blockEl[id].style.height = spriteHeight;
     blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
 };
+
+//------------------------------------------------
+// Switch music on and off
+//------------------------------------------------
+
+function switchMusic(){
+    bgCheckbox.checked ? player.play() : player.pause();
+}
