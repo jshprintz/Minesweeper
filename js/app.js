@@ -5,6 +5,7 @@ console.log('Javascript works')
 let remainingMines;
 let timer;
 let blockArray = [];
+let checkArray = [];
 let firstPicked;
 let newId;
 
@@ -82,8 +83,6 @@ function clearCheck(obj, id){
     id = convertID(id);
 
     if (toggleEl.innerText === 'CLEAR') {
-        // Change to cleared spot
-        obj.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         // Checks if this is the first action
         if (firstPicked === false){
             // randomizes mines after selection
@@ -128,10 +127,10 @@ function clearMark(e){
 //---------------------------------------------------
 function firstPick(id){
     firstPicked = true;
-    // Mark first pick square as cleared
-    blockArray[id].cleared = true;
     // Randomize mines throughout the board
     randomMines(id);
+    // Clears the current square
+    clearSquare(id);
     // Run computerClear()
     computerClear(id);
 };
@@ -142,8 +141,8 @@ function firstPick(id){
 function checkPick(id){
     // run checkMine()
     checkMine(id);
-    // mark picked square as cleared
-    blockArray[id].cleared = true;
+    // Clears the current square
+    clearSquare(id);
     // Run checkWin()
     checkWin();
     // Run computerClear()
@@ -240,7 +239,6 @@ function bigWinner(){
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id){
-    console.log('Computer Clear')
 
     // Determine what blocks, if any, that surround the
     // current selection should be cleared by the
@@ -356,12 +354,43 @@ function computerClear(id){
             clearSquare(id+11);
     };
 
+    // console.log(checkArray);
+
+    // for (let i=0; i<checkArray.length; i++){
+    //     console.log(checkArray[i], "Check Array i | ", blockArray[i].surroundingMines, " surrounding mines");
+    //     if (blockArray[checkArray[i]].surroundingMines === 0){
+    //         clearSquare(checkArray[i]);
+    //     }
+    // }
+
 
     // DO NOT CLEAR MINES
     // DO NOT CLEAR ANYTHING THAT ISN'T CONNECTED TO
     //        INITIAL USER ID
 
 };
+
+//---------------------------------------------------------
+// Clears a square cleared by the computer
+//---------------------------------------------------------
+
+function clearSquare(id){
+    console.log(`clearSquare: ${id}`)
+    blockArray[id].cleared = true;
+    // Change to cleared spot
+    let squareEl = document.getElementById('sq' + id);
+    squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    squareEl.innerText = blockArray[id].surroundingMines;
+    
+    // It keeps adding the array even if it's already on the array
+    // Need to figure out how to keep it from adding twice
+
+        // checkArray.forEach(function(el){
+        //     if (el === id)
+        //     checkArray.push(id);
+        // })
+    
+}
 
 //-----------------------------------------------------
 // Assigns each square with the number of surrounding
@@ -483,13 +512,3 @@ function assignSurrounding(){
     };
 console.log(blockArray);
 };
-//---------------------------------------------------------
-// Clears a square cleared by the computer
-//---------------------------------------------------------
-
-function clearSquare(id){
-    blockArray[id].cleared = true;
-    // Change to cleared spot
-    let squareEl = document.querySelectorAll('sq' + id);
-    squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
-}
