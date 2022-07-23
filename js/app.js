@@ -3,7 +3,7 @@ console.log('Javascript works')
 // Declare state variables
 //-----------------------------------------------------
 let remainingMines;
-let timer;
+let timer = 0;
 let blockArray = [];
 let checkArray = [];
 let firstPicked;
@@ -11,6 +11,7 @@ let newId;
 let clearArray;
 let masterArray = [];
 let noMine = true;
+let clockMaster;
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -20,6 +21,7 @@ let boardEl = document.getElementById('board');
 let toggleEl = document.getElementById('toggle');
 let dispMessageEl = document.querySelector('h2');
 let remainingMinesEl = document.getElementById('remainingmines');
+let timerEl = document.getElementById('timer');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -142,6 +144,8 @@ function firstPick(id){
     clearSquare(id);
     // Run computerClear()
     computerClear(id);
+    // Start clock
+    clockMaster = setInterval(clock, 1000);
 
     console.log(checkArray, "CheckArray");
 };
@@ -161,6 +165,7 @@ function checkPick(id){
         // Run computerClear()
         computerClear(id);
     } else if (noMine === false){
+        clearInterval(clockMaster);
         revealBoard();
     }
 };
@@ -519,6 +524,7 @@ function checkMine(id){
 //-----------------------------------------------------
 function bigWinner(){
     console.log('You Won!');
+    clearInterval(clockMaster);
 };
 
 //----------------------------------------------------
@@ -571,4 +577,12 @@ function revealBoard(){
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
         }
     };
+};
+
+//------------------------------------------------------
+// Clock to keep score
+//------------------------------------------------------
+function clock(){
+    timer++;
+    timerEl.innerText = `Seconds: ${timer}`;
 };
