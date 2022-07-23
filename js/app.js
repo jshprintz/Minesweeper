@@ -8,6 +8,8 @@ let blockArray = [];
 let checkArray = [];
 let firstPicked;
 let newId;
+let clearArray;
+let masterArray = [];
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -129,10 +131,14 @@ function firstPick(id){
     firstPicked = true;
     // Randomize mines throughout the board
     randomMines(id);
+    // Determines the amount of mines surrounding each square
+    assignSurrounding();
     // Clears the current square
     clearSquare(id);
     // Run computerClear()
     computerClear(id);
+
+    console.log(checkArray, "CheckArray");
 };
 
 //---------------------------------------------------
@@ -147,92 +153,6 @@ function checkPick(id){
     checkWin();
     // Run computerClear()
     computerClear(id);
-};
-
-//-----------------------------------------------------
-// Converts the string ID to a numerical form that 
-// matches with the array
-//-----------------------------------------------------
-function convertID(id){
-    // Extract the number from the rest of the string
-    id = id.substring(2,id.length);
-    // Convert the remaining string into a number
-    // and subtract 1 so it matches the array
-    id = Number(id);
-    // return array index
-    return id;
-};
-
-//-----------------------------------------------------
-// Returns an object representing the square's
-// data that's pushed into the array
-//-----------------------------------------------------
-function newSquare(){
-    const newBlock = {
-        mine: false,
-        cleared: false,
-        surroundingMines: 0,
-        marked: false,
-    };
-    return newBlock;
-};
-
-//----------------------------------------------------
-//  Randomizes the placement of mines on the board
-//----------------------------------------------------
-
-function randomMines(id){
-    for (let i=0; i < 20; i++){
-        let randNum = Math.floor(Math.random() * 100);
-        if (randNum !== id){
-            // Change square to containing mine
-            blockArray[randNum].mine = true;
-        } else {
-            // If the random number is equal to the first
-            // mine selected, just run again.
-            i -= 1;
-        }
-    }
-    //Determines the amount of mines surrounding each square
-    assignSurrounding();
-};
-
-//-----------------------------------------------
-// Checks to see if the user has won
-// ----------------------------------------------
-function checkWin(){
-    let winCount = 0;
-    // Checks each object to see if it's cleared
-    for(const i in blockArray){
-        if ((blockArray[i].cleared === true) && 
-            (blockArray[i].mine === false)) {
-                winCount += 1;
-            }
-    };
-    // Checks if user won
-    if (winCount === 80) bigWinner();
-};
-
-//-----------------------------------------------------
-// Checks if user clicked on mine
-//-----------------------------------------------------
-function checkMine(id){
-    if (blockArray[id].mine === true) bigLoser();
-};
-
-//-----------------------------------------------------
-// User lost!
-//-----------------------------------------------------
-
-function bigLoser(){
-    console.log('You Lost!');
-};
-
-//-----------------------------------------------------
-// User won!
-//-----------------------------------------------------
-function bigWinner(){
-    console.log('You Won!');
 };
 
 //-----------------------------------------------------
@@ -354,43 +274,51 @@ function computerClear(id){
             clearSquare(id+11);
     };
 
-    // console.log(checkArray);
-
-    // for (let i=0; i<checkArray.length; i++){
-    //     console.log(checkArray[i], "Check Array i | ", blockArray[i].surroundingMines, " surrounding mines");
-    //     if (blockArray[checkArray[i]].surroundingMines === 0){
-    //         clearSquare(checkArray[i]);
-    //     }
-    // }
-
-
-    // DO NOT CLEAR MINES
-    // DO NOT CLEAR ANYTHING THAT ISN'T CONNECTED TO
-    //        INITIAL USER ID
-
+    if (checkArray.length > 0) {
+    // If checkArray contains original square selected, remove
+        for (const i in checkArray){
+            if (checkArray[i]===id){
+                checkArray.splice(i, 1);
+            }
+        }
+        // Check remaining squares
+        checkArrayClear();
+    }
 };
 
 //---------------------------------------------------------
 // Clears a square cleared by the computer
 //---------------------------------------------------------
-
 function clearSquare(id){
-    console.log(`clearSquare: ${id}`)
     blockArray[id].cleared = true;
     // Change to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     squareEl.innerText = blockArray[id].surroundingMines;
     
-    // It keeps adding the array even if it's already on the array
-    // Need to figure out how to keep it from adding twice
-
-        // checkArray.forEach(function(el){
-        //     if (el === id)
-        //     checkArray.push(id);
-        // })
-    
-}
+    // Keep a record of all zeroes
+    if (blockArray[id].surroundingMines === 0){
+        masterArray.push(id); // Master record of zeros
+        checkArray.push(id); // Working record of zeros
+        for (let i=0; i<(masterArray.length - 1); i++){
+            // if the square in question (the one just added)
+            // is already on the master list, delete it from
+            // both the master list and the working list
+            if (masterArray[i] === id){
+                masterArray.pop(); 
+                checkArray.pop();
+            };
+        }
+    };
+};
+//-----------------------------------------------------
+// CheckArray Clear (clears surrounding squares)
+//-----------------------------------------------------
+function checkArrayClear(){
+    // Removes next square to clear and sends it to computerClear
+    clearArray = checkArray.shift();
+    computerClear(clearArray);
+};
 
 //-----------------------------------------------------
 // Assigns each square with the number of surrounding
@@ -511,4 +439,88 @@ function assignSurrounding(){
         };
     };
 console.log(blockArray);
+};
+
+//-----------------------------------------------------
+// Converts the string ID to a numerical form that 
+// matches with the array
+//-----------------------------------------------------
+function convertID(id){
+    // Extract the number from the rest of the string
+    id = id.substring(2,id.length);
+    // Convert the remaining string into a number
+    // and subtract 1 so it matches the array
+    id = Number(id);
+    // return array index
+    return id;
+};
+
+//-----------------------------------------------------
+// Returns an object representing the square's
+// data that's pushed into the array
+//-----------------------------------------------------
+function newSquare(){
+    const newBlock = {
+        mine: false,
+        cleared: false,
+        surroundingMines: 0,
+        marked: false,
+    };
+    return newBlock;
+};
+
+//-----------------------------------------------------
+// Checks if user clicked on mine
+//-----------------------------------------------------
+function checkMine(id){
+    if (blockArray[id].mine === true) bigLoser();
+};
+
+//-----------------------------------------------------
+// User lost!
+//-----------------------------------------------------
+
+function bigLoser(){
+    console.log('You Lost!');
+};
+
+//-----------------------------------------------------
+// User won!
+//-----------------------------------------------------
+function bigWinner(){
+    console.log('You Won!');
+};
+
+//----------------------------------------------------
+//  Randomizes the placement of mines on the board
+//----------------------------------------------------
+
+function randomMines(id){
+    for (let i=0; i < 20; i++){
+        let randNum = Math.floor(Math.random() * 100);
+        if (randNum !== id){
+            // Change square to containing mine
+            blockArray[randNum].mine = true;
+        } else {
+            // If the random number is equal to the first
+            // mine selected, just run again.
+            i -= 1;
+        }
+    }
+};
+
+//-----------------------------------------------
+// Checks to see if the user has won
+// ----------------------------------------------
+function checkWin(){
+    let winCount = 0;
+    // Checks each object to see if it's cleared
+    for(const i in blockArray){
+        if ((blockArray[i].cleared === true) && 
+            (blockArray[i].mine === false)) {
+                winCount += 1;
+            }
+    };
+    // Checks if user won
+    if (winCount === 80) bigWinner();
 };
