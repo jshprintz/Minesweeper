@@ -3,7 +3,8 @@ console.log('Javascript works')
 // Declare state variables
 //-----------------------------------------------------
 let remainingMines;
-let timer = 0;
+let minutes = 0;
+let seconds = 0;
 let blockArray = [];
 let checkArray = [];
 let firstPicked;
@@ -12,6 +13,7 @@ let clearArray;
 let masterArray = [];
 let noMine = true;
 let clockMaster;
+let timerDisp = '';
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -525,7 +527,7 @@ function checkMine(id){
 //-----------------------------------------------------
 function bigWinner(){
     dispMessageEl.innerText = `You did it! Congratualtions!
-                        Now see if you can do it in under ${timer}.`
+                Now see if you can do it in under ${timerDisp}.`
 
     revealBoard();
 };
@@ -590,6 +592,22 @@ function revealBoard(){
 // Clock to keep score
 //------------------------------------------------------
 function clock(){
-    timer++;
-    timerEl.innerText = `Seconds: ${timer}`;
+    seconds++;
+    //convert to minutes
+    if (seconds === 60){
+        seconds = 0;
+        minutes++;
+    };
+    //format timer
+        timerDisp = `${minutes} : ${seconds}`;
+
+    if ((minutes < 10) && (seconds >= 10)){
+        timerDisp = `0${minutes} : ${seconds}`;
+    } else if ((minutes < 10) && (seconds < 10)){
+        timerDisp = `0${minutes} : 0${seconds}`;    
+    } else {
+        timerDisp = `${minutes} : ${seconds}`;
+    };
+
+    timerEl.innerText = timerDisp;
 };

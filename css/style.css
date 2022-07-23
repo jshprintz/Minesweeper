@@ -5,6 +5,7 @@
 body {
     background-image: url('../images/grassyField.png');
     display: grid;
+    
 }
 
 h1 {
@@ -13,6 +14,7 @@ h1 {
     color: #9B823F;
     padding: 10px;
     border:#9B823F 10px ridge;
+    font-family: 'Black Ops One', cursive;
 }
 
 h2 {
@@ -22,11 +24,13 @@ h2 {
     padding: 10px;
     border:#9B823F 10px;
     border-style: double;
+    font-family: 'Black Ops One', cursive;
 }
 
 nav {
     display: flex;
     justify-content: space-evenly;
+    font-family: 'Black Ops One', cursive;
 }
 
 main {
@@ -41,6 +45,7 @@ main {
     border:#9B823F 5px solid;
     margin-bottom: 5%;
     margin-top: 5%;
+    font-size: 20pt;
 }
 
 #remainingmines {
@@ -50,17 +55,19 @@ main {
     border:#9B823F 5px solid;
     margin-bottom: 5%;
     margin-top: 5%;
+    font-size: 20pt;
 }
 
 #timer {
     background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     color: #9B823F;
-    padding: 10px;
     border:#9B823F 5px solid;
     margin-bottom: 5%;
     margin-top: 5%;
     min-width: 150px;
     text-align: center;
+    font-size: 24pt;
+    padding-top: 5px;
 }
 
 #board {
@@ -82,6 +89,7 @@ main {
     max-width: 15px;
     font-size: 10pt;
     font-weight: bold;
+    font-family: 'Black Ops One', cursive;
 }
 
 #row1 {
@@ -161,6 +169,7 @@ footer {
     border:#9B823F 10px ridge;
     font-weight: bold;
     font-size: 36pt;
+    font-family: 'Black Ops One', cursive;
 }
 
 
