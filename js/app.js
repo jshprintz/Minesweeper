@@ -31,7 +31,7 @@ let timerDisp = '';
 //-----------------------------------------------------
 const posHeadline = [`Great job! I knew you could do it!`,
 `That's the square I would have picked!`, `You'll get promoted for this.`,
-`Phenominal! Only ${remainingMines} to go!`,`We're all counting on you!`,
+`Phenominal! Keep it up!`,`We're all counting on you!`,
 `Can you clear any faster?`, `We'll win this war yet!`, `Great work!`,
 `There was never a doubt in my mind!`];
 
@@ -44,8 +44,6 @@ const spriteWidth = 180;
 const spriteHeight = 240;
 const player = new Audio();
 
-
-
 //-----------------------------------------------------
 // Cache my DOM elements
 //-----------------------------------------------------
@@ -56,13 +54,13 @@ const dispMessageEl = document.querySelector('h2');
 const remainingMinesEl = document.getElementById('remainingmines');
 const timerEl = document.getElementById('timer');
 const musicEl = document.querySelector('#checkMusic');
+const soundEl = document.querySelector('#checkSound');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
 // Add Event Listeners
 //-----------------------------------------------------
 boardEl.addEventListener('click', render);
-toggleEl.addEventListener('click', clearMark);
 musicEl.addEventListener('change', switchMusic);
 //-----------------------------------------------------
 
@@ -97,7 +95,7 @@ function init(){
 // Render changes
 //----------------------------------------------------
 function render(e){
-
+    toggleEl.addEventListener('click', clearMark);
     // Capture the block ID
     let blockID = e.target.id;
     // Capture the block object
@@ -589,30 +587,6 @@ function checkWin(){
     if (winCount === 80) bigWinner();
 };
 
-//--------------------------------------------------------
-// Reveal the board
-//--------------------------------------------------------
-function revealBoard(){
-    boardEl.removeEventListener('click', render);
-    toggleEl.addEventListener('click', clearMark);
-
-    clearInterval(clockMaster);
-    mineCount();
-    player.pause();
-
-    for (let i=0; i<blockArray.length; i++){
-        if (blockArray[i].cleared === false) {
-            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
-        }
-        
-        if ((blockArray[i].mine === true) && (blockArray[i].marked === true)){
-            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
-        } else if (blockArray[i].mine === true) {
-            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
-        }
-    };
-};
-
 //------------------------------------------------------
 // Clock to keep score
 //------------------------------------------------------
@@ -706,4 +680,67 @@ function mineCount(){
     };
 
 remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+};
+
+//-----------------------------------------------------
+// Play Again display message
+//-----------------------------------------------------
+
+function playAgain(){
+    dispMessageEl.innerText = `Would you like to play again?`;
+    toggleEl.innerText = `YES`;
+    toggleEl.addEventListener('click', reset);
+};
+
+function reset(e){
+        toggleEl.removeEventListener('click', reset);
+        blockArray.length = 0;
+
+        // Create the array containing objects
+        blockEl.forEach(function(el){
+        el.style.border = '5px groove #FFEFCA';
+        el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
+        el.innerText = '';
+        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
+
+            // Push new object
+            blockArray.push(newSquare());
+        });
+    
+        // Set initial values for state variables
+        remainingMines = 20;
+        firstPicked = false;
+        noMine = true;
+        seconds = 0;
+        minutes = 0;
+        timerEl.innerText = '00 : 00';
+        toggleEl.innerText = 'CLEAR';
+        boardEl.addEventListener('click', render);
+        console.log(blockArray);
+};
+
+//--------------------------------------------------------
+// Reveal the board
+//--------------------------------------------------------
+function revealBoard(){
+    boardEl.removeEventListener('click', render);
+    toggleEl.removeEventListener('click', clearMark);
+
+    clearInterval(clockMaster);
+    mineCount();
+    player.pause();
+
+    for (let i=0; i<blockArray.length; i++){
+        if (blockArray[i].cleared === false) {
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
+        }
+        
+        if ((blockArray[i].mine === true) && (blockArray[i].marked === true)){
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
+        } else if (blockArray[i].mine === true) {
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
+        }
+    };
+
+    setTimeout(playAgain, 3000);
 };
