@@ -615,6 +615,7 @@ function revealBoard(){
 
     clearInterval(clockMaster);
     remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+    player.pause();
 
     for (let i=0; i<blockArray.length; i++){
         if (blockArray[i].cleared === false) {
