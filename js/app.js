@@ -58,7 +58,7 @@ const soundEl = document.querySelector('#checkSound');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
-// Add Event Listeners
+// Add Initial Event Listeners
 //-----------------------------------------------------
 boardEl.addEventListener('click', render);
 musicEl.addEventListener('change', switchMusic);
@@ -164,8 +164,6 @@ function firstPick(id){
     player.src = 'https://upload.wikimedia.org/wikipedia/commons/5/54/Gustav_Holst_-_the_planets%2C_op._32_-_i._mars%2C_the_bringer_of_war.ogg';
     player.setAttribute('preload', 'auto');
     player.play();
-
-    console.log(checkArray, "CheckArray");
 };
 
 //---------------------------------------------------
@@ -495,7 +493,6 @@ function assignSurrounding(){
                 blockArray[id].surroundingMines += 1;
         };
     };
-console.log(blockArray);
 };
 
 //-----------------------------------------------------
@@ -531,13 +528,16 @@ function newSquare(){
 //-----------------------------------------------------
 function checkMine(id){
     if (blockArray[id].mine === true) {
-        
-        console.log("You Lose!")
+        // Final mine count
         mineCount();
+        // Negative headline
         headline(false);
+        // Explosion graphic
         explosion(id);
+        // Don't continue
         return false;
     } else {
+        // Not a mine, contine
         return true;
     }
 };
@@ -573,7 +573,6 @@ function randomMines(id){
 // Checks to see if the user has won
 // ----------------------------------------------
 function checkWin(){
-    console.log("Check win");
     let winCount = 0;
     // Checks each object to see if it's cleared
     for(const i in blockArray){
@@ -583,7 +582,6 @@ function checkWin(){
             }
     };
     // Checks if user won
-    console.log(winCount, "Win Count")
     if (winCount === 80) bigWinner();
 };
 
@@ -654,7 +652,7 @@ function markSquare(obj, id){
         mineCount();
     } // Checks if already cleared
     else if (blockArray[id].cleared === true){
-        console.log('Already cleared idiot');
+        dispMessageEl.innerText = 'That spot has been cleared already.'
     }
     else {
         // Change to marked spot
@@ -698,49 +696,58 @@ function reset(e){
 
         // Create the array containing objects
         blockEl.forEach(function(el){
-        el.style.border = '5px groove #FFEFCA';
-        el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
-        el.innerText = '';
-        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
-
+            // Reset board
+            el.style.border = '5px groove #FFEFCA';
+            el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
+            el.innerText = '';
             // Push new object
             blockArray.push(newSquare());
         });
+        // Reset headline
+        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
     
         // Set initial values for state variables
-        remainingMines = 20;
+        remainingMines = startMines;
         firstPicked = false;
         noMine = true;
         seconds = 0;
         minutes = 0;
+        mineCount();
         timerEl.innerText = '00 : 00';
         toggleEl.innerText = 'CLEAR';
         boardEl.addEventListener('click', render);
-        console.log(blockArray);
 };
 
 //--------------------------------------------------------
 // Reveal the board
 //--------------------------------------------------------
 function revealBoard(){
+    //remove old event listeners
     boardEl.removeEventListener('click', render);
     toggleEl.removeEventListener('click', clearMark);
-
+    // stops the clock
     clearInterval(clockMaster);
+    // final mine count
     mineCount();
+    // stops the music
     player.pause();
 
+        // Changes all of the background images for the squares
+        // based on the data pulled from the object
     for (let i=0; i<blockArray.length; i++){
         if (blockArray[i].cleared === false) {
+            // Not cleared squares
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
         }
-        
+            // Successfully marked mines
         if ((blockArray[i].mine === true) && (blockArray[i].marked === true)){
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
         } else if (blockArray[i].mine === true) {
+            // Not marked mines
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
         }
     };
-
+    // Three seconds display before changing headline
+    // to play again option.
     setTimeout(playAgain, 3000);
 };
