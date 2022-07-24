@@ -12,6 +12,7 @@ console.log('Javascript works')
 //-----------------------------------------------------
 // Declare state variables
 //-----------------------------------------------------
+let startMines = 20;
 let remainingMines;
 let minutes = 0;
 let seconds = 0;
@@ -54,7 +55,7 @@ const toggleEl = document.getElementById('toggle');
 const dispMessageEl = document.querySelector('h2');
 const remainingMinesEl = document.getElementById('remainingmines');
 const timerEl = document.getElementById('timer');
-const bgCheckbox = document.querySelector('input[type="checkbox"]');
+const musicEl = document.querySelector('#checkMusic');
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -62,7 +63,7 @@ const bgCheckbox = document.querySelector('input[type="checkbox"]');
 //-----------------------------------------------------
 boardEl.addEventListener('click', render);
 toggleEl.addEventListener('click', clearMark);
-bgCheckbox.addEventListener('change', switchMusic);
+musicEl.addEventListener('change', switchMusic);
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -127,24 +128,7 @@ function clearCheck(obj, id){
             checkPick(id);
         };
     } else {
-        // Checks if already marked
-        if (blockArray[id].marked === true) {
-            blockArray[id].marked = false;
-            remainingMines++;
-            remainingMinesEl.innerText = `Mines: ${remainingMines}`;
-            obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
-        } // Checks if already cleared
-        else if (blockArray[id].cleared === true){
-            console.log('Already cleared idiot');
-        }
-        else {
-            // Change to marked spot
-            blockArray[id].marked = true;
-            obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
-            remainingMines--;
-            remainingMinesEl.innerText = `Mines: ${remainingMines}`;
-            checkWin();
-        };
+        markSquare(obj, id);
     };
 };
 
@@ -551,7 +535,7 @@ function checkMine(id){
     if (blockArray[id].mine === true) {
         
         console.log("You Lose!")
-        remainingMines++;
+        mineCount();
         headline(false);
         explosion(id);
         return false;
@@ -566,7 +550,6 @@ function checkMine(id){
 function bigWinner(){
     dispMessageEl.innerText = `You did it! Congratualtions!
                 Now see if you can do it in under ${timerDisp}.`
-    remainingMines = 0;
     revealBoard();
 };
 
@@ -614,7 +597,7 @@ function revealBoard(){
     toggleEl.addEventListener('click', clearMark);
 
     clearInterval(clockMaster);
-    remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+    mineCount();
     player.pause();
 
     for (let i=0; i<blockArray.length; i++){
@@ -668,7 +651,7 @@ function headline(pos){
 };
 
 //----------------------------------------------
-// Sprite image explosion
+// Sprite image explosion (NOT YET FUNCTIONAL)
 //----------------------------------------------
 
 function explosion(id){
@@ -682,5 +665,45 @@ function explosion(id){
 //------------------------------------------------
 
 function switchMusic(){
-    bgCheckbox.checked ? player.play() : player.pause();
-}
+    musicEl.checked ? player.play() : player.pause();
+};
+
+//---------------------------------------------------
+// Runs through logic when a user Marks a square
+//---------------------------------------------------
+
+function markSquare(obj, id){
+    // Checks if already marked
+    if (blockArray[id].marked === true) {
+        blockArray[id].marked = false;
+        obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
+        mineCount();
+    } // Checks if already cleared
+    else if (blockArray[id].cleared === true){
+        console.log('Already cleared idiot');
+    }
+    else {
+        // Change to marked spot
+        blockArray[id].marked = true;
+        obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        mineCount();
+        checkWin();
+    };
+};
+
+//------------------------------------------------------
+// Counts the remaining mines
+//------------------------------------------------------
+function mineCount(){
+    remainingMines = 20;
+    blockArray.forEach(function(el){
+        if (el.marked === true) remainingMines--;
+    });
+
+    if (remainingMines < 0){
+        remainingMines = 0;
+        dispMessageEl.innerText = `Check your marks! We only started with ${startMines} mines!!`;
+    };
+
+remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+};
