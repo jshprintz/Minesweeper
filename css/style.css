@@ -8,15 +8,6 @@ body {
     
 }
 
-h1 {
-    text-align: center;
-    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
-    color: #9B823F;
-    padding: 10px;
-    border:#9B823F 10px ridge;
-    font-family: 'Black Ops One', cursive;
-}
-
 h2 {
     display: grid;
     align-items: center;
@@ -25,9 +16,9 @@ h2 {
     color: #9B823F;
     padding: 10px;
     border:#9B823F 10px;
-    border-style: double;
+    border-style: groove;
     font-family: 'Black Ops One', cursive;
-    min-height: 100px;
+    min-height: 160px;
 }
 
 nav {
