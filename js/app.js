@@ -380,26 +380,24 @@ function checkCorners(id, num){
     // Checks corners to see if they are accessible to clear.
     // If there is no path because of mines or marks, it
     // will not clear.
-
-    if (num === 11){   
-        // Both paths contain Mines 
-        if ((squareArray[id+long].mine === true)
-            && (squareArray[id+lat].mine === true)){
-                return false;
-        } // One Mine, one Mark
-        else if ((squareArray[id+long].mine === true)
-            && (squareArray[id+lat].marked === true)){
-                return false;
-        } // One Mine, one Mark
-        else if ((squareArray[id+long].marked === true)
-            && (squareArray[id+lat].mine === true)){
-                return false;
-        } // Both paths contain Mines 
-        else if ((squareArray[id+long].marked === true)
-            && (squareArray[id+lat].marked === true)){
-                return false;
-        } else return true;
-    }; 
+    
+    // Both paths contain Mines 
+    if ((squareArray[id+long].mine === true)
+        && (squareArray[id+lat].mine === true)){
+            return false;
+    } // One Mine, one Mark
+    else if ((squareArray[id+long].mine === true)
+        && (squareArray[id+lat].marked === true)){
+            return false;
+    } // One Mine, one Mark
+    else if ((squareArray[id+long].marked === true)
+        && (squareArray[id+lat].mine === true)){
+            return false;
+    } // Both paths contain Mines 
+    else if ((squareArray[id+long].marked === true)
+        && (squareArray[id+lat].marked === true)){
+            return false;
+    } else return true;
 };
 
 
