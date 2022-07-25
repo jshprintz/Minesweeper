@@ -6,7 +6,10 @@ console.log('Javascript works')
 // Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
 //
 // Music Gustav Holst: The Planets — “Mars, the Bringer of War”
-//https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg
+// https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg
+//
+// Cheering Sound
+// https://freesound.org/people/jayfrosting/sounds/333404/
 //----------------------------------------------------
 
 //-----------------------------------------------------
@@ -25,6 +28,7 @@ let masterArray = [];
 let noMine = true;
 let clockMaster;
 let timerDisp = '';
+let playSound = true;
 
 //-----------------------------------------------------
 // Declare constant variables
@@ -53,15 +57,20 @@ const toggleEl = document.getElementById('toggle');
 const dispMessageEl = document.querySelector('h2');
 const remainingMinesEl = document.getElementById('remainingmines');
 const timerEl = document.getElementById('timer');
-const musicEl = document.querySelector('#checkMusic');
-const soundEl = document.querySelector('#checkSound');
+const mixerEl = document.getElementById('music');
+const soundEl = document.getElementById('checkSound');
+const musicEl = document.getElementById('checkMusic');
 //-----------------------------------------------------
+
+// Not sure if this is doing anything
+mixerEl.volume = .1;
 
 //-----------------------------------------------------
 // Add Initial Event Listeners
 //-----------------------------------------------------
 boardEl.addEventListener('click', render);
 musicEl.addEventListener('change', switchMusic);
+soundEl.addEventListener('change', switchSound);
 //-----------------------------------------------------
 
 //-----------------------------------------------------
@@ -161,7 +170,7 @@ function firstPick(id){
     // Display positive headline
     headline(true);
     // Autoplay music
-    player.src = 'https://upload.wikimedia.org/wikipedia/commons/5/54/Gustav_Holst_-_the_planets%2C_op._32_-_i._mars%2C_the_bringer_of_war.ogg';
+    player.src = 'Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
     player.setAttribute('preload', 'auto');
     player.play();
 
@@ -180,10 +189,10 @@ function checkPick(id){
         clearSquare(id);
         // Positive headline
         headline(true);
-        // Run checkWin()
-        checkWin();
         // Run computerClear()
         computerClear(id);
+        // Run checkWin()
+        checkWin();
     } else if (noMine === false){
         clearInterval(clockMaster);
         revealBoard();
@@ -551,6 +560,15 @@ function checkMine(id){
 function bigWinner(){
     dispMessageEl.innerText = `You did it! Congratualtions!
                 Now see if you can do it in under ${timerDisp}.`
+    if (playSound === true){    
+        player.src = '333404__jayfrosting__cheer-2.wav';
+        player.setAttribute('preload', 'auto');
+        player.play();
+    } else{
+        player.src = '201883__parcodeisuoni__silence.mp3';
+        player.setAttribute('preload', 'auto');
+        player.play();
+    };
     revealBoard();
 };
 
@@ -586,7 +604,7 @@ function checkWin(){
             ((squareArray[i].mine === true) &&
             (squareArray[i].marked === true))) {
                 winCount += 1;
-            }
+            };
         
     };
     // Checks if user won
@@ -636,6 +654,16 @@ function headline(pos){
 //----------------------------------------------
 
 function explosion(id){
+    
+    if (playSound === true){
+        player.src = '156031__iwiploppenisse__explosion.mp3';
+        player.setAttribute('preload', 'auto');
+        player.play();
+    } else{
+        player.src = '201883__parcodeisuoni__silence.mp3';
+        player.setAttribute('preload', 'auto');
+        player.play();
+    };
     blockEl[id].style.spriteWidth = spriteWidth;
     blockEl[id].style.height = spriteHeight;
     blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
@@ -647,6 +675,14 @@ function explosion(id){
 
 function switchMusic(){
     musicEl.checked ? player.play() : player.pause();
+};
+
+//------------------------------------------------
+// Switch sound on and off
+//------------------------------------------------
+
+function switchSound(){
+    soundEl.checked ? playSound = true : playSound = false;
 };
 
 //---------------------------------------------------
@@ -705,6 +741,8 @@ function playAgain(){
 //----------------------------------------------------
 
 function reset(e){
+        // stops the sound effects
+        player.pause();
         toggleEl.removeEventListener('click', reset);
         squareArray.length = 0;
 
@@ -744,8 +782,6 @@ function revealBoard(){
     clearInterval(clockMaster);
     // final mine count
     mineCount();
-    // stops the music
-    player.pause();
 
         // Changes all of the background images for the squares
         // based on the data pulled from the object
@@ -768,9 +804,9 @@ function revealBoard(){
             blockEl[i].style.fontSize = '20pt';
         }
     };
-    // Three seconds display before changing headline
+    // Four seconds display before changing headline
     // to play again option.
-    setTimeout(playAgain, 3000);
+    setTimeout(playAgain, 4000);
 };
 
 

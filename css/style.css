@@ -180,7 +180,7 @@ footer {
     font-weight: bold;
     font-size: 16pt;
     font-family: 'Black Ops One', cursive;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 
