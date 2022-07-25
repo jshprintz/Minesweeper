@@ -16,7 +16,7 @@ let startMines = 20;
 let remainingMines;
 let minutes = 0;
 let seconds = 0;
-let blockArray = [];
+let squareArray = [];
 let checkArray = [];
 let firstPicked;
 let newId;
@@ -81,11 +81,11 @@ function init(){
     // Create the array containing objects
     blockEl.forEach(function(el){
         // Push new object
-        blockArray.push(newSquare());
+        squareArray.push(newSquare());
     });
 
     // Set initial values for state variables
-    remainingMines = 20;
+    remainingMines = startMines;
     timer = 0;
     firstPicked = false;
     noMine = true;
@@ -164,6 +164,8 @@ function firstPick(id){
     player.src = 'https://upload.wikimedia.org/wikipedia/commons/5/54/Gustav_Holst_-_the_planets%2C_op._32_-_i._mars%2C_the_bringer_of_war.ogg';
     player.setAttribute('preload', 'auto');
     player.play();
+
+    console.log(squareArray);
 };
 
 //---------------------------------------------------
@@ -173,7 +175,7 @@ function checkPick(id){
     // run checkMine()
     noMine = checkMine(id);
     // If user did not click on a mine
-    if ((noMine === true) && (blockArray[id].cleared === false)){
+    if ((noMine === true) && (squareArray[id].cleared === false)){
         // Clears the current square
         clearSquare(id);
         // Positive headline
@@ -200,111 +202,125 @@ function computerClear(id){
     // If adjacent square does not contain a mine, clear it.
 
     if ((id > 0) && (id < 9)){
-        if (blockArray[id-1].mine === false) 
+        if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
-        if (blockArray[id+1].mine === false) 
+        if (squareArray[id+1].mine === false) 
             clearSquare(id+1);
-        if (blockArray[id+9].mine === false) 
+        if (squareArray[id+9].mine === false) 
             clearSquare(id+9);
-        if (blockArray[id+10].mine === false) 
+        if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
-        if (blockArray[id+11].mine === false) 
+        if (squareArray[id+11].mine === false) 
             clearSquare(id+11);
     } 
     // Bottom Row
     else if ((id > 90) && (id < 99)){
-        if (blockArray[id-11].mine === false) 
+        if (squareArray[id-11].mine === false) 
             clearSquare(id-11);
-        if (blockArray[id-10].mine === false) 
+        if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
-        if (blockArray[id-9].mine === false) 
+        if (squareArray[id-9].mine === false) 
             clearSquare(id-9);
-        if (blockArray[id-1].mine === false) 
+        if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
-        if (blockArray[id+1].mine === false) 
+        if (squareArray[id+1].mine === false) 
             clearSquare(id+1);
     } 
     // Left Row
     else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
-        if (blockArray[id-10].mine === false) 
+        if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
-        if (blockArray[id-9].mine === false) 
+        if (squareArray[id-9].mine === false) 
             clearSquare(id-9);
-        if (blockArray[id+1].mine === false) 
+        if (squareArray[id+1].mine === false) 
             clearSquare(id+1);
-        if (blockArray[id+10].mine === false) 
+        if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
-        if (blockArray[id+11].mine === false) 
+        if (squareArray[id+11].mine === false) 
             clearSquare(id+11);
     } 
     // Right Row
     else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-        if (blockArray[id-11].mine === false) 
+        if (squareArray[id-11].mine === false) 
             clearSquare(id-11);
-        if (blockArray[id-10].mine === false) 
+        if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
-        if (blockArray[id-1].mine === false) 
+        if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
-        if (blockArray[id+9].mine === false) 
+        if (squareArray[id+9].mine === false) 
             clearSquare(id+9);
-        if (blockArray[id+10].mine === false) 
+        if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
     } 
     // -----------CORNERS-----------
     // Top Left
     else if (id === 0){
-        if (blockArray[1].mine === false) 
+        if (squareArray[1].mine === false) 
             clearSquare(1);
-        if (blockArray[10].mine === false) 
+        if (squareArray[10].mine === false) 
             clearSquare(10);
-        if (blockArray[11].mine === false) 
+        if (squareArray[11].mine === false) 
             clearSquare(11);
     } 
     // Top Right
     else if (id === 9){
-        if (blockArray[8].mine === false) 
+        if (squareArray[8].mine === false) 
             clearSquare(8);
-        if (blockArray[19].mine === false) 
+        if (squareArray[19].mine === false) 
             clearSquare(19);
-        if (blockArray[18].mine === false) 
+        if (squareArray[18].mine === false)
+            // && ((squareArray[8].mine === false)
+            // && (squareArray[19].mine === false))) 
             clearSquare(18);
     } 
     // Bottom Left
     else if (id === 90){
-        if (blockArray[80].mine === false) 
-            clearSquare(80);
-        if (blockArray[81].mine === false) 
-            clearSquare(81);
-        if (blockArray[91].mine === false) 
-            clearSquare(91);
+        if (squareArray[80].mine === false) 
+                clearSquare(80);
+        if (squareArray[81].mine === false) 
+            // && ((squareArray[80].mine === false)
+            // && (squareArray[91].mine === false)))
+                clearSquare(81);
+        if (squareArray[91].mine === false) 
+                clearSquare(91);
     } 
     // Bottom Right
     else if (id === 99){
-        if (blockArray[98].mine === false) 
-            clearSquare(98);
-        if (blockArray[88].mine === false) 
-            clearSquare(88);
-        if (blockArray[89].mine === false) 
-            clearSquare(89);
+        if (squareArray[98].mine === false) 
+                clearSquare(98);
+        if (squareArray[88].mine === false) 
+            // && ((squareArray[98].mine ==false)
+            // && (squareArray[89].mine === false)))
+                clearSquare(88);
+        if (squareArray[89].mine === false) 
+                clearSquare(89);
     } 
     // Middle of grid
     else{
-        if (blockArray[id-11].mine === false) 
-            clearSquare(id-11);
-        if (blockArray[id-10].mine === false) 
-            clearSquare(id-10);
-        if (blockArray[id-9].mine === false) 
-            clearSquare(id-9);
-        if (blockArray[id-1].mine === false) 
-            clearSquare(id-1);
-        if (blockArray[id+1].mine === false) 
-            clearSquare(id+1);
-        if (blockArray[id+9].mine === false) 
-            clearSquare(id+9);
-        if (blockArray[id+10].mine === false) 
-            clearSquare(id+10);
-        if (blockArray[id+11].mine === false) 
-            clearSquare(id+11);
+        if (squareArray[id-11].mine === false) 
+            // && ((squareArray[id-10] === false)
+            // || (squareArray[id-1] === false)))
+                clearSquare(id-11);
+        if (squareArray[id-10].mine === false) 
+                clearSquare(id-10);
+        if (squareArray[id-9].mine === false) 
+            // && ((squareArray[id-10].mine === false)
+            // || (squareArray[id+1].mine === false)))
+                clearSquare(id-9);
+        if (squareArray[id-1].mine === false) 
+                clearSquare(id-1);
+        if (squareArray[id+1].mine === false) 
+                clearSquare(id+1);
+        if (squareArray[id+9].mine === false)
+            // && ((squareArray[id-1].mine === false)
+            // || (squareArray[id+10].mine === false)))
+                clearSquare(id+9);
+        if (squareArray[id+10].mine === false) 
+                clearSquare(id+10);
+        if (squareArray[id+11].mine === false)
+            // && ((squareArray[id+1].mine === false)
+            // || (squareArray[id+10].mine === false)))
+                clearSquare(id+11);
     };
 
     if (checkArray.length > 0) {
@@ -314,6 +330,7 @@ function computerClear(id){
                 checkArray.splice(i, 1);
             }
         }
+
         // Check remaining squares
         checkArrayClear();
     };
@@ -323,14 +340,14 @@ function computerClear(id){
 // Clears a square cleared by the computer
 //---------------------------------------------------------
 function clearSquare(id){
-    blockArray[id].cleared = true;
+    squareArray[id].cleared = true;
     // Change to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     
     //Updates inner square with number and color
-    if (blockArray[id].surroundingMines !== 0){
-        squareEl.innerText = blockArray[id].surroundingMines;
+    if (squareArray[id].surroundingMines !== 0){
+        squareEl.innerText = squareArray[id].surroundingMines;
         if (squareEl.innerText === '1'){
             squareEl.style.color = 'blue';
         } else if (squareEl.innerText === '2'){
@@ -352,7 +369,8 @@ function clearSquare(id){
 
 
     // Keep a record of all zeroes
-    if (blockArray[id].surroundingMines === 0){
+    // RESEARCH POSSIBLY INSTANCE OF AND SEE IF THAT WORKS
+    if (squareArray[id].surroundingMines === 0){
         masterArray.push(id); // Master record of zeros
         checkArray.push(id); // Working record of zeros
         for (let i=0; i<(masterArray.length - 1); i++){
@@ -373,126 +391,6 @@ function checkArrayClear(){
     // Removes next square to clear and sends it to computerClear
     clearArray = checkArray.shift();
     computerClear(clearArray);
-};
-
-//-----------------------------------------------------
-// Assigns each square with the number of surrounding
-// mines
-//-----------------------------------------------------
-function assignSurrounding(){
-    // Loop through array assigning the amount of
-    // surrounding mines
-    for (let id = 0; id < blockArray.length; id++){
-        // -------NOT INCLUDING CORNERS------
-        // Top Row
-        if ((id > 0) && (id < 9)){
-            if (blockArray[id-1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-        } 
-        // Bottom Row
-        else if ((id > 90) && (id < 99)){
-            if (blockArray[id-11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-        } 
-        // Left Row
-        else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
-            if (blockArray[id-10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-        } 
-        // Right Row
-        else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-            if (blockArray[id-11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-        } 
-        // -----------CORNERS-----------
-        // Top Left
-        else if (id === 0){
-            if (blockArray[1].mine === true) 
-                blockArray[0].surroundingMines += 1;
-            if (blockArray[10].mine === true) 
-                blockArray[0].surroundingMines += 1;
-            if (blockArray[11].mine === true) 
-                blockArray[0].surroundingMines += 1;
-        } 
-        // Top Right
-        else if (id === 9){
-            if (blockArray[8].mine === true) 
-                blockArray[9].surroundingMines += 1;
-            if (blockArray[19].mine === true) 
-                blockArray[9].surroundingMines += 1;
-            if (blockArray[18].mine === true) 
-                blockArray[9].surroundingMines += 1;
-        } 
-        // Bottom Left
-        else if (id === 90){
-            if (blockArray[80].mine === true) 
-                blockArray[90].surroundingMines += 1;
-            if (blockArray[81].mine === true) 
-                blockArray[90].surroundingMines += 1;
-            if (blockArray[91].mine === true) 
-                blockArray[90].surroundingMines += 1;
-        } 
-        // Bottom Right
-        else if (id === 99){
-            if (blockArray[98].mine === true) 
-                blockArray[99].surroundingMines += 1;
-            if (blockArray[88].mine === true) 
-                blockArray[99].surroundingMines += 1;
-            if (blockArray[89].mine === true) 
-                blockArray[99].surroundingMines += 1;
-        } 
-        // Middle of grid
-        else{
-            if (blockArray[id-11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id-1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+1].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+9].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+10].mine === true) 
-                blockArray[id].surroundingMines += 1;
-            if (blockArray[id+11].mine === true) 
-                blockArray[id].surroundingMines += 1;
-        };
-    };
 };
 
 //-----------------------------------------------------
@@ -527,7 +425,7 @@ function newSquare(){
 // Checks if user clicked on mine
 //-----------------------------------------------------
 function checkMine(id){
-    if (blockArray[id].mine === true) {
+    if (squareArray[id].mine === true) {
         // Final mine count
         mineCount();
         // Negative headline
@@ -556,11 +454,11 @@ function bigWinner(){
 //----------------------------------------------------
 
 function randomMines(id){
-    for (let i=0; i < 20; i++){
+    for (let i=0; i < startMines; i++){
         let randNum = Math.floor(Math.random() * 100);
-        if ((randNum !== id) && (blockArray[randNum].mine === false)){
+        if ((randNum !== id) && (squareArray[randNum].mine === false)){
             // Change square to containing mine
-            blockArray[randNum].mine = true;
+            squareArray[randNum].mine = true;
         } else {
             // If the random number is equal to the first
             // mine selected, just run again.
@@ -575,14 +473,20 @@ function randomMines(id){
 function checkWin(){
     let winCount = 0;
     // Checks each object to see if it's cleared
-    for(const i in blockArray){
-        if ((blockArray[i].cleared === true) && 
-            (blockArray[i].mine === false)) {
+    for(const i in squareArray){
+            // if non mines are cleared
+        if (((squareArray[i].cleared === true) && 
+            (squareArray[i].mine === false)) || 
+            // if mines are marked
+            ((squareArray[i].mine === true) &&
+            (squareArray[i].marked === true))) {
                 winCount += 1;
             }
+        
     };
     // Checks if user won
-    if (winCount === 80) bigWinner();
+    if (winCount === 100) bigWinner();
+    console.log(winCount, "win count");
 };
 
 //------------------------------------------------------
@@ -646,17 +550,18 @@ function switchMusic(){
 
 function markSquare(obj, id){
     // Checks if already marked
-    if (blockArray[id].marked === true) {
-        blockArray[id].marked = false;
+    if (squareArray[id].marked === true) {
+        squareArray[id].marked = false;
         obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         mineCount();
+        checkWin();
     } // Checks if already cleared
-    else if (blockArray[id].cleared === true){
+    else if (squareArray[id].cleared === true){
         dispMessageEl.innerText = 'That spot has been cleared already.'
     }
     else {
         // Change to marked spot
-        blockArray[id].marked = true;
+        squareArray[id].marked = true;
         obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         mineCount();
         checkWin();
@@ -668,7 +573,7 @@ function markSquare(obj, id){
 //------------------------------------------------------
 function mineCount(){
     remainingMines = 20;
-    blockArray.forEach(function(el){
+    squareArray.forEach(function(el){
         if (el.marked === true) remainingMines--;
     });
 
@@ -690,9 +595,13 @@ function playAgain(){
     toggleEl.addEventListener('click', reset);
 };
 
+//----------------------------------------------------
+// Resets the game if the user wants to play again
+//----------------------------------------------------
+
 function reset(e){
         toggleEl.removeEventListener('click', reset);
-        blockArray.length = 0;
+        squareArray.length = 0;
 
         // Create the array containing objects
         blockEl.forEach(function(el){
@@ -700,8 +609,9 @@ function reset(e){
             el.style.border = '5px groove #FFEFCA';
             el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
             el.innerText = '';
+            el.style.fontSize = '10pt';
             // Push new object
-            blockArray.push(newSquare());
+            squareArray.push(newSquare());
         });
         // Reset headline
         dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
@@ -734,20 +644,147 @@ function revealBoard(){
 
         // Changes all of the background images for the squares
         // based on the data pulled from the object
-    for (let i=0; i<blockArray.length; i++){
-        if (blockArray[i].cleared === false) {
-            // Not cleared squares
+    for (let i=0; i<squareArray.length; i++){
+        if ((squareArray[i].cleared === false) && (squareArray[i].marked === false)) {
+            // Not cleared, not marked squares
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
         }
             // Successfully marked mines
-        if ((blockArray[i].mine === true) && (blockArray[i].marked === true)){
+        if ((squareArray[i].mine === true) && (squareArray[i].marked === true)){
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
-        } else if (blockArray[i].mine === true) {
+        } else if (squareArray[i].mine === true) {
             // Not marked mines
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
+        } else if ((squareArray[i].mine === false) && (squareArray[i].marked === true)){
+            // Wrongly marked
+            blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
+            blockEl[i].innerText = 'X';
+            blockEl[i].style.color = 'red';
+            blockEl[i].style.fontSize = '20pt';
         }
     };
     // Three seconds display before changing headline
     // to play again option.
     setTimeout(playAgain, 3000);
+};
+
+
+//-----------------------------------------------------
+// Assigns each square with the number of surrounding
+// mines
+//-----------------------------------------------------
+function assignSurrounding(){
+    // Loop through array assigning the amount of
+    // surrounding mines
+    for (let id = 0; id < squareArray.length; id++){
+        // -------NOT INCLUDING CORNERS------
+        // Top Row
+        if ((id > 0) && (id < 9)){
+            if (squareArray[id-1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+        } 
+        // Bottom Row
+        else if ((id > 90) && (id < 99)){
+            if (squareArray[id-11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+        } 
+        // Left Row
+        else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
+            if (squareArray[id-10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+        } 
+        // Right Row
+        else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
+            if (squareArray[id-11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+        } 
+        // -----------CORNERS-----------
+        // Top Left
+        else if (id === 0){
+            if (squareArray[1].mine === true) 
+                squareArray[0].surroundingMines += 1;
+            if (squareArray[10].mine === true) 
+                squareArray[0].surroundingMines += 1;
+            if (squareArray[11].mine === true) 
+                squareArray[0].surroundingMines += 1;
+        } 
+        // Top Right
+        else if (id === 9){
+            if (squareArray[8].mine === true) 
+                squareArray[9].surroundingMines += 1;
+            if (squareArray[19].mine === true) 
+                squareArray[9].surroundingMines += 1;
+            if (squareArray[18].mine === true) 
+                squareArray[9].surroundingMines += 1;
+        } 
+        // Bottom Left
+        else if (id === 90){
+            if (squareArray[80].mine === true) 
+                squareArray[90].surroundingMines += 1;
+            if (squareArray[81].mine === true) 
+                squareArray[90].surroundingMines += 1;
+            if (squareArray[91].mine === true) 
+                squareArray[90].surroundingMines += 1;
+        } 
+        // Bottom Right
+        else if (id === 99){
+            if (squareArray[98].mine === true) 
+                squareArray[99].surroundingMines += 1;
+            if (squareArray[88].mine === true) 
+                squareArray[99].surroundingMines += 1;
+            if (squareArray[89].mine === true) 
+                squareArray[99].surroundingMines += 1;
+        } 
+        // Middle of grid
+        else{
+            if (squareArray[id-11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id-1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+1].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+9].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+10].mine === true) 
+                squareArray[id].surroundingMines += 1;
+            if (squareArray[id+11].mine === true) 
+                squareArray[id].surroundingMines += 1;
+        };
+    };
 };
