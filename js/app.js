@@ -194,33 +194,42 @@ function checkPick(id){
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id){
-
+let testCorner = true;
     // Determine what blocks, if any, that surround the
     // current selection should be cleared by the
     // computer.
 
     // If adjacent square does not contain a mine, clear it.
 
+    // Top Row
     if ((id > 0) && (id < 9)){
         if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
         if (squareArray[id+1].mine === false) 
             clearSquare(id+1);
-        if (squareArray[id+9].mine === false) 
-            clearSquare(id+9);
+        if (squareArray[id+9].mine === false){ 
+            testCorner = checkCorners(id, 9);
+            if (testCorner === true) clearSquare(id+9);
+        };
         if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
-        if (squareArray[id+11].mine === false) 
-            clearSquare(id+11);
+        if (squareArray[id+11].mine === false){ 
+            testCorner = checkCorners(id, 11);
+            if (testCorner === true) clearSquare(id+11);
+        };
     } 
     // Bottom Row
     else if ((id > 90) && (id < 99)){
-        if (squareArray[id-11].mine === false) 
-            clearSquare(id-11);
+        if (squareArray[id-11].mine === false){ 
+            testCorner = checkCorners(id, -11);
+            if (testCorner === true) clearSquare(id-11);
+        };
         if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
-        if (squareArray[id-9].mine === false) 
-            clearSquare(id-9);
+        if (squareArray[id-9].mine === false){ 
+            testCorner = checkCorners(id, -9);
+            if (testCorner === true) clearSquare(id-9);
+        };
         if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
         if (squareArray[id+1].mine === false) 
@@ -230,25 +239,33 @@ function computerClear(id){
     else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
         if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
-        if (squareArray[id-9].mine === false) 
-            clearSquare(id-9);
+        if (squareArray[id-9].mine === false){ 
+            testCorner = checkCorners(id, -9);
+            if (testCorner === true) clearSquare(id-9);
+        };
         if (squareArray[id+1].mine === false) 
             clearSquare(id+1);
         if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
-        if (squareArray[id+11].mine === false) 
-            clearSquare(id+11);
+        if (squareArray[id+11].mine === false){
+            testCorner = checkCorners(id, 11);
+            if (testCorner === true) clearSquare(id+11);
+        };
     } 
     // Right Row
     else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-        if (squareArray[id-11].mine === false) 
-            clearSquare(id-11);
+        if (squareArray[id-11].mine === false){ 
+            testCorner = checkCorners(id, -11);
+            if (testCorner === true) clearSquare(id-11);
+        };
         if (squareArray[id-10].mine === false) 
             clearSquare(id-10);
         if (squareArray[id-1].mine === false) 
             clearSquare(id-1);
-        if (squareArray[id+9].mine === false) 
-            clearSquare(id+9);
+        if (squareArray[id+9].mine === false){
+            testCorner = checkCorners(id, 9);
+            if (testCorner === true) clearSquare(id+9);
+        };
         if (squareArray[id+10].mine === false) 
             clearSquare(id+10);
     } 
@@ -259,8 +276,10 @@ function computerClear(id){
             clearSquare(1);
         if (squareArray[10].mine === false) 
             clearSquare(10);
-        if (squareArray[11].mine === false) 
-            clearSquare(11);
+        if (squareArray[11].mine === false){
+            testCorner = checkCorners(id, 11);
+            if (testCorner === true) clearSquare(id+11);
+        };
     } 
     // Top Right
     else if (id === 9){
@@ -268,19 +287,19 @@ function computerClear(id){
             clearSquare(8);
         if (squareArray[19].mine === false) 
             clearSquare(19);
-        if (squareArray[18].mine === false)
-            // && ((squareArray[8].mine === false)
-            // && (squareArray[19].mine === false))) 
-            clearSquare(18);
+        if (squareArray[18].mine === false){
+            testCorner = checkCorners(id, 9);
+            if (testCorner === true) clearSquare(id+9);
+        };
     } 
     // Bottom Left
     else if (id === 90){
         if (squareArray[80].mine === false) 
                 clearSquare(80);
-        if (squareArray[81].mine === false) 
-            // && ((squareArray[80].mine === false)
-            // && (squareArray[91].mine === false)))
-                clearSquare(81);
+        if (squareArray[81].mine === false){ 
+            testCorner = checkCorners(id, -9);
+            if (testCorner === true) clearSquare(id-9);
+        };
         if (squareArray[91].mine === false) 
                 clearSquare(91);
     } 
@@ -288,39 +307,39 @@ function computerClear(id){
     else if (id === 99){
         if (squareArray[98].mine === false) 
                 clearSquare(98);
-        if (squareArray[88].mine === false) 
-            // && ((squareArray[98].mine ==false)
-            // && (squareArray[89].mine === false)))
-                clearSquare(88);
+        if (squareArray[88].mine === false){ 
+            testCorner = checkCorners(id, -11);
+            if (testCorner === true) clearSquare(id-11);
+        };
         if (squareArray[89].mine === false) 
                 clearSquare(89);
     } 
     // Middle of grid
     else{
-        if (squareArray[id-11].mine === false) 
-            // && ((squareArray[id-10] === false)
-            // || (squareArray[id-1] === false)))
-                clearSquare(id-11);
+        if (squareArray[id-11].mine === false){ 
+            testCorner = checkCorners(id, -11);
+            if (testCorner === true) clearSquare(id-11);
+        };
         if (squareArray[id-10].mine === false) 
                 clearSquare(id-10);
-        if (squareArray[id-9].mine === false) 
-            // && ((squareArray[id-10].mine === false)
-            // || (squareArray[id+1].mine === false)))
-                clearSquare(id-9);
+        if (squareArray[id-9].mine === false){ 
+            testCorner = checkCorners(id, -9);
+            if (testCorner === true) clearSquare(id-9);
+        };
         if (squareArray[id-1].mine === false) 
                 clearSquare(id-1);
         if (squareArray[id+1].mine === false) 
                 clearSquare(id+1);
-        if (squareArray[id+9].mine === false)
-            // && ((squareArray[id-1].mine === false)
-            // || (squareArray[id+10].mine === false)))
-                clearSquare(id+9);
+        if (squareArray[id+9].mine === false){
+            testCorner = checkCorners(id, 9);
+            if (testCorner === true) clearSquare(id+9);
+        };
         if (squareArray[id+10].mine === false) 
                 clearSquare(id+10);
-        if (squareArray[id+11].mine === false)
-            // && ((squareArray[id+1].mine === false)
-            // || (squareArray[id+10].mine === false)))
-                clearSquare(id+11);
+        if (squareArray[id+11].mine === false){
+            testCorner = checkCorners(id, 11);
+            if (testCorner === true) clearSquare(id+11);
+        };
     };
 
     if (checkArray.length > 0) {
@@ -328,13 +347,61 @@ function computerClear(id){
         for (const i in checkArray){
             if (checkArray[i]===id){
                 checkArray.splice(i, 1);
-            }
-        }
+            };
+        };
 
         // Check remaining squares
         checkArrayClear();
     };
 };
+
+//-------------------------------------------------
+// Check corners
+//-------------------------------------------------
+function checkCorners(id, num){
+    let long = 0;
+    let lat = 10;
+    
+    // Determines where on the board the square is
+    if (num === 11){
+        long = 1;
+        lat = 10;
+    } else if (num === 9){
+        long = -1;
+        lat = 10;
+    } else if (num === -9){
+        long = 1;
+        lat = -10;
+    } else if (num === -11){
+        long = -1;
+        lat = -10;
+    };
+
+    // Checks corners to see if they are accessible to clear.
+    // If there is no path because of mines or marks, it
+    // will not clear.
+
+    if (num === 11){   
+        // Both paths contain Mines 
+        if ((squareArray[id+long].mine === true)
+            && (squareArray[id+lat].mine === true)){
+                return false;
+        } // One Mine, one Mark
+        else if ((squareArray[id+long].mine === true)
+            && (squareArray[id+lat].marked === true)){
+                return false;
+        } // One Mine, one Mark
+        else if ((squareArray[id+long].marked === true)
+            && (squareArray[id+lat].mine === true)){
+                return false;
+        } // Both paths contain Mines 
+        else if ((squareArray[id+long].marked === true)
+            && (squareArray[id+lat].marked === true)){
+                return false;
+        } else return true;
+    }; 
+};
+
 
 //---------------------------------------------------------
 // Clears a square cleared by the computer
