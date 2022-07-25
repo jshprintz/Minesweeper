@@ -203,140 +203,180 @@ let testCorner = true;
 
     // Top Row
     if ((id > 0) && (id < 9)){
-        if (squareArray[id-1].mine === false) 
+        if ((squareArray[id-1].mine === false)
+            && (squareArray[id-1].marked === false))
             clearSquare(id-1);
-        if (squareArray[id+1].mine === false) 
+        if ((squareArray[id+1].mine === false)
+            && (squareArray[id+1].marked === false)) 
             clearSquare(id+1);
-        if (squareArray[id+9].mine === false){ 
+        if ((squareArray[id+9].mine === false)
+            && (squareArray[id+9].marked === false)){ 
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
-        if (squareArray[id+10].mine === false) 
+        if ((squareArray[id+10].mine === false)
+            && (squareArray[id+10].marked === false))
             clearSquare(id+10);
-        if (squareArray[id+11].mine === false){ 
+        if ((squareArray[id+11].mine === false)
+            && (squareArray[id+11].marked === false)){ 
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
     } 
     // Bottom Row
     else if ((id > 90) && (id < 99)){
-        if (squareArray[id-11].mine === false){ 
+        if ((squareArray[id-11].mine === false)
+            && (squareArray[id-11].marked === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
-        if (squareArray[id-10].mine === false) 
+        if ((squareArray[id-10].mine === false)
+            && (squareArray[id-10].marked === false))
             clearSquare(id-10);
-        if (squareArray[id-9].mine === false){ 
+        if ((squareArray[id-9].mine === false)
+            && (squareArray[id-9].marked === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
-        if (squareArray[id-1].mine === false) 
+        if ((squareArray[id-1].mine === false)
+            && (squareArray[id-1].marked === false))
             clearSquare(id-1);
-        if (squareArray[id+1].mine === false) 
+        if ((squareArray[id+1].mine === false)
+            && (squareArray[id+1].marked === false))
             clearSquare(id+1);
     } 
     // Left Row
     else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
-        if (squareArray[id-10].mine === false) 
+        if ((squareArray[id-10].mine === false)
+            && (squareArray[id-10].marked === false)) 
             clearSquare(id-10);
-        if (squareArray[id-9].mine === false){ 
+        if ((squareArray[id-9].mine === false)
+            && (squareArray[id-9].marked === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
-        if (squareArray[id+1].mine === false) 
+        if ((squareArray[id+1].mine === false)
+            && (squareArray[id+1].marked === false))
             clearSquare(id+1);
-        if (squareArray[id+10].mine === false) 
+        if ((squareArray[id+10].mine === false)
+            && (squareArray[id+10].marked === false)) 
             clearSquare(id+10);
-        if (squareArray[id+11].mine === false){
+        if ((squareArray[id+11].mine === false)
+            && (squareArray[id+11].marked === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
     } 
     // Right Row
     else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-        if (squareArray[id-11].mine === false){ 
+        if ((squareArray[id-11].mine === false)
+            && (squareArray[id-11].marked === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
-        if (squareArray[id-10].mine === false) 
+        if ((squareArray[id-10].mine === false)
+            && (squareArray[id-10].marked === false))
             clearSquare(id-10);
-        if (squareArray[id-1].mine === false) 
+        if ((squareArray[id-1].mine === false)
+            && (squareArray[id-1].marked === false)) 
             clearSquare(id-1);
-        if (squareArray[id+9].mine === false){
+        if ((squareArray[id+9].mine === false)
+            && (squareArray[id+9].marked === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
-        if (squareArray[id+10].mine === false) 
+        if ((squareArray[id+10].mine === false)
+            && (squareArray[id+10].marked === false))
             clearSquare(id+10);
     } 
     // -----------CORNERS-----------
     // Top Left
     else if (id === 0){
-        if (squareArray[1].mine === false) 
+        if ((squareArray[1].mine === false)
+            && (squareArray[1].marked === false))
             clearSquare(1);
-        if (squareArray[10].mine === false) 
+        if ((squareArray[10].mine === false)
+            && (squareArray[10].marked === false))
             clearSquare(10);
-        if (squareArray[11].mine === false){
+        if ((squareArray[11].mine === false)
+            && (squareArray[11].marked === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
     } 
     // Top Right
     else if (id === 9){
-        if (squareArray[8].mine === false) 
+        if ((squareArray[8].mine === false) 
+            && (squareArray[8].marked === false))
             clearSquare(8);
-        if (squareArray[19].mine === false) 
+        if ((squareArray[19].mine === false)
+            && (squareArray[19].marked === false))
             clearSquare(19);
-        if (squareArray[18].mine === false){
+        if ((squareArray[18].mine === false)
+            && (squareArray[18].marked === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
     } 
     // Bottom Left
     else if (id === 90){
-        if (squareArray[80].mine === false) 
+        if ((squareArray[80].mine === false)
+            && (squareArray[80].marked === false))
                 clearSquare(80);
-        if (squareArray[81].mine === false){ 
+        if ((squareArray[81].mine === false)
+            && (squareArray[81].marked === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
-        if (squareArray[91].mine === false) 
+        if ((squareArray[91].mine === false)
+            && (squareArray[91].marked === false))
                 clearSquare(91);
     } 
     // Bottom Right
     else if (id === 99){
-        if (squareArray[98].mine === false) 
+        if ((squareArray[98].mine === false) 
+            && (squareArray[98].marked === false))
                 clearSquare(98);
-        if (squareArray[88].mine === false){ 
+        if ((squareArray[88].mine === false)
+            && (squareArray[88].marked === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
-        if (squareArray[89].mine === false) 
+        if ((squareArray[89].mine === false) 
+            && (squareArray[89].marked === false))
                 clearSquare(89);
     } 
     // Middle of grid
     else{
-        if (squareArray[id-11].mine === false){ 
+        if ((squareArray[id-11].mine === false)
+            && (squareArray[id-11].marked === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
-        if (squareArray[id-10].mine === false) 
+        if ((squareArray[id-10].mine === false)
+            && (squareArray[id-10].marked === false))
                 clearSquare(id-10);
-        if (squareArray[id-9].mine === false){ 
+        if ((squareArray[id-9].mine === false)
+            && (squareArray[id-9].marked === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
-        if (squareArray[id-1].mine === false) 
+        if ((squareArray[id-1].mine === false) 
+            && (squareArray[id-1].marked === false)) 
                 clearSquare(id-1);
-        if (squareArray[id+1].mine === false) 
+        if ((squareArray[id+1].mine === false)
+            && (squareArray[id+1].marked === false))
                 clearSquare(id+1);
-        if (squareArray[id+9].mine === false){
+        if ((squareArray[id+9].mine === false)
+            && (squareArray[id+9].marked === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
-        if (squareArray[id+10].mine === false) 
+        if ((squareArray[id+10].mine === false) 
+            && (squareArray[id+10].marked === false))
                 clearSquare(id+10);
-        if (squareArray[id+11].mine === false){
+        if ((squareArray[id+11].mine === false)
+            && (squareArray[id+11].marked === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
