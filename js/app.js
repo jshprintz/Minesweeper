@@ -20,10 +20,10 @@ let remainingMines;
 let minutes = 0;
 let seconds = 0;
 let squareArray = [];
-let checkArray = [];
+let clearArray = [];
 let firstPicked;
 let newId;
-let clearArray;
+let clear;
 let masterArray = [];
 let noMine = true;
 let clockMaster;
@@ -46,7 +46,9 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 
 const spriteWidth = 180;
 const spriteHeight = 240;
-const player = new Audio();
+const playerMusic = new Audio('Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg');
+const playerBomb = new Audio('156031__iwiploppenisse__explosion.mp3');
+const playerCheer = new Audio('333404__jayfrosting__cheer-2.wav');
 
 //-----------------------------------------------------
 // Cache my DOM elements
@@ -57,13 +59,14 @@ const toggleEl = document.getElementById('toggle');
 const dispMessageEl = document.querySelector('h2');
 const remainingMinesEl = document.getElementById('remainingmines');
 const timerEl = document.getElementById('timer');
-const mixerEl = document.getElementById('music');
 const soundEl = document.getElementById('checkSound');
 const musicEl = document.getElementById('checkMusic');
 //-----------------------------------------------------
 
-// Not sure if this is doing anything
-mixerEl.volume = .1;
+// Set the volume for all of the sounds
+playerMusic.volume = 0.2;
+playerBomb.volume = 0.1;
+playerCheer.volume = 0.1;
 
 //-----------------------------------------------------
 // Add Initial Event Listeners
@@ -170,9 +173,9 @@ function firstPick(id){
     // Display positive headline
     headline(true);
     // Autoplay music
-    player.src = 'Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-    player.setAttribute('preload', 'auto');
-    player.play();
+    playerMusic.src = 'Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+    playerMusic.setAttribute('preload', 'auto');
+    playerMusic.play();
 
     console.log(squareArray);
 };
@@ -391,16 +394,16 @@ let testCorner = true;
         };
     };
 
-    if (checkArray.length > 0) {
-    // If checkArray contains original square selected, remove
-        for (const i in checkArray){
-            if (checkArray[i]===id){
-                checkArray.splice(i, 1);
+    if (clearArray.length > 0) {
+    // If clearArray contains original square selected, remove
+        for (const i in clearArray){
+            if (clearArray[i]===id){
+                clearArray.splice(i, 1);
             };
         };
 
         // Check remaining squares
-        checkArrayClear();
+        clearArrayClear();
     };
 };
 
@@ -486,25 +489,25 @@ function clearSquare(id){
     // RESEARCH POSSIBLY INSTANCE OF AND SEE IF THAT WORKS
     if (squareArray[id].surroundingMines === 0){
         masterArray.push(id); // Master record of zeros
-        checkArray.push(id); // Working record of zeros
+        clearArray.push(id); // Working record of zeros
         for (let i=0; i<(masterArray.length - 1); i++){
             // if the square in question (the one just added)
             // is already on the master list, delete it from
             // both the master list and the working list
             if (masterArray[i] === id){
                 masterArray.pop(); 
-                checkArray.pop();
+                clearArray.pop();
             };
         }
     };
 };
 //-----------------------------------------------------
-// CheckArray Clear (clears surrounding squares)
+// clearArray Clear (clears surrounding squares)
 //-----------------------------------------------------
-function checkArrayClear(){
+function clearArrayClear(){
     // Removes next square to clear and sends it to computerClear
-    clearArray = checkArray.shift();
-    computerClear(clearArray);
+    clear = clearArray.shift();
+    computerClear(clear);
 };
 
 //-----------------------------------------------------
@@ -561,14 +564,10 @@ function bigWinner(){
     dispMessageEl.innerText = `You did it! Congratualtions!
                 Now see if you can do it in under ${timerDisp}.`
     if (playSound === true){    
-        player.src = '333404__jayfrosting__cheer-2.wav';
-        player.setAttribute('preload', 'auto');
-        player.play();
-    } else{
-        player.src = '201883__parcodeisuoni__silence.mp3';
-        player.setAttribute('preload', 'auto');
-        player.play();
+        playerCheer.play();
     };
+    playerMusic.pause();
+    
     revealBoard();
 };
 
@@ -656,14 +655,10 @@ function headline(pos){
 function explosion(id){
     
     if (playSound === true){
-        player.src = '156031__iwiploppenisse__explosion.mp3';
-        player.setAttribute('preload', 'auto');
-        player.play();
-    } else{
-        player.src = '201883__parcodeisuoni__silence.mp3';
-        player.setAttribute('preload', 'auto');
-        player.play();
-    };
+        playerBomb.play();
+    }; 
+    playerMusic.pause();
+    
     blockEl[id].style.spriteWidth = spriteWidth;
     blockEl[id].style.height = spriteHeight;
     blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
@@ -674,7 +669,7 @@ function explosion(id){
 //------------------------------------------------
 
 function switchMusic(){
-    musicEl.checked ? player.play() : player.pause();
+    musicEl.checked ? playerMusic.play() : playerMusic.pause();
 };
 
 //------------------------------------------------
@@ -742,7 +737,7 @@ function playAgain(){
 
 function reset(e){
         // stops the sound effects
-        player.pause();
+        playerMusic.pause();
         toggleEl.removeEventListener('click', reset);
         squareArray.length = 0;
 

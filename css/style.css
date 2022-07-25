@@ -166,6 +166,13 @@ main {
     grid-row-start: 83;
 }
 
+#checkSound{
+    margin-left: 5%;
+}
+#checkMusic{
+    margin-left: 5%;
+}
+
 footer {
     position: fixed;
     display: flex;
@@ -180,7 +187,7 @@ footer {
     font-weight: bold;
     font-size: 16pt;
     font-family: 'Black Ops One', cursive;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 
 
