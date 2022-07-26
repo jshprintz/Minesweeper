@@ -56,6 +56,7 @@ const playerCheer = new Audio('333404__jayfrosting__cheer-2.wav');
 const blockEl = document.querySelectorAll('.block');
 const boardEl = document.getElementById('board');
 const toggleEl = document.getElementById('toggle');
+const modeSelectEl = document.getElementById('modeSelect');
 const dispMessageEl = document.querySelector('h2');
 const remainingMinesEl = document.getElementById('remainingmines');
 const timerEl = document.getElementById('timer');
@@ -74,13 +75,13 @@ playerCheer.volume = 0.1;
 boardEl.addEventListener('click', render);
 musicEl.addEventListener('change', switchMusic);
 soundEl.addEventListener('change', switchSound);
+modeSelectEl.addEventListener('click', changeMode);
 //-----------------------------------------------------
 
 //-----------------------------------------------------
 // Initialize program
 //-----------------------------------------------------
 init();
-
 
 //------------------------------------------------------
 //                 F U N C T I O N S
@@ -107,7 +108,8 @@ function init(){
 // Render changes
 //----------------------------------------------------
 function render(e){
-    toggleEl.addEventListener('click', clearMark);
+    toggleEl.addEventListener('click', clearFlag);
+    modeSelectEl.removeEventListener('click', changeMode);
     // Capture the block ID
     let blockID = e.target.id;
     // Capture the block object
@@ -138,16 +140,16 @@ function clearCheck(obj, id){
             checkPick(id);
         };
     } else {
-        markSquare(obj, id);
+        flagSquare(obj, id);
     };
 };
 
 //---------------------------------------------------
 // Toggle between Clearing blocks and Marking blocks
 //---------------------------------------------------
-function clearMark(e){
+function clearFlag(e){
     if (toggleEl.innerText === 'CLEAR'){
-        toggleEl.innerText = 'MARK';
+        toggleEl.innerText = 'FLAG';
         toggleEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
     } else {
         toggleEl.innerText = 'CLEAR';
@@ -216,21 +218,21 @@ let testCorner = true;
     // Top Row
     if ((id > 0) && (id < 9)){
         if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].marked === false))
+            && (squareArray[id-1].flagged === false))
             clearSquare(id-1);
         if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].marked === false)) 
+            && (squareArray[id+1].flagged === false)) 
             clearSquare(id+1);
         if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].marked === false)){ 
+            && (squareArray[id+9].flagged === false)){ 
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
         if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].marked === false))
+            && (squareArray[id+10].flagged === false))
             clearSquare(id+10);
         if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].marked === false)){ 
+            && (squareArray[id+11].flagged === false)){ 
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
@@ -238,43 +240,43 @@ let testCorner = true;
     // Bottom Row
     else if ((id > 90) && (id < 99)){
         if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].marked === false)){ 
+            && (squareArray[id-11].flagged === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
         if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].marked === false))
+            && (squareArray[id-10].flagged === false))
             clearSquare(id-10);
         if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].marked === false)){ 
+            && (squareArray[id-9].flagged === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
         if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].marked === false))
+            && (squareArray[id-1].flagged === false))
             clearSquare(id-1);
         if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].marked === false))
+            && (squareArray[id+1].flagged === false))
             clearSquare(id+1);
     } 
     // Left Row
     else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
         if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].marked === false)) 
+            && (squareArray[id-10].flagged === false)) 
             clearSquare(id-10);
         if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].marked === false)){ 
+            && (squareArray[id-9].flagged === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
         if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].marked === false))
+            && (squareArray[id+1].flagged === false))
             clearSquare(id+1);
         if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].marked === false)) 
+            && (squareArray[id+10].flagged === false)) 
             clearSquare(id+10);
         if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].marked === false)){
+            && (squareArray[id+11].flagged === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
@@ -282,36 +284,36 @@ let testCorner = true;
     // Right Row
     else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
         if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].marked === false)){ 
+            && (squareArray[id-11].flagged === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
         if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].marked === false))
+            && (squareArray[id-10].flagged === false))
             clearSquare(id-10);
         if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].marked === false)) 
+            && (squareArray[id-1].flagged === false)) 
             clearSquare(id-1);
         if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].marked === false)){
+            && (squareArray[id+9].flagged === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
         if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].marked === false))
+            && (squareArray[id+10].flagged === false))
             clearSquare(id+10);
     } 
     // -----------CORNERS-----------
     // Top Left
     else if (id === 0){
         if ((squareArray[1].mine === false)
-            && (squareArray[1].marked === false))
+            && (squareArray[1].flagged === false))
             clearSquare(1);
         if ((squareArray[10].mine === false)
-            && (squareArray[10].marked === false))
+            && (squareArray[10].flagged === false))
             clearSquare(10);
         if ((squareArray[11].mine === false)
-            && (squareArray[11].marked === false)){
+            && (squareArray[11].flagged === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
@@ -319,13 +321,13 @@ let testCorner = true;
     // Top Right
     else if (id === 9){
         if ((squareArray[8].mine === false) 
-            && (squareArray[8].marked === false))
+            && (squareArray[8].flagged === false))
             clearSquare(8);
         if ((squareArray[19].mine === false)
-            && (squareArray[19].marked === false))
+            && (squareArray[19].flagged === false))
             clearSquare(19);
         if ((squareArray[18].mine === false)
-            && (squareArray[18].marked === false)){
+            && (squareArray[18].flagged === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
@@ -333,62 +335,62 @@ let testCorner = true;
     // Bottom Left
     else if (id === 90){
         if ((squareArray[80].mine === false)
-            && (squareArray[80].marked === false))
+            && (squareArray[80].flagged === false))
                 clearSquare(80);
         if ((squareArray[81].mine === false)
-            && (squareArray[81].marked === false)){ 
+            && (squareArray[81].flagged === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
         if ((squareArray[91].mine === false)
-            && (squareArray[91].marked === false))
+            && (squareArray[91].flagged === false))
                 clearSquare(91);
     } 
     // Bottom Right
     else if (id === 99){
         if ((squareArray[98].mine === false) 
-            && (squareArray[98].marked === false))
+            && (squareArray[98].flagged === false))
                 clearSquare(98);
         if ((squareArray[88].mine === false)
-            && (squareArray[88].marked === false)){ 
+            && (squareArray[88].flagged === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
         if ((squareArray[89].mine === false) 
-            && (squareArray[89].marked === false))
+            && (squareArray[89].flagged === false))
                 clearSquare(89);
     } 
     // Middle of grid
     else{
         if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].marked === false)){ 
+            && (squareArray[id-11].flagged === false)){ 
             testCorner = checkCorners(id, -11);
             if (testCorner === true) clearSquare(id-11);
         };
         if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].marked === false))
+            && (squareArray[id-10].flagged === false))
                 clearSquare(id-10);
         if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].marked === false)){ 
+            && (squareArray[id-9].flagged === false)){ 
             testCorner = checkCorners(id, -9);
             if (testCorner === true) clearSquare(id-9);
         };
         if ((squareArray[id-1].mine === false) 
-            && (squareArray[id-1].marked === false)) 
+            && (squareArray[id-1].flagged === false)) 
                 clearSquare(id-1);
         if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].marked === false))
+            && (squareArray[id+1].flagged === false))
                 clearSquare(id+1);
         if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].marked === false)){
+            && (squareArray[id+9].flagged === false)){
             testCorner = checkCorners(id, 9);
             if (testCorner === true) clearSquare(id+9);
         };
         if ((squareArray[id+10].mine === false) 
-            && (squareArray[id+10].marked === false))
+            && (squareArray[id+10].flagged === false))
                 clearSquare(id+10);
         if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].marked === false)){
+            && (squareArray[id+11].flagged === false)){
             testCorner = checkCorners(id, 11);
             if (testCorner === true) clearSquare(id+11);
         };
@@ -439,15 +441,15 @@ function checkCorners(id, num){
             return false;
     } // One Mine, one Mark
     else if ((squareArray[id+long].mine === true)
-        && (squareArray[id+lat].marked === true)){
+        && (squareArray[id+lat].flagged === true)){
             return false;
     } // One Mine, one Mark
-    else if ((squareArray[id+long].marked === true)
+    else if ((squareArray[id+long].flagged === true)
         && (squareArray[id+lat].mine === true)){
             return false;
     } // Both paths contain Mines 
-    else if ((squareArray[id+long].marked === true)
-        && (squareArray[id+lat].marked === true)){
+    else if ((squareArray[id+long].flagged === true)
+        && (squareArray[id+lat].flagged === true)){
             return false;
     } else return true;
 };
@@ -533,7 +535,7 @@ function newSquare(){
         mine: false,
         cleared: false,
         surroundingMines: 0,
-        marked: false,
+        flagged: false,
     };
     return newBlock;
 };
@@ -601,7 +603,7 @@ function checkWin(){
             (squareArray[i].mine === false)) || 
             // if mines are marked
             ((squareArray[i].mine === true) &&
-            (squareArray[i].marked === true))) {
+            (squareArray[i].flagged === true))) {
                 winCount += 1;
             };
         
@@ -684,10 +686,10 @@ function switchSound(){
 // Runs through logic when a user Marks a square
 //---------------------------------------------------
 
-function markSquare(obj, id){
+function flagSquare(obj, id){
     // Checks if already marked
-    if (squareArray[id].marked === true) {
-        squareArray[id].marked = false;
+    if (squareArray[id].flagged === true) {
+        squareArray[id].flagged = false;
         obj.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
         mineCount();
         checkWin();
@@ -697,7 +699,7 @@ function markSquare(obj, id){
     }
     else {
         // Change to marked spot
-        squareArray[id].marked = true;
+        squareArray[id].flagged = true;
         obj.style.backgroundImage = 'radial-gradient(circle, #8f0000, #a04518, #b06e3b, #bf9465, #cfb995, #d7c7a7, #e0d4b9, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         mineCount();
         checkWin();
@@ -710,7 +712,7 @@ function markSquare(obj, id){
 function mineCount(){
     remainingMines = 20;
     squareArray.forEach(function(el){
-        if (el.marked === true) remainingMines--;
+        if (el.flagged === true) remainingMines--;
     });
 
     if (remainingMines < 0){
@@ -728,6 +730,7 @@ remainingMinesEl.innerText = `Mines: ${remainingMines}`;
 function playAgain(){
     dispMessageEl.innerText = `Would you like to play again?`;
     toggleEl.innerText = `YES`;
+    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     toggleEl.addEventListener('click', reset);
 };
 
@@ -772,7 +775,7 @@ function reset(e){
 function revealBoard(){
     //remove old event listeners
     boardEl.removeEventListener('click', render);
-    toggleEl.removeEventListener('click', clearMark);
+    toggleEl.removeEventListener('click', clearFlag);
     // stops the clock
     clearInterval(clockMaster);
     // final mine count
@@ -781,17 +784,17 @@ function revealBoard(){
         // Changes all of the background images for the squares
         // based on the data pulled from the object
     for (let i=0; i<squareArray.length; i++){
-        if ((squareArray[i].cleared === false) && (squareArray[i].marked === false)) {
+        if ((squareArray[i].cleared === false) && (squareArray[i].flagged === false)) {
             // Not cleared, not marked squares
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
         }
             // Successfully marked mines
-        if ((squareArray[i].mine === true) && (squareArray[i].marked === true)){
+        if ((squareArray[i].mine === true) && (squareArray[i].flagged === true)){
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
         } else if (squareArray[i].mine === true) {
             // Not marked mines
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #d16b6b, #c36265, #b45a5e, #a65158, #984951, #99484c, #9a4747, #9b4742, #a8503b, #b25b32, #b86726, #bb7617)';
-        } else if ((squareArray[i].mine === false) && (squareArray[i].marked === true)){
+        } else if ((squareArray[i].mine === false) && (squareArray[i].flagged === true)){
             // Wrongly marked
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #4d3434, #6c565a, #8a7a80, #aaa0a7, #ccc8cd, #d2cdd3, #d9d2d8, #e0d7de, #ceb9bf, #bb9d9b, #a38475, #826f52)';
             blockEl[i].innerText = 'X';
@@ -923,4 +926,20 @@ function assignSurrounding(){
                 squareArray[id].surroundingMines += 1;
         };
     };
+};
+
+
+//---------------------------------------------------
+// Change game mode (Casual/Survivor)
+//---------------------------------------------------
+
+function changeMode(){
+    if (modeSelectEl.innerText === 'CASUAL'){
+        modeSelectEl.innerText = 'SURVIVOR';
+        modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
+    } else {
+        modeSelectEl.innerText = 'CASUAL';
+        modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    };
+
 };

@@ -157,11 +157,15 @@ main {
     grid-row-start: 83;
 }
 
-#checkSound{
-    margin-left: 5%;
-}
-#checkMusic{
-    margin-left: 5%;
+
+#modeSelect {
+    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
+    color: #9B823F;
+    padding: 15px;
+    border:#9B823F 5px solid;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    font-size: 16pt;
 }
 
 footer {
@@ -178,7 +182,8 @@ footer {
     font-weight: bold;
     font-size: 16pt;
     font-family: 'Black Ops One', cursive;
-    justify-content: flex-start;
+    justify-content: space-around;
+    align-items: center;
 }
 
 
