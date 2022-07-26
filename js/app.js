@@ -46,9 +46,9 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 
 const spriteWidth = 180;
 const spriteHeight = 240;
-const playerMusic = new Audio('Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg');
-const playerBomb = new Audio('156031__iwiploppenisse__explosion.mp3');
-const playerCheer = new Audio('333404__jayfrosting__cheer-2.wav');
+const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg');
+const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
+const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
 //-----------------------------------------------------
 // Cache my DOM elements
