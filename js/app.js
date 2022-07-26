@@ -12,8 +12,23 @@ console.log('Javascript works')
 // https://freesound.org/people/jayfrosting/sounds/333404/
 //----------------------------------------------------
 
+
 //-----------------------------------------------------
-// Declare state variables
+//              Cache my DOM elements
+//-----------------------------------------------------
+const blockEl = document.querySelectorAll('.block');
+const boardEl = document.getElementById('board');
+const toggleEl = document.getElementById('toggle');
+const modeSelectEl = document.getElementById('modeSelect');
+const dispMessageEl = document.querySelector('h2');
+const remainingMinesEl = document.getElementById('remainingmines');
+const timerEl = document.getElementById('timer');
+const soundEl = document.getElementById('checkSound');
+const musicEl = document.getElementById('checkMusic');
+//-----------------------------------------------------
+
+//-----------------------------------------------------
+//              Declare state variables
 //-----------------------------------------------------
 let startMines = 20;
 let remainingMines;
@@ -34,7 +49,7 @@ let lose = false;
 let score = 0;
 
 //-----------------------------------------------------
-// Declare constant variables
+//              Declare constant variables
 //-----------------------------------------------------
 const posHeadline = [`Great job! I knew you could do it!`,
 `That's the square I would have picked!`, `You'll get promoted for this.`,
@@ -47,25 +62,13 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 `That was the worst square you could have picked.`, `Horrible choice. Just horrible.`,
 `If you want to help us, you can join our enemy.`];
 
+const currentMode = modeSelectEl.innerText;
 const spriteWidth = 180;
 const spriteHeight = 240;
 const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg');
 const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
 const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
-//-----------------------------------------------------
-// Cache my DOM elements
-//-----------------------------------------------------
-const blockEl = document.querySelectorAll('.block');
-const boardEl = document.getElementById('board');
-const toggleEl = document.getElementById('toggle');
-const modeSelectEl = document.getElementById('modeSelect');
-const dispMessageEl = document.querySelector('h2');
-const remainingMinesEl = document.getElementById('remainingmines');
-const timerEl = document.getElementById('timer');
-const soundEl = document.getElementById('checkSound');
-const musicEl = document.getElementById('checkMusic');
-//-----------------------------------------------------
 
 // Set the volume for all of the sounds
 playerMusic.volume = 0.2;
@@ -120,7 +123,7 @@ function render(e){
     if (blockID !== 'board'){
     // checks to see if user is clearing a square or 
     // marking a square
-        console.log(blockID);
+
         clearCheck(blockObj, blockID);
     }
 };
@@ -569,7 +572,6 @@ function bigWinner(){
     if (playSound === true){    
         playerCheer.play();
     };
-    console.log(modeSelectEl.innerText)
 
     if (modeSelectEl.innerText === 'CASUAL'){
         dispMessageEl.innerText = `You did it! Congratualtions!
@@ -577,8 +579,7 @@ function bigWinner(){
         playerMusic.pause();
         revealBoard();
     } else {
-        startMines += 5;
-        dispMessageEl.innerText = `Great job! This next one has ${startMines} mines!`;
+        dispMessageEl.innerText = `Great job! This next one has ${startMines + 5} mines!`;
         playerMusic.volume = 0.1;
         revealBoard();
     };
@@ -745,16 +746,20 @@ function flagSquare(obj, id){
 //------------------------------------------------------
 function mineCount(){
     remainingMines = startMines;
+    console.log (startMines, "minecount startMines");
+
+    // searches for flagged mines
     squareArray.forEach(function(el){
         if (el.flagged === true) remainingMines--;
     });
-
+    // checks for misflags
     if (remainingMines < 0){
         remainingMines = 0;
         dispMessageEl.innerText = `Check your flags! We only started with ${startMines} mines!!`;
     };
-
-remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+    console.log (remainingMines, "minecount remainingMines");
+    // displays final mine count
+    remainingMinesEl.innerText = `Mines: ${remainingMines}`;
 };
 
 //-----------------------------------------------------
@@ -770,7 +775,7 @@ function playAgain(){
         Play Again?`;
     }
     else {
-        dispMessageEl.innerText = `Ready for level ${level + 1}?`;
+        dispMessageEl.innerText = `Ready for LEVEL ${level + 1}?`;
     };
 
     toggleEl.innerText = `YES`;
@@ -808,17 +813,25 @@ function reset(e){
 
         // Sets the next level for SURVIVOR mode
         if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
-            
+            // adjusts time for new round
             minutes= Math.round(level/2) + minutes;
-            
+            // adjust time display based on digits
             if (seconds >= 10) {
                 timerEl.innerText = `0${minutes} : ${seconds}`;
             } else{
                 timerEl.innerText = `0${minutes} : 0${seconds}`;
             }
+            // increase level
             level++;
+            // increase minecount
+            startMines += 5;
             dispMessageEl.innerText = 'Clock starts when you clear!';
             playerMusic.volume = 0.2;
+
+            console.log (startMines, "reset startMines");
+            console.log (remainingMines, "reset remainingMines");
+            
+
         }   // resets all the settings for SURVIVOR mode
             else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
             minutes = 0;
@@ -860,7 +873,7 @@ function revealBoard(){
     toggleEl.removeEventListener('click', clearFlag);
     // stops the clock
     clearInterval(clockMaster);
-
+    console.log(remainingMines, "remaining mines reveal board")
     // final mine count
     mineCount();
 
