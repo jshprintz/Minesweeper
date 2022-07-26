@@ -801,7 +801,6 @@ function reset(e){
         });
     
         // Set initial values for state variables
-        remainingMines = startMines;
         masterArray = [];
         clearArray = [];
         firstPicked = false;
@@ -809,7 +808,9 @@ function reset(e){
 
         // Sets the next level for SURVIVOR mode
         if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
-            minutes = 3 + minutes;
+            
+            minutes= Math.round(level/2) + minutes;
+            
             if (seconds >= 10) {
                 timerEl.innerText = `0${minutes} : ${seconds}`;
             } else{
@@ -820,14 +821,15 @@ function reset(e){
             playerMusic.volume = 0.2;
         }   // resets all the settings for SURVIVOR mode
             else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
-            minutes = 3;
-            seconds = 0;
+            minutes = 0;
+            seconds = 30;
             lose = false;
             level = 1;
-            timerEl.innerText = '03 : 00';
+            timerEl.innerText = '00 : 30';
             modeSelectEl.addEventListener('click', changeMode);
             dispMessageEl.innerText = 'Ready when you are!';
-            startMines = 20;
+            startMines = 5;
+            remainingMines = startMines;
             playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
             playerMusic.volume = 0.2;
         }
@@ -836,9 +838,13 @@ function reset(e){
             minutes = 0;
             seconds = 0;
             lose = false;
+            startMines = 20;
+            remainingMines = startMines;
             timerEl.innerText = '00 : 00';
             modeSelectEl.addEventListener('click', changeMode);
             dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.volume = 0.2;
         };
 
         mineCount();
@@ -1014,14 +1020,19 @@ function changeMode(){
     if (modeSelectEl.innerText === 'CASUAL'){
         modeSelectEl.innerText = 'SURVIVOR';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
-        timerEl.innerText = '03 : 00';
-        minutes = 3;
+        timerEl.innerText = '00 : 30';
+        minutes = 0;
+        seconds = 30;
+        startMines = 5;
     } else {
         modeSelectEl.innerText = 'CASUAL';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         timerEl.innerText = '00 : 00';
         minutes = 0;
+        seconds = 0;
+        startMines = 20;
     };
+    remainingMinesEl.innerText = `Mines: ${startMines}`
 };
 
 //-----------------------------------------------------
@@ -1032,9 +1043,9 @@ function calculateScore(){
     score = 0;
 
     //
+    score += (level * 200);
     score += (minutes * 100);
     score += (seconds);
-    score = score * level;
     score = score / 10;
     lose = true;
 };
