@@ -166,6 +166,7 @@ main {
     margin-bottom: 5%;
     margin-top: 5%;
     font-size: 16pt;
+    min-width: 160px;
 }
 
 footer {

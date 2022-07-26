@@ -174,8 +174,8 @@ function firstPick(id){
     clockMaster = setInterval(clock, 1000);
     // Display positive headline
     headline(true);
-    // Autoplay music
-    playerMusic.setAttribute('preload', 'auto');
+    // Starts music over
+    playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
     playerMusic.play();
 };
 
@@ -653,6 +653,8 @@ function headline(pos){
 function explosion(id){
     
     if (playSound === true){
+        playerBomb.src = 'audio/156031__iwiploppenisse__explosion.mp3';
+        playerBomb.setAttribute('preload', 'auto');
         playerBomb.play();
     }; 
     playerMusic.pause();
@@ -736,8 +738,8 @@ function playAgain(){
 
 function reset(e){
         // stops the sound effects
-        playerMusic.pause();
         toggleEl.removeEventListener('click', reset);
+        modeSelectEl.addEventListener('click', changeMode);
         squareArray = [];
 
         // Create the array containing objects
