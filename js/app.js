@@ -115,10 +115,10 @@ function render(e){
     // Capture the block object
     let blockObj = e.target;
 
-
     if (blockID !== 'board'){
     // checks to see if user is clearing a square or 
     // marking a square
+        console.log(blockID);
         clearCheck(blockObj, blockID);
     }
 };
@@ -175,11 +175,8 @@ function firstPick(id){
     // Display positive headline
     headline(true);
     // Autoplay music
-    playerMusic.src = 'Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
     playerMusic.setAttribute('preload', 'auto');
     playerMusic.play();
-
-    console.log(squareArray);
 };
 
 //---------------------------------------------------
@@ -478,11 +475,11 @@ function clearSquare(id){
         } else if (squareEl.innerText === '5'){
             squareEl.style.color = 'red';
         } else if (squareEl.innerText === '6'){
-            squareEl.style.color = 'yellow';
-        } else if (squareEl.innerText === '7'){
             squareEl.style.color = 'brown';
+        } else if (squareEl.innerText === '7'){
+            squareEl.style.color = 'gray';
         } else {
-            squareEl.style.color = 'white';
+            squareEl.style.color = 'black';
         };
     };
 
@@ -610,7 +607,6 @@ function checkWin(){
     };
     // Checks if user won
     if (winCount === 100) bigWinner();
-    console.log(winCount, "win count");
 };
 
 //------------------------------------------------------
@@ -717,7 +713,7 @@ function mineCount(){
 
     if (remainingMines < 0){
         remainingMines = 0;
-        dispMessageEl.innerText = `Check your marks! We only started with ${startMines} mines!!`;
+        dispMessageEl.innerText = `Check your flags! We only started with ${startMines} mines!!`;
     };
 
 remainingMinesEl.innerText = `Mines: ${remainingMines}`;
@@ -742,7 +738,7 @@ function reset(e){
         // stops the sound effects
         playerMusic.pause();
         toggleEl.removeEventListener('click', reset);
-        squareArray.length = 0;
+        squareArray = [];
 
         // Create the array containing objects
         blockEl.forEach(function(el){
@@ -754,11 +750,14 @@ function reset(e){
             // Push new object
             squareArray.push(newSquare());
         });
+
         // Reset headline
         dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
     
         // Set initial values for state variables
         remainingMines = startMines;
+        masterArray = [];
+        clearArray = [];
         firstPicked = false;
         noMine = true;
         seconds = 0;
