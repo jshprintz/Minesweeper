@@ -99,7 +99,6 @@ function init(){
 
     // Set initial values for state variables
     remainingMines = startMines;
-    timer = 0;
     firstPicked = false;
     noMine = true;
 };
@@ -613,13 +612,33 @@ function checkWin(){
 // Clock to keep score
 //------------------------------------------------------
 function clock(){
-    seconds++;
+    if (modeSelectEl.innerText === 'CASUAL'){
+        // Casual mode
+        seconds++;
+        //convert to minutes
+        if (seconds === 60){
+            seconds = 0;
+            minutes++;
+        };
+    } else {
+        // Survivor Mode
+        seconds--;
+        //convert to seconds
+        if (seconds <= 0){
+            if (minutes === 0){
+                // Out of time
+                explosion();
+                dispMessageEl.innerText = 'You ran out of time!';
+                revealBoard();
+            } else {
+                // Tick down a minute
+                seconds = 59;
+                minutes--;
+            }
+        };
+    }
 
-    //convert to minutes
-    if (seconds === 60){
-        seconds = 0;
-        minutes++;
-    };
+
     //format timer
         timerDisp = `${minutes} : ${seconds}`;
 
@@ -658,10 +677,11 @@ function explosion(id){
         playerBomb.play();
     }; 
     playerMusic.pause();
+
     
-    blockEl[id].style.spriteWidth = spriteWidth;
-    blockEl[id].style.height = spriteHeight;
-    blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
+    // blockEl[id].style.spriteWidth = spriteWidth;
+    // blockEl[id].style.height = spriteHeight;
+    // blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
 };
 
 //------------------------------------------------
@@ -737,9 +757,10 @@ function playAgain(){
 //----------------------------------------------------
 
 function reset(e){
-        // stops the sound effects
+        // Resets event listeners
         toggleEl.removeEventListener('click', reset);
         modeSelectEl.addEventListener('click', changeMode);
+
         squareArray = [];
 
         // Create the array containing objects
@@ -763,9 +784,18 @@ function reset(e){
         firstPicked = false;
         noMine = true;
         seconds = 0;
-        minutes = 0;
+
+        //Resets the settings for the current mode by 
+        // changing mode twice.
+        if (modeSelectEl.innerText === 'SURVIVOR'){
+            minutes = 3;
+            timerEl.innerText = '03 : 00';
+        } else{
+            minutes = 0;
+            timerEl.innerText = '00 : 00';
+        };
+
         mineCount();
-        timerEl.innerText = '00 : 00';
         toggleEl.innerText = 'CLEAR';
         boardEl.addEventListener('click', render);
 };
@@ -938,9 +968,13 @@ function changeMode(){
     if (modeSelectEl.innerText === 'CASUAL'){
         modeSelectEl.innerText = 'SURVIVOR';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
+        timerEl.innerText = '03 : 00';
+        minutes = 3;
     } else {
         modeSelectEl.innerText = 'CASUAL';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        timerEl.innerText = '00 : 00';
+        minutes = 0;
     };
 
 };
