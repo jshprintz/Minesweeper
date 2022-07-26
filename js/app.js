@@ -15,7 +15,7 @@ console.log('Javascript works')
 //-----------------------------------------------------
 // Declare state variables
 //-----------------------------------------------------
-let startMines = 20;
+let startMines = 5;
 let remainingMines;
 let minutes = 0;
 let seconds = 0;
@@ -29,6 +29,7 @@ let noMine = true;
 let clockMaster;
 let timerDisp = '';
 let playSound = true;
+let level = 2;
 
 //-----------------------------------------------------
 // Declare constant variables
@@ -173,9 +174,11 @@ function firstPick(id){
     clockMaster = setInterval(clock, 1000);
     // Display positive headline
     headline(true);
-    // Starts music over
-    playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-    playerMusic.play();
+    // Starts music over for casual play
+    if (modeSelectEl.innerText === 'CASUAL'){
+        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+        playerMusic.play();
+    }
 };
 
 //---------------------------------------------------
@@ -559,14 +562,22 @@ function checkMine(id){
 // User won!
 //-----------------------------------------------------
 function bigWinner(){
-    dispMessageEl.innerText = `You did it! Congratualtions!
-                Now see if you can do it in under ${timerDisp}.`
     if (playSound === true){    
         playerCheer.play();
     };
-    playerMusic.pause();
-    
-    revealBoard();
+    console.log(modeSelectEl.innerText)
+
+    if (modeSelectEl.innerText === 'CASUAL'){
+        dispMessageEl.innerText = `You did it! Congratualtions!
+                    Now see if you can do it in under ${timerDisp}.`;
+        playerMusic.pause();
+        revealBoard();
+    } else {
+        startMines += 5;
+        dispMessageEl.innerText = `Great job! This next one has ${startMines} mines!`;
+        playerMusic.volume = 0.1;
+        revealBoard();
+    };
 };
 
 //----------------------------------------------------
@@ -728,7 +739,7 @@ function flagSquare(obj, id){
 // Counts the remaining mines
 //------------------------------------------------------
 function mineCount(){
-    remainingMines = 20;
+    remainingMines = startMines;
     squareArray.forEach(function(el){
         if (el.flagged === true) remainingMines--;
     });
@@ -746,7 +757,13 @@ remainingMinesEl.innerText = `Mines: ${remainingMines}`;
 //-----------------------------------------------------
 
 function playAgain(){
-    dispMessageEl.innerText = `Would you like to play again?`;
+    // Alter display based on game mode
+    if (modeSelectEl.innerText === 'CASUAL'){
+        dispMessageEl.innerText = `Would you like to play again?`;
+    } else {
+        dispMessageEl.innerText = `Ready for level ${level}?`;
+    };
+
     toggleEl.innerText = `YES`;
     toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     toggleEl.addEventListener('click', reset);
@@ -759,7 +776,7 @@ function playAgain(){
 function reset(e){
         // Resets event listeners
         toggleEl.removeEventListener('click', reset);
-        modeSelectEl.addEventListener('click', changeMode);
+        toggleEl.innerText = 'CLEAR';
 
         squareArray = [];
 
@@ -773,9 +790,6 @@ function reset(e){
             // Push new object
             squareArray.push(newSquare());
         });
-
-        // Reset headline
-        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
     
         // Set initial values for state variables
         remainingMines = startMines;
@@ -783,20 +797,28 @@ function reset(e){
         clearArray = [];
         firstPicked = false;
         noMine = true;
-        seconds = 0;
 
         //Resets the settings for the current mode by 
         // changing mode twice.
         if (modeSelectEl.innerText === 'SURVIVOR'){
-            minutes = 3;
-            timerEl.innerText = '03 : 00';
+            minutes = 3 + minutes;
+            if (seconds >= 10) {
+                timerEl.innerText = `0${minutes} : ${seconds}`;
+            } else{
+                timerEl.innerText = `0${minutes} : 0${seconds}`;
+            }
+            level++;
+            dispMessageEl.innerText = 'Clock starts when you clear!';
+            playerMusic.volume = 0.2;
         } else{
             minutes = 0;
+            seconds = 0;
             timerEl.innerText = '00 : 00';
+            modeSelectEl.addEventListener('click', changeMode);
+            dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
         };
 
         mineCount();
-        toggleEl.innerText = 'CLEAR';
         boardEl.addEventListener('click', render);
 };
 
@@ -809,6 +831,7 @@ function revealBoard(){
     toggleEl.removeEventListener('click', clearFlag);
     // stops the clock
     clearInterval(clockMaster);
+
     // final mine count
     mineCount();
 
@@ -833,9 +856,9 @@ function revealBoard(){
             blockEl[i].style.fontSize = '20pt';
         }
     };
-    // Four seconds display before changing headline
-    // to play again option.
-    setTimeout(playAgain, 4000);
+        // Four seconds display before changing headline
+        // to play again option.
+        setTimeout(playAgain, 4000);
 };
 
 
