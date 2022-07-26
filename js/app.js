@@ -15,7 +15,7 @@ console.log('Javascript works')
 //-----------------------------------------------------
 // Declare state variables
 //-----------------------------------------------------
-let startMines = 5;
+let startMines = 20;
 let remainingMines;
 let minutes = 0;
 let seconds = 0;
@@ -29,7 +29,9 @@ let noMine = true;
 let clockMaster;
 let timerDisp = '';
 let playSound = true;
-let level = 2;
+let level = 1;
+let lose = false;
+let score = 0;
 
 //-----------------------------------------------------
 // Declare constant variables
@@ -177,6 +179,8 @@ function firstPick(id){
     // Starts music over for casual play
     if (modeSelectEl.innerText === 'CASUAL'){
         playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+        playerMusic.play();
+    } else{
         playerMusic.play();
     }
 };
@@ -689,6 +693,7 @@ function explosion(id){
     }; 
     playerMusic.pause();
 
+    if (modeSelectEl.innerText === 'SURVIVOR') calculateScore();
     
     // blockEl[id].style.spriteWidth = spriteWidth;
     // blockEl[id].style.height = spriteHeight;
@@ -760,8 +765,12 @@ function playAgain(){
     // Alter display based on game mode
     if (modeSelectEl.innerText === 'CASUAL'){
         dispMessageEl.innerText = `Would you like to play again?`;
-    } else {
-        dispMessageEl.innerText = `Ready for level ${level}?`;
+    } else if (lose === true) {
+        dispMessageEl.innerText = `You scored ${score} points!
+        Play Again?`;
+    }
+    else {
+        dispMessageEl.innerText = `Ready for level ${level + 1}?`;
     };
 
     toggleEl.innerText = `YES`;
@@ -798,9 +807,8 @@ function reset(e){
         firstPicked = false;
         noMine = true;
 
-        //Resets the settings for the current mode by 
-        // changing mode twice.
-        if (modeSelectEl.innerText === 'SURVIVOR'){
+        // Sets the next level for SURVIVOR mode
+        if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
             minutes = 3 + minutes;
             if (seconds >= 10) {
                 timerEl.innerText = `0${minutes} : ${seconds}`;
@@ -810,9 +818,24 @@ function reset(e){
             level++;
             dispMessageEl.innerText = 'Clock starts when you clear!';
             playerMusic.volume = 0.2;
-        } else{
+        }   // resets all the settings for SURVIVOR mode
+            else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
+            minutes = 3;
+            seconds = 0;
+            lose = false;
+            level = 1;
+            timerEl.innerText = '03 : 00';
+            modeSelectEl.addEventListener('click', changeMode);
+            dispMessageEl.innerText = 'Ready when you are!';
+            startMines = 20;
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.volume = 0.2;
+        }
+            // resets all the settings for CASUAL mode
+            else{
             minutes = 0;
             seconds = 0;
+            lose = false;
             timerEl.innerText = '00 : 00';
             modeSelectEl.addEventListener('click', changeMode);
             dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
@@ -999,5 +1022,19 @@ function changeMode(){
         timerEl.innerText = '00 : 00';
         minutes = 0;
     };
+};
 
+//-----------------------------------------------------
+//         Calculate score (SURVIVOR mode)
+//-----------------------------------------------------
+
+function calculateScore(){
+    score = 0;
+
+    //
+    score += (minutes * 100);
+    score += (seconds);
+    score = score * level;
+    score = score / 10;
+    lose = true;
 };
