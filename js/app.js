@@ -31,6 +31,7 @@ const musicEl = document.getElementById('checkMusic');
 //              Declare state variables
 //-----------------------------------------------------
 let startMines = 20;
+let totalMineCount = 0;
 let remainingMines;
 let minutes = 0;
 let seconds = 0;
@@ -746,7 +747,6 @@ function flagSquare(obj, id){
 //------------------------------------------------------
 function mineCount(){
     remainingMines = startMines;
-    console.log (startMines, "minecount startMines");
 
     // searches for flagged mines
     squareArray.forEach(function(el){
@@ -757,9 +757,9 @@ function mineCount(){
         remainingMines = 0;
         dispMessageEl.innerText = `Check your flags! We only started with ${startMines} mines!!`;
     };
-    console.log (remainingMines, "minecount remainingMines");
     // displays final mine count
     remainingMinesEl.innerText = `Mines: ${remainingMines}`;
+    return remainingMines;
 };
 
 //-----------------------------------------------------
@@ -814,7 +814,7 @@ function reset(e){
         // Sets the next level for SURVIVOR mode
         if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
             // adjusts time for new round
-            minutes= Math.round(level/2) + minutes;
+            minutes++;
             // adjust time display based on digits
             if (seconds >= 10) {
                 timerEl.innerText = `0${minutes} : ${seconds}`;
@@ -824,20 +824,19 @@ function reset(e){
             // increase level
             level++;
             // increase minecount
+            totalMineCount += startMines;
             startMines += 5;
             dispMessageEl.innerText = 'Clock starts when you clear!';
             playerMusic.volume = 0.2;
-
-            console.log (startMines, "reset startMines");
-            console.log (remainingMines, "reset remainingMines");
             
 
         }   // resets all the settings for SURVIVOR mode
-            else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
+        else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
             minutes = 0;
             seconds = 30;
             lose = false;
             level = 1;
+            totalMineCount = 0;
             timerEl.innerText = '00 : 30';
             modeSelectEl.addEventListener('click', changeMode);
             dispMessageEl.innerText = 'Ready when you are!';
@@ -847,12 +846,13 @@ function reset(e){
             playerMusic.volume = 0.2;
         }
             // resets all the settings for CASUAL mode
-            else{
+        else{
             minutes = 0;
             seconds = 0;
             lose = false;
             startMines = 20;
             remainingMines = startMines;
+            totalMineCount = 0;
             timerEl.innerText = '00 : 00';
             modeSelectEl.addEventListener('click', changeMode);
             dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
@@ -873,7 +873,6 @@ function revealBoard(){
     toggleEl.removeEventListener('click', clearFlag);
     // stops the clock
     clearInterval(clockMaster);
-    console.log(remainingMines, "remaining mines reveal board")
     // final mine count
     mineCount();
 
@@ -1057,8 +1056,7 @@ function calculateScore(){
 
     //
     score += (level * 200);
-    score += (minutes * 100);
-    score += (seconds);
+    score += totalMineCount - mineCount();
     score = score / 10;
     lose = true;
 };
