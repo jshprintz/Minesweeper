@@ -37,14 +37,15 @@ let minutes = 0;
 let seconds = 0;
 let squareArray = [];
 let clearArray = [];
+let mainArray = [];
 let firstPicked;
 let newId;
 let clear;
-let masterArray = [];
 let noMine = true;
 let clockMaster;
 let timerDisp = '';
 let playSound = true;
+let playMusic = true;
 let level = 1;
 let lose = false;
 let score = 0;
@@ -72,6 +73,7 @@ const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
 
 // Set the volume for all of the sounds
+playerMusic.loop = true;
 playerMusic.volume = 0.2;
 playerBomb.volume = 0.1;
 playerCheer.volume = 0.1;
@@ -181,12 +183,14 @@ function firstPick(id){
     // Display positive headline
     headline(true);
     // Starts music over for casual play
-    if (modeSelectEl.innerText === 'CASUAL'){
-        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-        playerMusic.play();
-    } else{
-        playerMusic.play();
-    }
+    if (playMusic === true){
+        if (modeSelectEl.innerText === 'CASUAL'){
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.play();
+        } else{
+            playerMusic.play();
+        };
+    };
 };
 
 //---------------------------------------------------
@@ -497,14 +501,14 @@ function clearSquare(id){
     // Keep a record of all zeroes
     // RESEARCH POSSIBLY INSTANCE OF AND SEE IF THAT WORKS
     if (squareArray[id].surroundingMines === 0){
-        masterArray.push(id); // Master record of zeros
+        mainArray.push(id); // Master record of zeros
         clearArray.push(id); // Working record of zeros
-        for (let i=0; i<(masterArray.length - 1); i++){
+        for (let i=0; i<(mainArray.length - 1); i++){
             // if the square in question (the one just added)
             // is already on the master list, delete it from
             // both the master list and the working list
-            if (masterArray[i] === id){
-                masterArray.pop(); 
+            if (mainArray[i] === id){
+                mainArray.pop(); 
                 clearArray.pop();
             };
         }
@@ -719,8 +723,10 @@ function explosion(id){
 //------------------------------------------------
 
 function switchMusic(){
-    musicEl.checked ? playerMusic.play() : playerMusic.pause();
+    musicEl.checked ? playMusic = true : playMusic = false;
+    playMusic === true ? playerMusic.play() : playerMusic.pause();
 };
+
 
 //------------------------------------------------
 //              Switch sound on and off
@@ -785,7 +791,7 @@ function playAgain(){
         dispMessageEl.innerText = `Would you like to play again?`;
     } // Survivor mode Play Again?
     else if (lose === true) {
-        dispMessageEl.innerText = `You scored ${score} points!
+        dispMessageEl.innerText = `You made it to level ${level} and scored ${score} points!
         Play Again?`;
     } // Survivor mode Next Level
     else {
@@ -820,7 +826,7 @@ function reset(e){
         });
     
         // Set initial values for state variables
-        masterArray = [];
+        mainArray = [];
         clearArray = [];
         firstPicked = false;
         noMine = true;
@@ -833,7 +839,7 @@ function reset(e){
 };
 
 //--------------------------------------------------------
-// Reveal the board
+//                  Reveal the board
 //--------------------------------------------------------
 function revealBoard(){
     //remove old event listeners
@@ -1074,8 +1080,10 @@ function resetSelect(){
         dispMessageEl.innerText = 'Ready when you are!';
         startMines = 5;
         remainingMines = startMines;
-        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-        playerMusic.volume = 0.2;
+        if (playerMusic === true){
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.volume = 0.2;
+        };
     }
     //
     //         resets all the settings for CASUAL mode
@@ -1090,7 +1098,9 @@ function resetSelect(){
         timerEl.innerText = '00 : 00';
         modeSelectEl.addEventListener('click', changeMode);
         dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
-        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-        playerMusic.volume = 0.2;
+        if (playerMusic === true){
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.volume = 0.2;
+        };
     };
 };
