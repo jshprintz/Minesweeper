@@ -567,7 +567,7 @@ function checkMine(id){
 };
 
 //-----------------------------------------------------
-// User won!
+//                      User won!
 //-----------------------------------------------------
 function bigWinner(){
     if (playSound === true){    
@@ -587,12 +587,15 @@ function bigWinner(){
 };
 
 //----------------------------------------------------
-//  Randomizes the placement of mines on the board
+//      Randomizes the placement of mines on the board
 //----------------------------------------------------
 
 function randomMines(id){
     for (let i=0; i < startMines; i++){
+        // Random number generator
         let randNum = Math.floor(Math.random() * 100);
+        // Confirm random number is not first square
+        // and random number has not already been drawn
         if ((randNum !== id) && (squareArray[randNum].mine === false)){
             // Change square to containing mine
             squareArray[randNum].mine = true;
@@ -605,8 +608,8 @@ function randomMines(id){
 };
 
 //-----------------------------------------------
-// Checks to see if the user has won
-// ----------------------------------------------
+//          Checks to see if the user has won
+//-----------------------------------------------
 function checkWin(){
     let winCount = 0;
     // Checks each object to see if it's cleared
@@ -626,9 +629,12 @@ function checkWin(){
 };
 
 //------------------------------------------------------
-// Clock to keep score
+//              Clock to keep score
 //------------------------------------------------------
 function clock(){
+    
+    //          CALCULATE TIME
+    //---------------------------------------
     if (modeSelectEl.innerText === 'CASUAL'){
         // Casual mode
         seconds++;
@@ -655,7 +661,8 @@ function clock(){
         };
     }
 
-
+    //              DISPLAY TIME
+    //-------------------------------------
     //format timer
         timerDisp = `${minutes} : ${seconds}`;
 
@@ -666,44 +673,49 @@ function clock(){
     } else {
         timerDisp = `${minutes} : ${seconds}`;
     };
-
+    //display timer
     timerEl.innerText = timerDisp;
 };
 
 //---------------------------------------------
-// Populates a message in the h2
+//          Populates a message in the h2
 //---------------------------------------------
 
 function headline(pos){
+    // Positive headline
     if (pos === true){
         dispMessageEl.innerText = posHeadline[Math.floor(Math.random() * posHeadline.length)];
-    } else {
+    } // Negative headline
+    else {
         dispMessageEl.innerText = negHeadline[Math.floor(Math.random() * negHeadline.length)];
     };
 };
 
 //----------------------------------------------
-// Sprite image explosion (NOT YET FUNCTIONAL)
+//          Explosion sound and graphic
 //----------------------------------------------
 
 function explosion(id){
-    
+    // Sound On
     if (playSound === true){
         playerBomb.src = 'audio/156031__iwiploppenisse__explosion.mp3';
         playerBomb.setAttribute('preload', 'auto');
         playerBomb.play();
     }; 
+    // Pause music
     playerMusic.pause();
-
+    // If Survivor mode, calculate score
     if (modeSelectEl.innerText === 'SURVIVOR') calculateScore();
     
+    
+    // NOT FUNCITONAL SPRITE EXPLOSION
     // blockEl[id].style.spriteWidth = spriteWidth;
     // blockEl[id].style.height = spriteHeight;
     // blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
 };
 
 //------------------------------------------------
-// Switch music on and off
+//              Switch music on and off
 //------------------------------------------------
 
 function switchMusic(){
@@ -711,7 +723,7 @@ function switchMusic(){
 };
 
 //------------------------------------------------
-// Switch sound on and off
+//              Switch sound on and off
 //------------------------------------------------
 
 function switchSound(){
@@ -719,7 +731,7 @@ function switchSound(){
 };
 
 //---------------------------------------------------
-// Runs through logic when a user Marks a square
+//      Runs through logic when a user Marks a square
 //---------------------------------------------------
 
 function flagSquare(obj, id){
@@ -732,6 +744,7 @@ function flagSquare(obj, id){
     } // Checks if already cleared
     else if (squareArray[id].cleared === true){
         dispMessageEl.innerText = 'That spot has been cleared already.'
+        checkWin();
     }
     else {
         // Change to marked spot
@@ -743,7 +756,7 @@ function flagSquare(obj, id){
 };
 
 //------------------------------------------------------
-// Counts the remaining mines
+//          Counts the remaining mines
 //------------------------------------------------------
 function mineCount(){
     remainingMines = startMines;
@@ -763,28 +776,29 @@ function mineCount(){
 };
 
 //-----------------------------------------------------
-// Play Again display message
+//          Play Again display message
 //-----------------------------------------------------
 
 function playAgain(){
-    // Alter display based on game mode
+    // Casual mode Play Again?
     if (modeSelectEl.innerText === 'CASUAL'){
         dispMessageEl.innerText = `Would you like to play again?`;
-    } else if (lose === true) {
+    } // Survivor mode Play Again?
+    else if (lose === true) {
         dispMessageEl.innerText = `You scored ${score} points!
         Play Again?`;
-    }
+    } // Survivor mode Next Level
     else {
         dispMessageEl.innerText = `Ready for LEVEL ${level + 1}?`;
     };
-
+    // YES button display
     toggleEl.innerText = `YES`;
     toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     toggleEl.addEventListener('click', reset);
 };
 
 //----------------------------------------------------
-// Resets the game if the user wants to play again
+//  Resets the game if the user wants to play again
 //----------------------------------------------------
 
 function reset(e){
@@ -811,55 +825,9 @@ function reset(e){
         firstPicked = false;
         noMine = true;
 
-        // Sets the next level for SURVIVOR mode
-        if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
-            // adjusts time for new round
-            minutes++;
-            // adjust time display based on digits
-            if (seconds >= 10) {
-                timerEl.innerText = `0${minutes} : ${seconds}`;
-            } else{
-                timerEl.innerText = `0${minutes} : 0${seconds}`;
-            }
-            // increase level
-            level++;
-            // increase minecount
-            totalMineCount += startMines;
-            startMines += 5;
-            dispMessageEl.innerText = 'Clock starts when you clear!';
-            playerMusic.volume = 0.2;
-            
-
-        }   // resets all the settings for SURVIVOR mode
-        else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
-            minutes = 0;
-            seconds = 30;
-            lose = false;
-            level = 1;
-            totalMineCount = 0;
-            timerEl.innerText = '00 : 30';
-            modeSelectEl.addEventListener('click', changeMode);
-            dispMessageEl.innerText = 'Ready when you are!';
-            startMines = 5;
-            remainingMines = startMines;
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-            playerMusic.volume = 0.2;
-        }
-            // resets all the settings for CASUAL mode
-        else{
-            minutes = 0;
-            seconds = 0;
-            lose = false;
-            startMines = 20;
-            remainingMines = startMines;
-            totalMineCount = 0;
-            timerEl.innerText = '00 : 00';
-            modeSelectEl.addEventListener('click', changeMode);
-            dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-            playerMusic.volume = 0.2;
-        };
-
+        // Directing to appropriate level/reset
+        resetSelect();
+        // Reset minecount
         mineCount();
         boardEl.addEventListener('click', render);
 };
@@ -876,8 +844,8 @@ function revealBoard(){
     // final mine count
     mineCount();
 
-        // Changes all of the background images for the squares
-        // based on the data pulled from the object
+    // Changes all of the background images for the squares
+    // based on the data pulled from the object
     for (let i=0; i<squareArray.length; i++){
         if ((squareArray[i].cleared === false) && (squareArray[i].flagged === false)) {
             // Not cleared, not marked squares
@@ -901,7 +869,6 @@ function revealBoard(){
         // to play again option.
         setTimeout(playAgain, 4000);
 };
-
 
 //-----------------------------------------------------
 // Assigns each square with the number of surrounding
@@ -1029,6 +996,7 @@ function assignSurrounding(){
 //---------------------------------------------------
 
 function changeMode(){
+    // If Casual mode, change to SURVIVOR
     if (modeSelectEl.innerText === 'CASUAL'){
         modeSelectEl.innerText = 'SURVIVOR';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
@@ -1036,7 +1004,8 @@ function changeMode(){
         minutes = 0;
         seconds = 30;
         startMines = 5;
-    } else {
+    } // If SURVIVOR mode, change to CASUAL
+    else {
         modeSelectEl.innerText = 'CASUAL';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
         timerEl.innerText = '00 : 00';
@@ -1044,6 +1013,7 @@ function changeMode(){
         seconds = 0;
         startMines = 20;
     };
+    // Update mine count
     remainingMinesEl.innerText = `Mines: ${startMines}`
 };
 
@@ -1053,10 +1023,74 @@ function changeMode(){
 
 function calculateScore(){
     score = 0;
-
-    //
+    // 200 points for every level advance
     score += (level * 200);
+    // add all the total mines cleared, subtracting the mines
+    // that weren't cleared yet for that level
     score += totalMineCount - mineCount();
+    // Divide by 10 to make it more readable.
     score = score / 10;
+    // Let it be known that the user lost.
     lose = true;
+};
+
+//----------------------------------------------------
+//      Determines correct path for Reset
+// (Casual reset, Survivor reset, Survivor next level)
+//----------------------------------------------------
+
+function resetSelect(){
+    //
+    //      Sets the next level for SURVIVOR mode
+    //
+    if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
+        // adjusts time for new round
+        minutes++;
+        // adjust time display based on digits
+        if (seconds >= 10) {
+            timerEl.innerText = `0${minutes} : ${seconds}`;
+        } else{
+            timerEl.innerText = `0${minutes} : 0${seconds}`;
+        }
+    // increase level
+    level++;
+    // increase minecount
+    totalMineCount += startMines;
+    startMines += 5;
+    dispMessageEl.innerText = 'Clock starts when you clear!';
+    playerMusic.volume = 0.2;
+    }
+    //   
+    //      resets all the settings for SURVIVOR mode
+    //
+    else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
+        minutes = 0;
+        seconds = 30;
+        lose = false;
+        level = 1;
+        totalMineCount = 0;
+        timerEl.innerText = '00 : 30';
+        modeSelectEl.addEventListener('click', changeMode);
+        dispMessageEl.innerText = 'Ready when you are!';
+        startMines = 5;
+        remainingMines = startMines;
+        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+        playerMusic.volume = 0.2;
+    }
+    //
+    //         resets all the settings for CASUAL mode
+    //
+    else{
+        minutes = 0;
+        seconds = 0;
+        lose = false;
+        startMines = 20;
+        remainingMines = startMines;
+        totalMineCount = 0;
+        timerEl.innerText = '00 : 00';
+        modeSelectEl.addEventListener('click', changeMode);
+        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
+        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+        playerMusic.volume = 0.2;
+    };
 };
