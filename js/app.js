@@ -1,7 +1,7 @@
 console.log('Javascript works')
 //-----------------------------------------------------
 // Images obtained:
-// Explosion: https://www.pngwing.com/en/free-png-vdqes/download
+// Explosion: https://freesound.org/people/Iwiploppenisse/sounds/156031/
 //
 // Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
 //
@@ -11,7 +11,6 @@ console.log('Javascript works')
 // Cheering Sound
 // https://freesound.org/people/jayfrosting/sounds/333404/
 //----------------------------------------------------
-
 
 //-----------------------------------------------------
 //              Cache my DOM elements
@@ -30,20 +29,17 @@ const musicEl = document.getElementById('checkMusic');
 //-----------------------------------------------------
 //              Declare state variables
 //-----------------------------------------------------
-let startMines = 20;
-let totalMineCount = 0;
-let remainingMines;
-let minutes = 0;
-let seconds = 0;
-let squareArray = [];
-let clearArray = [];
-let mainArray = [];
+// Mine Count variables
+let [startMines, totalMineCount, remainingMines] = [20, 0, 0];
+// Time variables
+let [minutes, seconds, timerDisp, clockMaster] = [0, 0, '', null];
+// Computer clear variables
+let [squareArray, clearArray, mainArray, clear] = [ [], [], [], ''];
+
+// Misc. Variables
 let firstPicked;
 let newId;
-let clear;
 let noMine = true;
-let clockMaster;
-let timerDisp = '';
 let playSound = true;
 let playMusic = true;
 let level = 1;
@@ -64,31 +60,12 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 `That was the worst square you could have picked.`, `Horrible choice. Just horrible.`,
 `If you want to help us, you can join our enemy.`];
 
-const currentMode = modeSelectEl.innerText;
-const spriteWidth = 180;
-const spriteHeight = 240;
 const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3');
 const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
 const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
-
-// Set the volume for all of the sounds
-playerMusic.loop = true;
-playerMusic.volume = 0.2;
-playerBomb.volume = 0.1;
-playerCheer.volume = 0.1;
-
 //-----------------------------------------------------
-// Add Initial Event Listeners
-//-----------------------------------------------------
-boardEl.addEventListener('click', render);
-musicEl.addEventListener('change', switchMusic);
-soundEl.addEventListener('change', switchSound);
-modeSelectEl.addEventListener('click', changeMode);
-//-----------------------------------------------------
-
-//-----------------------------------------------------
-// Initialize program
+//                 Initialize program
 //-----------------------------------------------------
 init();
 
@@ -96,13 +73,24 @@ init();
 //                 F U N C T I O N S
 //------------------------------------------------------
 
-// Initialize program
+
+//------------------------------------------------------
+//             Initialize program function
 //------------------------------------------------------
 function init(){
+//-----------------------------------------------------
+//          Add Initial Event Listeners
+//-----------------------------------------------------
+    boardEl.addEventListener('click', render);
+    musicEl.addEventListener('change', switchMusic);
+    soundEl.addEventListener('change', switchSound);
+    modeSelectEl.addEventListener('click', changeMode);
+//-----------------------------------------------------
     
-    // Create the array containing objects
+    // Create the array containing each square
+    // as an object.
     blockEl.forEach(function(el){
-        // Push new object
+        // Push new square object to array
         squareArray.push(newSquare());
     });
 
@@ -110,10 +98,16 @@ function init(){
     remainingMines = startMines;
     firstPicked = false;
     noMine = true;
+
+    // Set the volume for all of the sounds
+    playerMusic.loop = true;
+    playerMusic.volume = 0.2;
+    playerBomb.volume = 0.1;
+    playerCheer.volume = 0.1;
 };
 
 //----------------------------------------------------
-// Render changes
+//                      Render changes
 //----------------------------------------------------
 function render(e){
     toggleEl.addEventListener('click', clearFlag);
@@ -122,11 +116,10 @@ function render(e){
     let blockID = e.target.id;
     // Capture the block object
     let blockObj = e.target;
-
+    // Ensures user picks a square and not the board
     if (blockID !== 'board'){
     // checks to see if user is clearing a square or 
     // marking a square
-
         clearCheck(blockObj, blockID);
     }
 };
@@ -141,32 +134,20 @@ function clearCheck(obj, id){
     if (toggleEl.innerText === 'CLEAR') {
         // Checks if this is the first action
         if (firstPicked === false){
-            // randomizes mines after selection
+            // User picking for the first time
             firstPick(id);
         } else {
             // determine if pick is a loser, winner, or cleared
             checkPick(id);
         };
     } else {
+        // Marks the square with a flag
         flagSquare(obj, id);
     };
 };
 
 //---------------------------------------------------
-// Toggle between Clearing blocks and Marking blocks
-//---------------------------------------------------
-function clearFlag(e){
-    if (toggleEl.innerText === 'CLEAR'){
-        toggleEl.innerText = 'FLAG';
-        toggleEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
-    } else {
-        toggleEl.innerText = 'CLEAR';
-        toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
-    };
-};
-
-//---------------------------------------------------
-// FIRST SELECTION of the game
+//           FIRST SELECTION of the game
 //---------------------------------------------------
 function firstPick(id){
     firstPicked = true;
@@ -183,6 +164,7 @@ function firstPick(id){
     // Display positive headline
     headline(true);
     // Starts music over for casual play
+    // Continues music for Survivor play
     if (playMusic === true){
         if (modeSelectEl.innerText === 'CASUAL'){
             playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
@@ -211,7 +193,7 @@ function checkPick(id){
         checkWin();
     } else if (noMine === false){
         clearInterval(clockMaster);
-        revealBoard();
+        revealBoard(id);
     }
 };
 
@@ -406,7 +388,8 @@ let testCorner = true;
             if (testCorner === true) clearSquare(id+11);
         };
     };
-
+    // clearArray is the array that contains the found squares
+    // the computer needs to clear.
     if (clearArray.length > 0) {
     // If clearArray contains original square selected, remove
         for (const i in clearArray){
@@ -471,7 +454,7 @@ function checkCorners(id, num){
 //---------------------------------------------------------
 function clearSquare(id){
     squareArray[id].cleared = true;
-    // Change to cleared spot
+    // Change background to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     
@@ -497,15 +480,19 @@ function clearSquare(id){
         };
     };
 
-
-    // Keep a record of all zeroes
-    // RESEARCH POSSIBLY INSTANCE OF AND SEE IF THAT WORKS
+    //------------------------------------------
+    // Probably better way to do this
+    // -----------------------------------------
+    // Keep a main record of all squares with no
+    // surrounding mines.
+    // If square does not have surrounding mines,
+    // add square to main array and clear array.
     if (squareArray[id].surroundingMines === 0){
         mainArray.push(id); // Master record of zeros
         clearArray.push(id); // Working record of zeros
         for (let i=0; i<(mainArray.length - 1); i++){
             // if the square in question (the one just added)
-            // is already on the master list, delete it from
+            // is already on the main array, delete it from
             // both the master list and the working list
             if (mainArray[i] === id){
                 mainArray.pop(); 
@@ -514,6 +501,7 @@ function clearSquare(id){
         }
     };
 };
+
 //-----------------------------------------------------
 // clearArray Clear (clears surrounding squares)
 //-----------------------------------------------------
@@ -560,8 +548,8 @@ function checkMine(id){
         mineCount();
         // Negative headline
         headline(false);
-        // Explosion graphic
-        explosion(id);
+        // Explosion audio
+        explosion();
         // Don't continue
         return false;
     } else {
@@ -577,13 +565,14 @@ function bigWinner(){
     if (playSound === true){    
         playerCheer.play();
     };
-
+    // Casual mode Victory
     if (modeSelectEl.innerText === 'CASUAL'){
         dispMessageEl.innerText = `You did it! Congratualtions!
                     Now see if you can do it in under ${timerDisp}.`;
         playerMusic.pause();
         revealBoard();
-    } else {
+    } // Survivor mode next level
+    else {
         dispMessageEl.innerText = `Great job! This next one has ${startMines + 5} mines!`;
         playerMusic.volume = 0.1;
         revealBoard();
@@ -699,23 +688,17 @@ function headline(pos){
 //          Explosion sound and graphic
 //----------------------------------------------
 
-function explosion(id){
+function explosion(){
     // Sound On
     if (playSound === true){
         playerBomb.src = 'audio/156031__iwiploppenisse__explosion.mp3';
-        playerBomb.setAttribute('preload', 'auto');
         playerBomb.play();
     }; 
     // Pause music
-    playerMusic.pause();
+    playerMusic.pause(); 
+
     // If Survivor mode, calculate score
     if (modeSelectEl.innerText === 'SURVIVOR') calculateScore();
-    
-    
-    // NOT FUNCITONAL SPRITE EXPLOSION
-    // blockEl[id].style.spriteWidth = spriteWidth;
-    // blockEl[id].style.height = spriteHeight;
-    // blockEl[id].style.backgroundImage = 'url(../images/explosion.png) 0 0';
 };
 
 //------------------------------------------------
@@ -726,7 +709,6 @@ function switchMusic(){
     musicEl.checked ? playMusic = true : playMusic = false;
     playMusic === true ? playerMusic.play() : playerMusic.pause();
 };
-
 
 //------------------------------------------------
 //              Switch sound on and off
@@ -791,7 +773,7 @@ function playAgain(){
         dispMessageEl.innerText = `Would you like to play again?`;
     } // Survivor mode Play Again?
     else if (lose === true) {
-        dispMessageEl.innerText = `You made it to level ${level} and scored ${score} points!
+        dispMessageEl.innerText = `You made it to LEVEL ${level} and scored ${score} points!
         Play Again?`;
     } // Survivor mode Next Level
     else {
@@ -841,7 +823,7 @@ function reset(e){
 //--------------------------------------------------------
 //                  Reveal the board
 //--------------------------------------------------------
-function revealBoard(){
+function revealBoard(id){
     //remove old event listeners
     boardEl.removeEventListener('click', render);
     toggleEl.removeEventListener('click', clearFlag);
@@ -854,7 +836,7 @@ function revealBoard(){
     // based on the data pulled from the object
     for (let i=0; i<squareArray.length; i++){
         if ((squareArray[i].cleared === false) && (squareArray[i].flagged === false)) {
-            // Not cleared, not marked squares
+            // Not cleared, not flagged squares
             blockEl[i].style.backgroundImage = 'radial-gradient(circle, #bb7617, #bb7617, #bb7617, #bb7617, #bb7617, #b67316, #b16f16, #ac6c15, #a06514, #955e13, #8a5711, #7f5010)';
         }
             // Successfully marked mines
@@ -996,7 +978,6 @@ function assignSurrounding(){
     };
 };
 
-
 //---------------------------------------------------
 // Change game mode (Casual/Survivor)
 //---------------------------------------------------
@@ -1057,46 +1038,61 @@ function resetSelect(){
             timerEl.innerText = `0${minutes} : ${seconds}`;
         } else{
             timerEl.innerText = `0${minutes} : 0${seconds}`;
-        }
-    // increase level
-    level++;
-    // increase minecount
-    totalMineCount += startMines;
-    startMines += 5;
-    dispMessageEl.innerText = 'Clock starts when you clear!';
-    playerMusic.volume = 0.2;
+        };
+        // increase level
+        level++;
+        // increase minecount
+        totalMineCount += startMines;
+        startMines += 5;
+        // Display message
+        dispMessageEl.innerText = 'Clock starts when you clear!';
+        playerMusic.volume = 0.2;
     }
     //   
     //      resets all the settings for SURVIVOR mode
     //
     else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
-        minutes = 0;
         seconds = 30;
-        lose = false;
-        level = 1;
-        totalMineCount = 0;
-        timerEl.innerText = '00 : 30';
-        modeSelectEl.addEventListener('click', changeMode);
-        dispMessageEl.innerText = 'Ready when you are!';
         startMines = 5;
-        remainingMines = startMines;
-        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
-        playerMusic.volume = 0.2;
+        timerEl.innerText = '00 : 30';
+        dispMessageEl.innerText = 'Ready when you are!';
+        resetLikeVariables();
     }
     //
     //         resets all the settings for CASUAL mode
     //
     else{
-        minutes = 0;
         seconds = 0;
-        lose = false;
         startMines = 20;
-        remainingMines = startMines;
-        totalMineCount = 0;
         timerEl.innerText = '00 : 00';
-        modeSelectEl.addEventListener('click', changeMode);
         dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
-        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
-        playerMusic.volume = 0.2;
-        };
+        resetLikeVariables();
+    };
+};
+
+//--------------------------------------------------
+//  Resets some common like variables in game modes
+//--------------------------------------------------
+function resetLikeVariables(){
+    minutes = 0;
+    lose = false;
+    totalMineCount = 0
+    level = 1;
+    remainingMines = startMines;
+    modeSelectEl.addEventListener('click', changeMode);
+    playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
+    playerMusic.volume = 0.2;
+}
+
+//---------------------------------------------------
+// Toggle between Clearing blocks and Marking blocks
+//---------------------------------------------------
+function clearFlag(e){
+    if (toggleEl.innerText === 'CLEAR'){
+        toggleEl.innerText = 'FLAG';
+        toggleEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
+    } else {
+        toggleEl.innerText = 'CLEAR';
+        toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    };
 };
