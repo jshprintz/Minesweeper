@@ -6,7 +6,7 @@ console.log('Javascript works')
 // Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
 //
 // Music Gustav Holst: The Planets — “Mars, the Bringer of War”
-// https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg
+// https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.mp3
 //
 // Cheering Sound
 // https://freesound.org/people/jayfrosting/sounds/333404/
@@ -67,7 +67,7 @@ const negHeadline = [`And now we're all dead!`,`And we lost the war. I knew you 
 const currentMode = modeSelectEl.innerText;
 const spriteWidth = 180;
 const spriteHeight = 240;
-const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg');
+const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3');
 const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
 const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
@@ -185,7 +185,7 @@ function firstPick(id){
     // Starts music over for casual play
     if (playMusic === true){
         if (modeSelectEl.innerText === 'CASUAL'){
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
+            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
             playerMusic.play();
         } else{
             playerMusic.play();
@@ -1080,10 +1080,8 @@ function resetSelect(){
         dispMessageEl.innerText = 'Ready when you are!';
         startMines = 5;
         remainingMines = startMines;
-        if (playerMusic === true){
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-            playerMusic.volume = 0.2;
-        };
+        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
+        playerMusic.volume = 0.2;
     }
     //
     //         resets all the settings for CASUAL mode
@@ -1098,9 +1096,7 @@ function resetSelect(){
         timerEl.innerText = '00 : 00';
         modeSelectEl.addEventListener('click', changeMode);
         dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
-        if (playerMusic === true){
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.ogg';
-            playerMusic.volume = 0.2;
+        playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
+        playerMusic.volume = 0.2;
         };
-    };
 };
