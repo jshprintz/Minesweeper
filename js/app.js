@@ -37,7 +37,7 @@ let [minutes, seconds, timerDisp, clockMaster] = [0, 0, '', null];
 let [squareArray, clearArray, mainArray, clear] = [ [], [], [], ''];
 
 // Misc. Variables
-let firstPicked;
+let firstPicked = false;
 let newId;
 let noMine = true;
 let playSound = true;
@@ -64,6 +64,16 @@ const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mar
 const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
 const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
+// -------------------TEST CODE-------------------------
+const spaceToggleEl = document.addEventListener('keyup', e => {
+    if ((e.code == 'Space') && (firstPicked === true)) {
+        console.log(squareArray[convertID(e.target.id)])
+        if ((squareArray[convertID(e.target.id)].flagged === false)
+        && (squareArray[convertID(e.target.id)].mine === false)){
+            clearFlag();
+        };
+    };
+});
 //-----------------------------------------------------
 //                 Initialize program
 //-----------------------------------------------------
@@ -73,23 +83,19 @@ init();
 //                 F U N C T I O N S
 //------------------------------------------------------
 
-
 //------------------------------------------------------
 //             Initialize program function
 //------------------------------------------------------
 function init(){
-//-----------------------------------------------------
-//          Add Initial Event Listeners
-//-----------------------------------------------------
+    //Add Initial Event Listeners
     boardEl.addEventListener('click', render);
     musicEl.addEventListener('change', switchMusic);
     soundEl.addEventListener('change', switchSound);
-    modeSelectEl.addEventListener('click', changeMode);
-//-----------------------------------------------------
+    modeSelectEl.addEventListener('click', changeMode); 
     
     // Create the array containing each square
     // as an object.
-    blockEl.forEach(function(el){
+    blockEl.forEach(function(){
         // Push new square object to array
         squareArray.push(newSquare());
     });
@@ -112,6 +118,7 @@ function init(){
 function render(e){
     toggleEl.addEventListener('click', clearFlag);
     modeSelectEl.removeEventListener('click', changeMode);
+
     // Capture the block ID
     let blockID = e.target.id;
     // Capture the block object
@@ -481,9 +488,6 @@ function clearSquare(id){
         };
     };
 
-    //------------------------------------------
-    // Probably better way to do this
-    // -----------------------------------------
     // Keep a main record of all squares with no
     // surrounding mines.
     // If square does not have surrounding mines,
@@ -583,7 +587,6 @@ function bigWinner(){
 //----------------------------------------------------
 //      Randomizes the placement of mines on the board
 //----------------------------------------------------
-
 function randomMines(id){
     for (let i=0; i < startMines; i++){
         // Random number generator
@@ -674,7 +677,6 @@ function clock(){
 //---------------------------------------------
 //          Populates a message in the h2
 //---------------------------------------------
-
 function headline(pos){
     // Positive headline
     if (pos === true){
@@ -688,7 +690,6 @@ function headline(pos){
 //----------------------------------------------
 //          Explosion sound and graphic
 //----------------------------------------------
-
 function explosion(){
     // Sound On
     if (playSound === true){
@@ -705,7 +706,6 @@ function explosion(){
 //------------------------------------------------
 //              Switch music on and off
 //------------------------------------------------
-
 function switchMusic(){
     musicEl.checked ? playMusic = true : playMusic = false;
     playMusic === true ? playerMusic.play() : playerMusic.pause();
@@ -714,7 +714,6 @@ function switchMusic(){
 //------------------------------------------------
 //              Switch sound on and off
 //------------------------------------------------
-
 function switchSound(){
     soundEl.checked ? playSound = true : playSound = false;
 };
@@ -722,7 +721,6 @@ function switchSound(){
 //---------------------------------------------------
 //      Runs through logic when a user Marks a square
 //---------------------------------------------------
-
 function flagSquare(obj, id){
     // Checks if already marked
     if (squareArray[id].flagged === true) {
@@ -732,7 +730,7 @@ function flagSquare(obj, id){
         checkWin();
     } // Checks if already cleared
     else if (squareArray[id].cleared === true){
-        dispMessageEl.innerText = 'That spot has been cleared already.'
+        headline(true);
         checkWin();
     }
     else {
@@ -767,7 +765,6 @@ function mineCount(){
 //-----------------------------------------------------
 //          Play Again display message
 //-----------------------------------------------------
-
 function playAgain(){
     // Casual mode Play Again?
     if (modeSelectEl.innerText === 'CASUAL'){
@@ -789,36 +786,36 @@ function playAgain(){
 //----------------------------------------------------
 //  Resets the game if the user wants to play again
 //----------------------------------------------------
-
 function reset(e){
-        // Resets event listeners
-        toggleEl.removeEventListener('click', reset);
-        toggleEl.innerText = 'CLEAR';
+    // Resets event listeners
+    toggleEl.removeEventListener('click', reset);
+    toggleEl.innerText = 'CLEAR';
 
-        squareArray = [];
+    squareArray = [];
 
-        // Create the array containing objects
-        blockEl.forEach(function(el){
-            // Reset board
-            el.style.border = '5px groove #FFEFCA';
-            el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
-            el.innerText = '';
-            el.style.fontSize = '10pt';
-            // Push new object
-            squareArray.push(newSquare());
-        });
+    // Create the array containing objects
+    blockEl.forEach(function(el){
+        // Reset board
+        el.style.border = '5px groove #FFEFCA';
+        el.style.backgroundImage = 'radial-gradient(circle, #5c4a0a, #65510d, #6d5710, #765e13, #7f6516, #81681b, #846a20, #866d25, #826c2c, #7e6b33, #7b6939, #77683f)';
+        el.innerText = '';
+        el.style.fontSize = '10pt';
+        // Push new object
+        squareArray.push(newSquare());
+    });
     
-        // Set initial values for state variables
-        mainArray = [];
-        clearArray = [];
-        firstPicked = false;
-        noMine = true;
 
-        // Directing to appropriate level/reset
-        resetSelect();
-        // Reset minecount
-        mineCount();
-        boardEl.addEventListener('click', render);
+    // Set initial values for state variables
+    mainArray = [];
+    clearArray = [];
+    firstPicked = false;
+    noMine = true;
+
+    // Directing to appropriate level/reset
+    resetSelect();
+    // Reset minecount
+    mineCount();
+    boardEl.addEventListener('click', render);
 };
 
 //--------------------------------------------------------
@@ -982,7 +979,6 @@ function assignSurrounding(){
 //---------------------------------------------------
 // Change game mode (Casual/Survivor)
 //---------------------------------------------------
-
 function changeMode(){
     // If Casual mode, change to SURVIVOR
     if (modeSelectEl.innerText === 'CASUAL'){
@@ -1008,7 +1004,6 @@ function changeMode(){
 //-----------------------------------------------------
 //         Calculate score (SURVIVOR mode)
 //-----------------------------------------------------
-
 function calculateScore(){
     score = 0;
     // 200 points for every level advance
@@ -1026,7 +1021,6 @@ function calculateScore(){
 //      Determines correct path for Reset
 // (Casual reset, Survivor reset, Survivor next level)
 //----------------------------------------------------
-
 function resetSelect(){
     //
     //      Sets the next level for SURVIVOR mode
@@ -1083,7 +1077,7 @@ function resetLikeVariables(){
     modeSelectEl.addEventListener('click', changeMode);
     playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
     playerMusic.volume = 0.2;
-}
+};
 
 //---------------------------------------------------
 // Toggle between Clearing blocks and Marking blocks
