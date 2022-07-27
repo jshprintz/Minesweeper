@@ -64,16 +64,6 @@ const playerMusic = new Audio('audio/Gustav_Holst_-_the_planets,_op._32_-_i._mar
 const playerBomb = new Audio('audio/156031__iwiploppenisse__explosion.mp3');
 const playerCheer = new Audio('audio/333404__jayfrosting__cheer-2.wav');
 
-// -------------------TEST CODE-------------------------
-const spaceToggleEl = document.addEventListener('keyup', e => {
-    if ((e.code == 'Space') && (firstPicked === true)) {
-        console.log(squareArray[convertID(e.target.id)])
-        if ((squareArray[convertID(e.target.id)].flagged === false)
-        && (squareArray[convertID(e.target.id)].mine === false)){
-            clearFlag();
-        };
-    };
-});
 //-----------------------------------------------------
 //                 Initialize program
 //-----------------------------------------------------
