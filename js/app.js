@@ -448,12 +448,13 @@ function checkCorners(id, num){
     } else return true;
 };
 
-
 //---------------------------------------------------------
 // Clears a square cleared by the computer
 //---------------------------------------------------------
 function clearSquare(id){
     squareArray[id].cleared = true;
+    squareArray[id].flagged = false;
+    mineCount();
     // Change background to cleared spot
     let squareEl = document.getElementById('sq' + id);
     squareEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fcfafc, #faf5f7, #f9f0ef, #f5ece7, #f4e8de, #f0e5d4, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
