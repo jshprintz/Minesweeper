@@ -570,6 +570,8 @@ function bigWinner(){
     };
         // Tutorial victory
     if (tutorial === true){
+        // stops the clock
+        clearInterval(clockMaster);
         dispMessageEl.innerText = `Great job! Now let's learn Survivor mode`;
         setTimeout(reset, 5000);
     }   // Casual mode Victory
@@ -792,6 +794,7 @@ function reset(e){
     // Resets event listeners
     toggleEl.removeEventListener('click', reset);
     toggleEl.innerText = 'CLEAR';
+    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
 
     squareArray = [];
 
@@ -996,9 +999,9 @@ function changeMode(){
     if (modeSelectEl.innerText === 'CASUAL'){
         modeSelectEl.innerText = 'SURVIVOR';
         modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
-        timerEl.innerText = '00 : 30';
-        minutes = 0;
-        seconds = 30;
+        timerEl.innerText = '01 : 00';
+        minutes = 1;
+        seconds = 0;
         startMines = 5;
     } // If SURVIVOR mode, change to CASUAL
     else {
@@ -1039,7 +1042,13 @@ function resetSelect(){
     //
     if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === false)){
         // adjusts time for new round
-        minutes++;
+        minutes += Math.floor(level/2);
+        if ((level%2) === 1) seconds += 30;
+        if (seconds >= 60){
+            minutes++;
+            seconds -= 60;
+        };
+
         // adjust time display based on digits
         if (seconds >= 10) {
             timerEl.innerText = `0${minutes} : ${seconds}`;
@@ -1061,8 +1070,8 @@ function resetSelect(){
     else if ((modeSelectEl.innerText === 'SURVIVOR') && (lose === true)){
         seconds = 30;
         startMines = 5;
-        timerEl.innerText = '00 : 30';
-        dispMessageEl.innerText = 'Ready when you are!';
+        timerEl.innerText = '01 : 00';
+        dispMessageEl.innerText = 'Choose the game mode below, the click on the grid to begin!';
         resetLikeVariables();
     }
     //
@@ -1072,7 +1081,7 @@ function resetSelect(){
         seconds = 0;
         startMines = 20;
         timerEl.innerText = '00 : 00';
-        dispMessageEl.innerText = 'Soldier! We need you to clear this field immediately!';
+        dispMessageEl.innerText = 'Choose the game mode below, the click on the grid to begin!';
         resetLikeVariables();
     };
 };
@@ -1141,7 +1150,7 @@ function resetButtons(){
     if (modeSelectEl.innerText === 'CASUAL'){
         timerEl.innerText = '00 : 00'
     } else {
-        timerEl.innerText = '00 : 30'
+        timerEl.innerText = '01 : 00'
     };
 };
 
@@ -1159,7 +1168,7 @@ function yesTutorial(){
     timerEl.innerText = '00 : 00';
     
     tutorial = true;
-    dispMessageEl.innerText = 'The below grid represents a minefield. Go ahead and click anywhere on the grid to start.';
+    dispMessageEl.innerText = 'The grid below represents a minefield. Go ahead and click anywhere on the grid to start.';
     
 };
 //----------------TUTORIAL--------------------------------
@@ -1190,7 +1199,7 @@ function survivorTeachOne(){
 };
 
 function survivorTeachTwo(){
-    dispMessageEl.innerText = `You only start with 30 seconds, but each level you gain 1 minute plus previous time!`;
+    dispMessageEl.innerText = `You only start with 1 minute, but with each level you get time bonuses!`;
     setTimeout(survivorTeachThree, 5000);
 };
 

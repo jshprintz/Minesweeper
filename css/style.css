@@ -17,7 +17,7 @@ h2 {
     border:#9B823F 10px;
     border-style: groove;
     font-family: 'Black Ops One', cursive;
-    min-height: 160px;
+    min-height: 260px;
 }
 
 nav {
@@ -90,7 +90,6 @@ main {
     font-weight: bold;
     font-family: 'Black Ops One', cursive;
 }
-
 
 #row1 {
     justify-content: center;
@@ -197,4 +196,7 @@ footer {
         margin-top: 0%;
     }
 
+    h2 {
+        min-height: 160px;
+    }
 }
