@@ -87,8 +87,8 @@ Flowchart
 #### How it's going...
 Desktop
 
-![Screen Shot 2022-07-28 at 12.46.52 PM](https://i.imgur.com/xn3HCh9.png)
+![Screen Shot 2022-07-28 at 2.25.55 PM](https://i.imgur.com/V0XIXJ1.png)
 
 Mobile
 
-![Screen Shot 2022-07-28 at 12.55.44 PM](https://i.imgur.com/6U4VQKa.png)
+![Screen Shot 2022-07-28 at 2.26.14 PM](https://i.imgur.com/RTpSONM.png)
