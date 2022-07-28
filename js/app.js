@@ -45,6 +45,8 @@ let playMusic = true;
 let level = 1;
 let lose = false;
 let score = 0;
+let tutorial = false;
+let repeatTutorial = true;
 
 //-----------------------------------------------------
 //              Declare constant variables
@@ -78,10 +80,10 @@ init();
 //------------------------------------------------------
 function init(){
     //Add Initial Event Listeners
-    boardEl.addEventListener('click', render);
+    toggleEl.addEventListener('click', toggleButton);
     musicEl.addEventListener('change', switchMusic);
     soundEl.addEventListener('change', switchSound);
-    modeSelectEl.addEventListener('click', changeMode); 
+    modeSelectEl.addEventListener('click', changeMode);
     
     // Create the array containing each square
     // as an object.
@@ -106,8 +108,8 @@ function init(){
 //                      Render changes
 //----------------------------------------------------
 function render(e){
-    toggleEl.addEventListener('click', clearFlag);
     modeSelectEl.removeEventListener('click', changeMode);
+    
 
     // Capture the block ID
     let blockID = e.target.id;
@@ -132,6 +134,7 @@ function clearCheck(obj, id){
         // Checks if this is the first action
         if (firstPicked === false){
             // User picking for the first time
+            toggleEl.addEventListener('click', toggleButton); 
             firstPick(id);
         } else {
             // determine if pick is a loser, winner, or cleared
@@ -158,16 +161,21 @@ function firstPick(id){
     computerClear(id);
     // Start clock
     clockMaster = setInterval(clock, 1000);
-    // Display positive headline
-    headline(true);
-    // Starts music over for casual play
-    // Continues music for Survivor play
-    if (playMusic === true){
-        if (modeSelectEl.innerText === 'CASUAL'){
-            playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
-            playerMusic.play();
-        } else{
-            playerMusic.play();
+
+    if (tutorial === true){
+        casualTeachOne();
+    } else {
+        // Display positive headline
+        headline(true);
+        // Starts music over for casual play
+        // Continues music for Survivor play
+        if (playMusic === true){
+            if (modeSelectEl.innerText === 'CASUAL'){
+                playerMusic.src = 'audio/Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war-[AudioTrimmer.com].mp3';
+                playerMusic.play();
+            } else{
+                playerMusic.play();
+            };
         };
     };
 };
@@ -560,13 +568,17 @@ function bigWinner(){
     if (playSound === true){    
         playerCheer.play();
     };
-    // Casual mode Victory
-    if (modeSelectEl.innerText === 'CASUAL'){
+        // Tutorial victory
+    if (tutorial === true){
+        dispMessageEl.innerText = `Great job! Now let's learn Survivor mode`;
+        setTimeout(reset, 5000);
+    }   // Casual mode Victory
+    else if (modeSelectEl.innerText === 'CASUAL'){
         dispMessageEl.innerText = `You did it! Congratualtions!
                     Now see if you can do it in under ${timerDisp}.`;
         playerMusic.pause();
         revealBoard();
-    } // Survivor mode next level
+    }   // Survivor mode next level
     else {
         dispMessageEl.innerText = `Great job! This next one has ${startMines + 5} mines!`;
         playerMusic.volume = 0.1;
@@ -806,6 +818,10 @@ function reset(e){
     // Reset minecount
     mineCount();
     boardEl.addEventListener('click', render);
+
+    if (tutorial === true){
+        survivorTeachOne();
+    };
 };
 
 //--------------------------------------------------------
@@ -814,7 +830,7 @@ function reset(e){
 function revealBoard(id){
     //remove old event listeners
     boardEl.removeEventListener('click', render);
-    toggleEl.removeEventListener('click', clearFlag);
+    toggleEl.removeEventListener('click', toggleButton);
     // stops the clock
     clearInterval(clockMaster);
     // final mine count
@@ -841,9 +857,15 @@ function revealBoard(id){
             blockEl[i].style.fontSize = '20pt';
         }
     };
-        // Four seconds display before changing headline
+
+    if (tutorial === true){
+        dispMessageEl.innerText = `Practice makes perfect. Let's learn SURVIVOR mode!`;
+        setTimeout(reset, 5000);
+    } else{
+        // Five seconds display before changing headline
         // to play again option.
-        setTimeout(playAgain, 4000);
+        setTimeout(playAgain, 5000);
+    };
 };
 
 //-----------------------------------------------------
@@ -1072,12 +1094,107 @@ function resetLikeVariables(){
 //---------------------------------------------------
 // Toggle between Clearing blocks and Marking blocks
 //---------------------------------------------------
-function clearFlag(e){
-    if (toggleEl.innerText === 'CLEAR'){
+function toggleButton(e){
+    
+    if ((tutorial === true) && (repeatTutorial === true)){
+        repeatTutorial = false;
+        casualTeachThree();
+    };
+    
+    if (toggleEl.innerText === 'START'){
+        toggleEl.innerText = 'YES';
+        timerEl.innerText = 'NO';
+        dispMessageEl.innerText = 'Welcome to MEGA Minesweeper! Do you need a tutorial?'
+        
+        modeSelectEl.removeEventListener('click', changeMode);
+        toggleEl.addEventListener('click', yesTutorial);
+        timerEl.addEventListener('click', noTutorial);
+
+    } else if (toggleEl.innerText === 'CLEAR'){
         toggleEl.innerText = 'FLAG';
         toggleEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
     } else {
         toggleEl.innerText = 'CLEAR';
         toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     };
+};
+
+//-------------------------------------------------
+//                  NO TUTORIAL
+//-------------------------------------------------
+function noTutorial(){
+    resetButtons();
+    dispMessageEl.innerText = 'Choose your game mode at the bottom, then click anywhere on the grid to start!';
+};
+
+//-------------------------------------------------
+// Resets values after Tutorial selection
+//-------------------------------------------------
+function resetButtons(){
+    toggleEl.removeEventListener('click', yesTutorial);
+    timerEl.removeEventListener('click', noTutorial);
+    modeSelectEl.addEventListener('click', changeMode);
+    boardEl.addEventListener('click', render);
+    tutorial = false;
+
+    toggleEl.innerText = 'CLEAR';
+    if (modeSelectEl.innerText === 'CASUAL'){
+        timerEl.innerText = '00 : 00'
+    } else {
+        timerEl.innerText = '00 : 30'
+    };
+};
+
+//-----------------------------------------------------
+//                  YES TUTORIAL
+//-----------------------------------------------------
+function yesTutorial(){
+    timerEl.removeEventListener('click', noTutorial);
+    boardEl.addEventListener('click', render);
+    toggleEl.removeEventListener('click', yesTutorial);
+    toggleEl.removeEventListener('click', toggleButton);
+
+    toggleEl.innerText = 'CLEAR';
+    modeSelectEl.innerText = 'CASUAL';
+    timerEl.innerText = '00 : 00';
+    
+    tutorial = true;
+    dispMessageEl.innerText = 'The below grid represents a minefield. Go ahead and click anywhere on the grid to start.';
+    
+};
+//----------------TUTORIAL--------------------------------
+function casualTeachOne(){
+    dispMessageEl.innerText = 'The first square will never be a mine. In CASUAL mode, the clock ticks up, so no rush!';
+    setTimeout(casualTeachTwo, 5000);
+};
+
+function casualTeachTwo(){
+    dispMessageEl.innerText = 'You can click on the CLEAR button to toggle between CLEAR and FLAG.';
+    toggleEl.addEventListener('click', toggleButton);
+};
+
+function casualTeachThree(){
+    dispMessageEl.innerText = 'Each number represent how many mines surround that square.';
+    setTimeout(casualTeachFour, 5000);
+};
+
+function casualTeachFour(){
+    dispMessageEl.innerText = 'Try to CLEAR the squares without mines, and FLAG the squares with mines!';
+    playerMusic.play();
+};
+
+function survivorTeachOne(){
+    changeMode();
+    dispMessageEl.innerText = `In SURVIVOR mode, you race against time to clear the squares.`;
+    setTimeout(survivorTeachTwo, 5000);
+};
+
+function survivorTeachTwo(){
+    dispMessageEl.innerText = `You only start with 30 seconds, but each level you gain 1 minute plus previous time!`;
+    setTimeout(survivorTeachThree, 5000);
+};
+
+function survivorTeachThree(){
+    dispMessageEl.innerText = `The higher the level, the more the score! Click a square to start!`;
+    tutorial = false;
 };

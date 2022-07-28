@@ -74,7 +74,7 @@ main {
     background-image: radial-gradient(circle, #e2d094, #e4d5a2, #e6d9af, #e7debd, #e9e2cb, #e9e2cb, #e9e2cb, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
     border:#9B823F 10px ridge;
     justify-content: center;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
 }
 
 .block {
@@ -90,6 +90,7 @@ main {
     font-weight: bold;
     font-family: 'Black Ops One', cursive;
 }
+
 
 #row1 {
     justify-content: center;
