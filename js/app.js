@@ -1097,14 +1097,15 @@ function toggleButton(e){
     };
     
     if (toggleEl.innerText === 'START'){
-        toggleEl.innerText = 'YES';
-        toggleEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056)';
+        toggleEl.innerText = 'CLEAR';
+        toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+        modeSelectEl.innerText = 'YES';
+        modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056)';
         timerEl.innerText = 'NO';
         timerEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
         dispMessageEl.innerText = 'Welcome to MEGA Minesweeper! Do you need a tutorial?'
-        
-        modeSelectEl.removeEventListener('click', changeMode);
-        toggleEl.addEventListener('click', yesTutorial);
+
+        modeSelectEl.addEventListener('click', yesTutorial);
         timerEl.addEventListener('click', noTutorial);
 
     } else if (toggleEl.innerText === 'CLEAR'){
@@ -1132,8 +1133,11 @@ function resetButtons(){
     timerEl.removeEventListener('click', noTutorial);
     modeSelectEl.addEventListener('click', changeMode);
     boardEl.addEventListener('click', render);
-    tutorial = false;
 
+    tutorial = false;
+    
+    modeSelectEl.innerText = 'CASUAL';
+    modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     timerEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)'
 
@@ -1151,13 +1155,14 @@ function resetButtons(){
 function yesTutorial(){
     timerEl.removeEventListener('click', noTutorial);
     boardEl.addEventListener('click', render);
-    toggleEl.removeEventListener('click', yesTutorial);
+    modeSelectEl.removeEventListener('click', yesTutorial);
     toggleEl.removeEventListener('click', toggleButton);
 
     toggleEl.innerText = 'CLEAR';
     toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     timerEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)'
     modeSelectEl.innerText = 'CASUAL';
+    modeSelectEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
     timerEl.innerText = '00 : 00';
     
     tutorial = true;

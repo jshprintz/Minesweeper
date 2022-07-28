@@ -35,11 +35,22 @@ main {
     justify-content: center;
 }
 
-#toggle {
+#modeSelect {
     background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
+    color: #9B823F;
+    padding: 15px;
+    border:#9B823F 5px solid;
+    margin-bottom: 2%;
+    font-size: 20pt;
+    min-width: 190px;
+}
+
+#toggle {
+    background-image: radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056);
     color: #9B823F;
     padding: 10px;
     border:#9B823F 5px solid;
+    margin-top: 2%;
     margin-bottom: 2%;
     font-size: 20pt;
     min-width: 125px;
@@ -157,17 +168,6 @@ main {
     grid-row-start: 83;
 }
 
-
-#modeSelect {
-    background-image: radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094);
-    color: #9B823F;
-    padding: 15px;
-    border:#9B823F 5px solid;
-    margin-bottom: 5%;
-    margin-top: 5%;
-    font-size: 16pt;
-    min-width: 160px;
-}
 
 footer {
     position: fixed;
