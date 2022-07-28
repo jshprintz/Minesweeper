@@ -57,3 +57,27 @@ Every time you clear the board, you advance to the next level. Every level advan
 * An 'All-time', 'Yearly, 'Monthly', and 'Daily' high score list for both CASUAL play and SURVIVOR mode.
 * Badges for certain achievements (i.e, 10 games played, 7 days in a row, etc.)
 * Social Media integration to allow friends to challenge one another and share achievements.
+
+---
+#### DEVELOPMENT
+
+View the original [flow chart here!](https://whimsical.com/minesweeper-flow-MWpk2bvyiYqZZMa7Cngk9n)
+
+
+#### How it started...
+Display 
+
+![Screen Shot 2022-07-28 at 12.49.08 PM](https://i.imgur.com/UgNfucD.png)
+
+Flowchart
+
+![Minesweeper Flow](https://i.imgur.com/TpEWUYp.png)
+
+#### How it's going...
+Desktop
+
+![Screen Shot 2022-07-28 at 12.46.52 PM](https://i.imgur.com/xn3HCh9.png)
+
+Mobile
+
+![Screen Shot 2022-07-28 at 12.55.44 PM](https://i.imgur.com/6U4VQKa.png)

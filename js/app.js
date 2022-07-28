@@ -84,7 +84,6 @@ function init(){
     toggleEl.addEventListener('click', toggleButton);
     musicEl.addEventListener('change', switchMusic);
     soundEl.addEventListener('change', switchSound);
-    modeSelectEl.addEventListener('click', changeMode);
     
     // Create the array containing each square
     // as an object.
@@ -571,13 +570,14 @@ function bigWinner(){
     };
         // Tutorial victory
     if (tutorial === true){
+        playerMusic.pause();
         // stops the clock
         clearInterval(clockMaster);
-        dispMessageEl.innerText = `Great job! Now let's learn Survivor mode`;
+        dispMessageEl.innerText = `Great job! Now let's learn SURVIVOR mode.`;
         setTimeout(reset, 5000);
     }   // Casual mode Victory
     else if (modeSelectEl.innerText === 'CASUAL'){
-        dispMessageEl.innerText = `You did it! Congratualtions!
+        dispMessageEl.innerText = `You did it! Congratulations!
                     Now see if you can do it in under ${timerDisp}.`;
         playerMusic.pause();
         revealBoard();
@@ -824,6 +824,7 @@ function reset(e){
     boardEl.addEventListener('click', render);
 
     if (tutorial === true){
+        modeSelectEl.addEventListener('click', changeMode);
         survivorTeachOne();
     };
 };
