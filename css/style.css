@@ -8,10 +8,6 @@ body {
 }
 
 h2 {
-    /* position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%; */
     display: grid;
     align-items: center;
     text-align: center;
@@ -43,17 +39,6 @@ main {
     margin-bottom: 2%;
     font-size: 20pt;
     min-width: 190px;
-}
-
-#toggle {
-    background-image: radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056);
-    color: #9B823F;
-    padding: 10px;
-    border:#9B823F 5px solid;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    font-size: 20pt;
-    min-width: 125px;
 }
 
 #remainingmines {
@@ -168,6 +153,16 @@ main {
     grid-row-start: 83;
 }
 
+#toggle {
+    background-image: radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056);
+    color: #9B823F;
+    padding: 10px;
+    border:#9B823F 5px solid;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    font-size: 20pt;
+    min-width: 125px;
+}
 
 footer {
     position: fixed;
