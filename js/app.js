@@ -784,7 +784,7 @@ function playAgain(){
     };
     // YES button display
     toggleEl.innerText = `YES`;
-    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056)';
     toggleEl.addEventListener('click', reset);
 };
 
@@ -824,7 +824,6 @@ function reset(e){
     boardEl.addEventListener('click', render);
 
     if (tutorial === true){
-        modeSelectEl.addEventListener('click', changeMode);
         survivorTeachOne();
     };
 };
@@ -1114,7 +1113,9 @@ function toggleButton(e){
     
     if (toggleEl.innerText === 'START'){
         toggleEl.innerText = 'YES';
+        toggleEl.style.backgroundImage = 'radial-gradient(circle, #ffffff, #fffcfe, #fff9fa, #fff6f4, #fff5ec, #f4ebd8, #e4e2c6, #cedab8, #adc799, #87b47f, #5da268, #1e9056)';
         timerEl.innerText = 'NO';
+        timerEl.style.backgroundImage = 'radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)';
         dispMessageEl.innerText = 'Welcome to MEGA Minesweeper! Do you need a tutorial?'
         
         modeSelectEl.removeEventListener('click', changeMode);
@@ -1148,6 +1149,9 @@ function resetButtons(){
     boardEl.addEventListener('click', render);
     tutorial = false;
 
+    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    timerEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)'
+
     toggleEl.innerText = 'CLEAR';
     if (modeSelectEl.innerText === 'CASUAL'){
         timerEl.innerText = '00 : 00'
@@ -1166,6 +1170,8 @@ function yesTutorial(){
     toggleEl.removeEventListener('click', toggleButton);
 
     toggleEl.innerText = 'CLEAR';
+    toggleEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)';
+    timerEl.style.backgroundImage = 'radial-gradient(circle, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #ebe8dd, #eae6d7, #eae4d1, #e9e2cb, #e7debd, #e6d9af, #e4d5a2, #e2d094)'
     modeSelectEl.innerText = 'CASUAL';
     timerEl.innerText = '00 : 00';
     
@@ -1185,7 +1191,7 @@ function casualTeachTwo(){
 };
 
 function casualTeachThree(){
-    dispMessageEl.innerText = 'Each number represent how many mines surround that square.';
+    dispMessageEl.innerText = 'Each number represents how many mines surround that square.';
     setTimeout(casualTeachFour, 5000);
 };
 
@@ -1196,6 +1202,7 @@ function casualTeachFour(){
 
 function survivorTeachOne(){
     changeMode();
+    modeSelectEl.removeEventListener('click', changeMode);
     dispMessageEl.innerText = `In SURVIVOR mode, you race against time to clear the squares.`;
     setTimeout(survivorTeachTwo, 5000);
 };
