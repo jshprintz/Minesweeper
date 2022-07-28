@@ -1,6 +1,6 @@
 console.log('Javascript works')
 //-----------------------------------------------------
-// Images obtained:
+// Media obtained:
 // Explosion: https://freesound.org/people/Iwiploppenisse/sounds/156031/
 //
 // Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
