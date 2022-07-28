@@ -1,16 +1,24 @@
 # MEGA Minesweeper
 ---
 ### Minesweeper meets Call of Duty in this action-packed rendition of the classic game!
+
+---
+### LAUNCH GAME
+
+The game can be [played here!](https://jshprintz.github.io/Minesweeper/)
+
+Upon inital launch, there is a built-in tutorial of how to play. There are also more detailed instructions below.
+
 ---
 
-## How to Play
+### HOW TO PLAY
 
 #### BASICS
 
-The goal of Minesweeper is the mark all the mines on the grid while clearing all the squares without mines. Each cleared square will either be blank or will contain a number. That number represents how many mines are surrounding that square (if the square is blank then no mines surround the square). Armed with the numbers, players use logic and reasoning to figure out where the remaining mines are.
+The goal of Minesweeper is the mark all the mines on the grid while clearing all the squares without mines. Each cleared square will either be blank or will contain a number. That number represents how many mines are surrounding that square (if the square is blank then there are no mines that surround the square). Armed with the numbers, players use logic and reasoning to figure out where the remaining mines are.
 
 
-In the image below, the player clicked on the board which opened up a large area in the center.
+In the image below, the player clicked on the board which opened up a large area in the left-center.
 
 ![Screen Shot 2022-07-28 at 10.04.00 AM](https://i.imgur.com/fXb3VsQ.png)
 
@@ -20,7 +28,7 @@ Based on the numbers, the player was able to place the following flags.
 
 ![Screen Shot 2022-07-28 at 10.04.50 AM](https://i.imgur.com/klTfeiS.png)
 
-And then based on those flags, they continue to clear the board.
+And then based on those flags, they continued to clear the board.
 
 ![Screen Shot 2022-07-28 at 10.05.24 AM](https://i.imgur.com/TChmdFq.png)
 
@@ -30,4 +38,22 @@ And then based on those flags, they continue to clear the board.
 
 In SURVIVOR mode, the goal isn't just to clear the board of mines, but to do it in as little time as possible. The game starts with only 5 mines on the board and 1 minute already on the clock. Unlike in traditional Minesweeper, this clock ticks down. If it hits zero, game over.
 
-Every time you clear the board, you advance to the next level. Every level advance comes with more points, but also 5 more mines. Any leftover time left on the clock from the previous level gets carried over, and you also get an additional time bonus as well. The farther you advance, the higher the score!
+Every time you clear the board, you advance to the next level. Every level advance comes with more points, but also 5 more mines. Any leftover time left on the clock from the previous level gets carried over as well, and you also get an additional time bonus for the new level. The farther you advance, the higher the score!
+
+---
+#### TECHNOLOGY USED
+
+* HTML5
+* CSS
+* JavaScript
+* Bootstrap
+* Google Fonts
+
+---
+#### FUTURE UPDATES
+
+* Spacebar integration so desktop players can quickly switch between CLEAR and FLAG without having to move a mouse and click.
+* Explosion graphics and visuals.
+* An 'All-time', 'Yearly, 'Monthly', and 'Daily' high score list for both CASUAL play and SURVIVOR mode.
+* Badges for certain achievements (i.e, 10 games played, 7 days in a row, etc.)
+* Social Media integration to allow friends to challenge one another and share achievements.
