@@ -24,4 +24,10 @@ And then based on those flags, they continue to clear the board.
 
 ![Screen Shot 2022-07-28 at 10.05.24 AM](https://i.imgur.com/TChmdFq.png)
 
+---
+
 #### SURVIVOR MODE
+
+In SURVIVOR mode, the goal isn't just to clear the board of mines, but to do it in as little time as possible. The game starts with only 5 mines on the board and 1 minute already on the clock. Unlike in traditional Minesweeper, this clock ticks down. If it hits zero, game over.
+
+Every time you clear the board, you advance to the next level. Every level advance comes with more points, but also 5 more mines. Any leftover time left on the clock from the previous level gets carried over, and you also get an additional time bonus as well. The farther you advance, the higher the score!
