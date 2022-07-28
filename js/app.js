@@ -1122,7 +1122,7 @@ function toggleButton(e){
 //-------------------------------------------------
 function noTutorial(){
     resetButtons();
-    dispMessageEl.innerText = 'Choose your game mode at the bottom, then click anywhere on the grid to start!';
+    dispMessageEl.innerText = 'Choose your game mode below, then click anywhere on the grid to start!';
 };
 
 //-------------------------------------------------

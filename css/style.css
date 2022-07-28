@@ -164,6 +164,10 @@ main {
     min-width: 125px;
 }
 
+#toggle:hover {
+    border: #9B823F 5px groove;
+}
+
 footer {
     position: fixed;
     display: flex;
