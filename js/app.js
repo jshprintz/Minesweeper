@@ -1,18 +1,3 @@
-console.log('Javascript works')
-//-----------------------------------------------------
-// Media obtained:
-// Explosion: https://freesound.org/people/Iwiploppenisse/sounds/156031/
-//
-// Camo: https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080
-//
-// Music Gustav Holst: The Planets — “Mars, the Bringer of War”
-// https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.mp3
-//
-// Cheering Sound
-// https://freesound.org/people/jayfrosting/sounds/333404/
-//----------------------------------------------------
-
-
 //-----------------------------------------------------
 //              Cache my DOM elements
 //-----------------------------------------------------

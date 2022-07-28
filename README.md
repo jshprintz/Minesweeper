@@ -50,6 +50,17 @@ Every time you clear the board, you advance to the next level. Every level advan
 * Google Fonts
 
 ---
+#### MEDIA OBTAINED
+
+*[Explosion Sound:](https://freesound.org/people/Iwiploppenisse/sounds/156031/)
+
+*[Camo background:](https://www.wallpaperflare.com/green-and-black-camouflage-textile-leaf-plant-part-no-people-wallpaper-pgcyo/download/1920x1080)
+
+*[Music: Gustav Holst: The Planets — “Mars, the Bringer of War”](https://commons.wikimedia.org/wiki/File:Gustav_Holst_-_the_planets,_op._32_-_i._mars,_the_bringer_of_war.mp3)
+
+*[Cheering Sound:](https://freesound.org/people/jayfrosting/sounds/333404/)
+
+---
 #### FUTURE UPDATES
 
 * Spacebar integration so desktop players can quickly switch between CLEAR and FLAG without having to move a mouse and click.
