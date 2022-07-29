@@ -95,7 +95,6 @@ function init(){
 function render(e){
     modeSelectEl.removeEventListener('click', changeMode);
     
-
     // Capture the block ID
     let blockID = e.target.id;
     // Capture the block object
@@ -1129,7 +1128,7 @@ function noTutorial(){
 // Resets values after Tutorial selection
 //-------------------------------------------------
 function resetButtons(){
-    toggleEl.removeEventListener('click', yesTutorial);
+    modeSelectEl.removeEventListener('click', yesTutorial);
     timerEl.removeEventListener('click', noTutorial);
     modeSelectEl.addEventListener('click', changeMode);
     boardEl.addEventListener('click', render);
