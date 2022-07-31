@@ -105,6 +105,7 @@ function render(e){
     // marking a square
         clearCheck(blockObj, blockID);
     }
+    checkWin();
 };
 
 //--------------------------------------------------------
@@ -1056,7 +1057,7 @@ function resetSelect(){
         seconds = 30;
         startMines = 5;
         timerEl.innerText = '01 : 00';
-        dispMessageEl.innerText = 'Choose the game mode below, the click on the grid to begin!';
+        dispMessageEl.innerText = 'Choose the game mode below, then click on the grid to begin!';
         resetLikeVariables();
     }
     //
@@ -1066,7 +1067,7 @@ function resetSelect(){
         seconds = 0;
         startMines = 20;
         timerEl.innerText = '00 : 00';
-        dispMessageEl.innerText = 'Choose the game mode below, the click on the grid to begin!';
+        dispMessageEl.innerText = 'Choose the game mode below, then click on the grid to begin!';
         resetLikeVariables();
     };
 };
@@ -1121,7 +1122,7 @@ function toggleButton(e){
 //-------------------------------------------------
 function noTutorial(){
     resetButtons();
-    dispMessageEl.innerText = 'Choose your game mode below, then click anywhere on the grid to start!';
+    dispMessageEl.innerText = 'Choose the game mode below, then click anywhere on the grid to start!';
 };
 
 //-------------------------------------------------
