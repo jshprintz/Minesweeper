@@ -108,7 +108,7 @@ function render(e){
 };
 
 //--------------------------------------------------------
-// Checks if User is CLEARING or MARKING
+// Checks if User is CLEARING or FLAGGING
 //--------------------------------------------------------
 function clearCheck(obj, id){
     // Convert ID to number matching array
