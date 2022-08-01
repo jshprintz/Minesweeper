@@ -186,6 +186,20 @@ function checkPick(id){
         revealBoard(id);
     }
 };
+//-----------------------------------------------------
+// Tests if square has a mine or a flag
+//-----------------------------------------------------
+
+function notMineOrFlag(id, num){
+    let goodToClear = false;
+    
+    if ((squareArray[id+num].mine === false)
+    && (squareArray[id+num].flagged === false))
+    goodToClear = true;
+    
+    return goodToClear;
+}
+
 
 //-----------------------------------------------------
 // Computer clears adjacent free squares
@@ -200,184 +214,89 @@ let testCorner = true;
 
     // Top Row
     if ((id > 0) && (id < 9)){
-        if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].flagged === false))
-            clearSquare(id-1);
-        if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].flagged === false)) 
-            clearSquare(id+1);
-        if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].flagged === false)){ 
-            testCorner = checkCorners(id, 9);
-            if (testCorner === true) clearSquare(id+9);
-        };
-        if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].flagged === false))
-            clearSquare(id+10);
-        if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].flagged === false)){ 
-            testCorner = checkCorners(id, 11);
-            if (testCorner === true) clearSquare(id+11);
-        };
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
+        if ((checkCorners(id, 9) === true) && (notMineOrFlag(id, 9) === true))
+        clearSquare(id+9);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
+        if ((checkCorners(id, 11) === true) && (notMineOrFlag(id, 11) === true))
+        clearSquare(id+11);
     } 
     // Bottom Row
     else if ((id > 90) && (id < 99)){
-        if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].flagged === false)){ 
-            testCorner = checkCorners(id, -11);
-            if (testCorner === true) clearSquare(id-11);
-        };
-        if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].flagged === false))
-            clearSquare(id-10);
-        if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].flagged === false)){ 
-            testCorner = checkCorners(id, -9);
-            if (testCorner === true) clearSquare(id-9);
-        };
-        if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].flagged === false))
-            clearSquare(id-1);
-        if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].flagged === false))
-            clearSquare(id+1);
+        if ((checkCorners(id, -11) === true) && (notMineOrFlag(id, -11) === true))
+        clearSquare(id-11);
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-1);
+        if ((checkCorners(id, -9) === true) && (notMineOrFlag(id, -9) === true))
+        clearSquare(id-9);
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
     } 
     // Left Row
     else if ((id !== 0) && (id !== 90) && (id % 10 === 0)){
-        if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].flagged === false)) 
-            clearSquare(id-10);
-        if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].flagged === false)){ 
-            testCorner = checkCorners(id, -9);
-            if (testCorner === true) clearSquare(id-9);
-        };
-        if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].flagged === false))
-            clearSquare(id+1);
-        if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].flagged === false)) 
-            clearSquare(id+10);
-        if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].flagged === false)){
-            testCorner = checkCorners(id, 11);
-            if (testCorner === true) clearSquare(id+11);
-        };
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-10);
+        if ((checkCorners(id, -9) === true) && (notMineOrFlag(id, -9) === true))
+        clearSquare(id-9);
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
+        if ((checkCorners(id, 11) === true) && (notMineOrFlag(id, 11) === true))
+        clearSquare(id+11);
     } 
     // Right Row
     else if ((id !== 9) && (id !== 99) && (id % 10 === 9)){
-        if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].flagged === false)){ 
-            testCorner = checkCorners(id, -11);
-            if (testCorner === true) clearSquare(id-11);
-        };
-        if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].flagged === false))
-            clearSquare(id-10);
-        if ((squareArray[id-1].mine === false)
-            && (squareArray[id-1].flagged === false)) 
-            clearSquare(id-1);
-        if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].flagged === false)){
-            testCorner = checkCorners(id, 9);
-            if (testCorner === true) clearSquare(id+9);
-        };
-        if ((squareArray[id+10].mine === false)
-            && (squareArray[id+10].flagged === false))
-            clearSquare(id+10);
+        if ((checkCorners(id, -11) === true) && (notMineOrFlag(id, -11) === true))
+        clearSquare(id-11);
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-10);
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if ((checkCorners(id, 9) === true) && (notMineOrFlag(id, 9) === true))
+        clearSquare(id+9);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
     } 
     // -----------CORNERS-----------
     // Top Left
     else if (id === 0){
-        if ((squareArray[1].mine === false)
-            && (squareArray[1].flagged === false))
-            clearSquare(1);
-        if ((squareArray[10].mine === false)
-            && (squareArray[10].flagged === false))
-            clearSquare(10);
-        if ((squareArray[11].mine === false)
-            && (squareArray[11].flagged === false)){
-            testCorner = checkCorners(id, 11);
-            if (testCorner === true) clearSquare(id+11);
-        };
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
+        if ((checkCorners(id, 11) === true) && (notMineOrFlag(id, 11) === true))
+        clearSquare(id+11);
     } 
     // Top Right
     else if (id === 9){
-        if ((squareArray[8].mine === false) 
-            && (squareArray[8].flagged === false))
-            clearSquare(8);
-        if ((squareArray[19].mine === false)
-            && (squareArray[19].flagged === false))
-            clearSquare(19);
-        if ((squareArray[18].mine === false)
-            && (squareArray[18].flagged === false)){
-            testCorner = checkCorners(id, 9);
-            if (testCorner === true) clearSquare(id+9);
-        };
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
+        if ((checkCorners(id, 9) === true) && (notMineOrFlag(id, 9) === true))
+        clearSquare(id+9);
     } 
     // Bottom Left
     else if (id === 90){
-        if ((squareArray[80].mine === false)
-            && (squareArray[80].flagged === false))
-                clearSquare(80);
-        if ((squareArray[81].mine === false)
-            && (squareArray[81].flagged === false)){ 
-            testCorner = checkCorners(id, -9);
-            if (testCorner === true) clearSquare(id-9);
-        };
-        if ((squareArray[91].mine === false)
-            && (squareArray[91].flagged === false))
-                clearSquare(91);
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-10);
+        if ((checkCorners(id, -9) === true) && (notMineOrFlag(id, -9) === true))
+        clearSquare(id-9);
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
     } 
     // Bottom Right
     else if (id === 99){
-        if ((squareArray[98].mine === false) 
-            && (squareArray[98].flagged === false))
-                clearSquare(98);
-        if ((squareArray[88].mine === false)
-            && (squareArray[88].flagged === false)){ 
-            testCorner = checkCorners(id, -11);
-            if (testCorner === true) clearSquare(id-11);
-        };
-        if ((squareArray[89].mine === false) 
-            && (squareArray[89].flagged === false))
-                clearSquare(89);
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if ((checkCorners(id, -11) === true) && (notMineOrFlag(id, -11) === true))
+        clearSquare(id-11);
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-10);
     } 
     // Middle of grid
     else{
-        if ((squareArray[id-11].mine === false)
-            && (squareArray[id-11].flagged === false)){ 
-            testCorner = checkCorners(id, -11);
-            if (testCorner === true) clearSquare(id-11);
-        };
-        if ((squareArray[id-10].mine === false)
-            && (squareArray[id-10].flagged === false))
-                clearSquare(id-10);
-        if ((squareArray[id-9].mine === false)
-            && (squareArray[id-9].flagged === false)){ 
-            testCorner = checkCorners(id, -9);
-            if (testCorner === true) clearSquare(id-9);
-        };
-        if ((squareArray[id-1].mine === false) 
-            && (squareArray[id-1].flagged === false)) 
-                clearSquare(id-1);
-        if ((squareArray[id+1].mine === false)
-            && (squareArray[id+1].flagged === false))
-                clearSquare(id+1);
-        if ((squareArray[id+9].mine === false)
-            && (squareArray[id+9].flagged === false)){
-            testCorner = checkCorners(id, 9);
-            if (testCorner === true) clearSquare(id+9);
-        };
-        if ((squareArray[id+10].mine === false) 
-            && (squareArray[id+10].flagged === false))
-                clearSquare(id+10);
-        if ((squareArray[id+11].mine === false)
-            && (squareArray[id+11].flagged === false)){
-            testCorner = checkCorners(id, 11);
-            if (testCorner === true) clearSquare(id+11);
-        };
+        if ((checkCorners(id, -11) === true) && (notMineOrFlag(id, -11) === true))
+            clearSquare(id-11);
+        if (notMineOrFlag(id, -10) === true) clearSquare(id-10);
+        if ((checkCorners(id, -9) === true) && (notMineOrFlag(id, -9) === true))
+            clearSquare(id-9);
+        if (notMineOrFlag(id, -1) === true) clearSquare(id-1);
+        if (notMineOrFlag(id, 1) === true) clearSquare(id+1);
+        if ((checkCorners(id, 9) === true) && (notMineOrFlag(id, 9) === true))
+            clearSquare(id+9);
+        if (notMineOrFlag(id, 10) === true) clearSquare(id+10);
+        if ((checkCorners(id, 11) === true) && (notMineOrFlag(id, 11) === true))
+            clearSquare(id+11);
     };
+    
     // clearArray is the array that contains the found squares
     // the computer needs to clear.
     if (clearArray.length > 0) {
