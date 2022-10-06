@@ -1,160 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minesweeper</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="#" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <script defer src="js/app.js"></script>
-
-</head>
-<body>
+  </head>
+  <body>
     <h2>MEGA Minesweeper</h2>
     <nav>
-        <button id="modeSelect">CASUAL</button>
+      <button id="modeSelect">CASUAL</button>
 
-        <div id="remainingmines">Mines: 20</div>
-        <div id="timer">00 : 00</div>
+      <div id="remainingmines">Mines: 20</div>
+      <div id="timer">00 : 00</div>
     </nav>
     <main>
-    <div></div>
-        <div id="board">
-            <div id="row1">
-                <button id="sq0" class="block"></button>
-                <button id="sq1" class="block"></button>
-                <button id="sq2" class="block"></button>
-                <button id="sq3" class="block"></button>
-                <button id="sq4" class="block"></button>
-                <button id="sq5" class="block"></button>
-                <button id="sq6" class="block"></button>
-                <button id="sq7" class="block"></button>
-                <button id="sq8" class="block"></button>
-                <button id="sq9" class="block"></button>
-            </div>
-            <div id="row2">
-                <button id="sq10" class="block"></button>
-                <button id="sq11" class="block"></button>
-                <button id="sq12" class="block"></button>
-                <button id="sq13" class="block"></button>
-                <button id="sq14" class="block"></button>
-                <button id="sq15" class="block"></button>
-                <button id="sq16" class="block"></button>
-                <button id="sq17" class="block"></button>
-                <button id="sq18" class="block"></button>
-                <button id="sq19" class="block"></button>
-            </div>
-            <div id="row3">
-                <button id="sq20" class="block"></button>
-                <button id="sq21" class="block"></button>
-                <button id="sq22" class="block"></button>
-                <button id="sq23" class="block"></button>
-                <button id="sq24" class="block"></button>
-                <button id="sq25" class="block"></button>
-                <button id="sq26" class="block"></button>
-                <button id="sq27" class="block"></button>
-                <button id="sq28" class="block"></button>
-                <button id="sq29" class="block"></button>
-            </div>
-            <div id="row4">
-                <button id="sq30" class="block"></button>
-                <button id="sq31" class="block"></button>
-                <button id="sq32" class="block"></button>
-                <button id="sq33" class="block"></button>
-                <button id="sq34" class="block"></button>
-                <button id="sq35" class="block"></button>
-                <button id="sq36" class="block"></button>
-                <button id="sq37" class="block"></button>
-                <button id="sq38" class="block"></button>
-                <button id="sq39" class="block"></button>
-            </div>
-            <div id="row5">
-                <button id="sq40" class="block"></button>
-                <button id="sq41" class="block"></button>
-                <button id="sq42" class="block"></button>
-                <button id="sq43" class="block"></button>
-                <button id="sq44" class="block"></button>
-                <button id="sq45" class="block"></button>
-                <button id="sq46" class="block"></button>
-                <button id="sq47" class="block"></button>
-                <button id="sq48" class="block"></button>
-                <button id="sq49" class="block"></button>
-            </div>
-            <div id="row6">
-                <button id="sq50" class="block"></button>
-                <button id="sq51" class="block"></button>
-                <button id="sq52" class="block"></button>
-                <button id="sq53" class="block"></button>
-                <button id="sq54" class="block"></button>
-                <button id="sq55" class="block"></button>
-                <button id="sq56" class="block"></button>
-                <button id="sq57" class="block"></button>
-                <button id="sq58" class="block"></button>
-                <button id="sq59" class="block"></button>
-            </div>
-            <div id="row7">
-                <button id="sq60" class="block"></button>
-                <button id="sq61" class="block"></button>
-                <button id="sq62" class="block"></button>
-                <button id="sq63" class="block"></button>
-                <button id="sq64" class="block"></button>
-                <button id="sq65" class="block"></button>
-                <button id="sq66" class="block"></button>
-                <button id="sq67" class="block"></button>
-                <button id="sq68" class="block"></button>
-                <button id="sq69" class="block"></button>
-            </div>
-            <div id="row8">
-                <button id="sq70" class="block"></button>
-                <button id="sq71" class="block"></button>
-                <button id="sq72" class="block"></button>
-                <button id="sq73" class="block"></button>
-                <button id="sq74" class="block"></button>
-                <button id="sq75" class="block"></button>
-                <button id="sq76" class="block"></button>
-                <button id="sq77" class="block"></button>
-                <button id="sq78" class="block"></button>
-                <button id="sq79" class="block"></button>
-            </div>
-            <div id="row9">
-                <button id="sq80" class="block"></button>
-                <button id="sq81" class="block"></button>
-                <button id="sq82" class="block"></button>
-                <button id="sq83" class="block"></button>
-                <button id="sq84" class="block"></button>
-                <button id="sq85" class="block"></button>
-                <button id="sq86" class="block"></button>
-                <button id="sq87" class="block"></button>
-                <button id="sq88" class="block"></button>
-                <button id="sq89" class="block"></button>
-            </div>
-            <div id="row10">
-                <button id="sq90" class="block"></button>
-                <button id="sq91" class="block"></button>
-                <button id="sq92" class="block"></button>
-                <button id="sq93" class="block"></button>
-                <button id="sq94" class="block"></button>
-                <button id="sq95" class="block"></button>
-                <button id="sq96" class="block"></button>
-                <button id="sq97" class="block"></button>
-                <button id="sq98" class="block"></button>
-                <button id="sq99" class="block"></button>
-            </div>
+      <div></div>
+      <div id="board">
+        <div id="row1">
+          <button id="sq0" class="block"></button>
+          <button id="sq1" class="block"></button>
+          <button id="sq2" class="block"></button>
+          <button id="sq3" class="block"></button>
+          <button id="sq4" class="block"></button>
+          <button id="sq5" class="block"></button>
+          <button id="sq6" class="block"></button>
+          <button id="sq7" class="block"></button>
+          <button id="sq8" class="block"></button>
+          <button id="sq9" class="block"></button>
         </div>
-    <div></div>
+        <div id="row2">
+          <button id="sq10" class="block"></button>
+          <button id="sq11" class="block"></button>
+          <button id="sq12" class="block"></button>
+          <button id="sq13" class="block"></button>
+          <button id="sq14" class="block"></button>
+          <button id="sq15" class="block"></button>
+          <button id="sq16" class="block"></button>
+          <button id="sq17" class="block"></button>
+          <button id="sq18" class="block"></button>
+          <button id="sq19" class="block"></button>
+        </div>
+        <div id="row3">
+          <button id="sq20" class="block"></button>
+          <button id="sq21" class="block"></button>
+          <button id="sq22" class="block"></button>
+          <button id="sq23" class="block"></button>
+          <button id="sq24" class="block"></button>
+          <button id="sq25" class="block"></button>
+          <button id="sq26" class="block"></button>
+          <button id="sq27" class="block"></button>
+          <button id="sq28" class="block"></button>
+          <button id="sq29" class="block"></button>
+        </div>
+        <div id="row4">
+          <button id="sq30" class="block"></button>
+          <button id="sq31" class="block"></button>
+          <button id="sq32" class="block"></button>
+          <button id="sq33" class="block"></button>
+          <button id="sq34" class="block"></button>
+          <button id="sq35" class="block"></button>
+          <button id="sq36" class="block"></button>
+          <button id="sq37" class="block"></button>
+          <button id="sq38" class="block"></button>
+          <button id="sq39" class="block"></button>
+        </div>
+        <div id="row5">
+          <button id="sq40" class="block"></button>
+          <button id="sq41" class="block"></button>
+          <button id="sq42" class="block"></button>
+          <button id="sq43" class="block"></button>
+          <button id="sq44" class="block"></button>
+          <button id="sq45" class="block"></button>
+          <button id="sq46" class="block"></button>
+          <button id="sq47" class="block"></button>
+          <button id="sq48" class="block"></button>
+          <button id="sq49" class="block"></button>
+        </div>
+        <div id="row6">
+          <button id="sq50" class="block"></button>
+          <button id="sq51" class="block"></button>
+          <button id="sq52" class="block"></button>
+          <button id="sq53" class="block"></button>
+          <button id="sq54" class="block"></button>
+          <button id="sq55" class="block"></button>
+          <button id="sq56" class="block"></button>
+          <button id="sq57" class="block"></button>
+          <button id="sq58" class="block"></button>
+          <button id="sq59" class="block"></button>
+        </div>
+        <div id="row7">
+          <button id="sq60" class="block"></button>
+          <button id="sq61" class="block"></button>
+          <button id="sq62" class="block"></button>
+          <button id="sq63" class="block"></button>
+          <button id="sq64" class="block"></button>
+          <button id="sq65" class="block"></button>
+          <button id="sq66" class="block"></button>
+          <button id="sq67" class="block"></button>
+          <button id="sq68" class="block"></button>
+          <button id="sq69" class="block"></button>
+        </div>
+        <div id="row8">
+          <button id="sq70" class="block"></button>
+          <button id="sq71" class="block"></button>
+          <button id="sq72" class="block"></button>
+          <button id="sq73" class="block"></button>
+          <button id="sq74" class="block"></button>
+          <button id="sq75" class="block"></button>
+          <button id="sq76" class="block"></button>
+          <button id="sq77" class="block"></button>
+          <button id="sq78" class="block"></button>
+          <button id="sq79" class="block"></button>
+        </div>
+        <div id="row9">
+          <button id="sq80" class="block"></button>
+          <button id="sq81" class="block"></button>
+          <button id="sq82" class="block"></button>
+          <button id="sq83" class="block"></button>
+          <button id="sq84" class="block"></button>
+          <button id="sq85" class="block"></button>
+          <button id="sq86" class="block"></button>
+          <button id="sq87" class="block"></button>
+          <button id="sq88" class="block"></button>
+          <button id="sq89" class="block"></button>
+        </div>
+        <div id="row10">
+          <button id="sq90" class="block"></button>
+          <button id="sq91" class="block"></button>
+          <button id="sq92" class="block"></button>
+          <button id="sq93" class="block"></button>
+          <button id="sq94" class="block"></button>
+          <button id="sq95" class="block"></button>
+          <button id="sq96" class="block"></button>
+          <button id="sq97" class="block"></button>
+          <button id="sq98" class="block"></button>
+          <button id="sq99" class="block"></button>
+        </div>
+      </div>
+      <div></div>
     </main>
     <footer>
-        <input type="checkbox" checked id="checkSound">Sound
-        <input type="checkbox" checked id="checkMusic">Music
-        <button id="toggle">START</button>
+      <input type="checkbox" checked id="checkSound" />Sound
+      <input type="checkbox" checked id="checkMusic" />Music
+      <button id="toggle">START</button>
     </footer>
-</body>
+  </body>
 </html>
