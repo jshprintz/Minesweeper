@@ -300,10 +300,14 @@ footer {
 
 @media only screen and (max-width: 500px) {
 
-  body{
-    zoom: .7
+  *{
+    zoom: .9
   }
 
+  h2 {
+    max-height: 80px;
+    padding: 2px;
+  }
   #timer {
     font-size: 14pt;
     padding-top: 15px ;
