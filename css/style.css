@@ -31,7 +31,7 @@ h2 {
   border: #9b823f 10px;
   border-style: groove;
   font-family: "Black Ops One", cursive;
-  min-height: 260px;
+  min-height: 160px;
 }
 
 nav {
@@ -298,16 +298,17 @@ footer {
   align-items: center;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 600px) {
+
+  body{
+    zoom: .7
+  }
+
   #board {
-    margin-top: 0%;
+    margin-top: 20%;
   }
 
   nav {
-    margin-top: 0%;
-  }
-
-  h2 {
-    min-height: 160px;
+    margin-top: 20%;
   }
 }
