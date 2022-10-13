@@ -301,7 +301,7 @@ footer {
 @media only screen and (max-width: 500px) {
 
   *{
-    zoom: .9
+    zoom: .7
   }
 
   h2 {
