@@ -301,7 +301,11 @@ footer {
 @media only screen and (max-width: 500px) {
 
   *{
-    zoom: .7
+    zoom: .7;
+  }
+
+  .block{
+    zoom: 1.5;
   }
 
   h2 {
