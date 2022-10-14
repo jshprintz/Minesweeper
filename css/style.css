@@ -301,11 +301,42 @@ footer {
 @media only screen and (max-width: 500px) {
 
   *{
-    zoom: .7;
+    zoom: .9;
   }
 
   .block{
-    zoom: 2;
+    zoom: 1.3;
+  }
+  
+  #row1 {
+    grid-column-start: 2;
+  }
+  #row2 {
+    grid-column-start: 2;
+  }
+  #row3 {
+    grid-column-start: 2;
+  }
+  #row4 {
+    grid-column-start: 2;
+  }
+  #row5 {
+    grid-column-start: 2;
+  }
+  #row6 {
+    grid-column-start: 2;
+  }
+  #row7 {
+    grid-column-start: 2;
+  }
+  #row8 {
+    grid-column-start: 2;
+  }
+  #row9 {
+    grid-column-start: 2;
+  }
+  #row10 {
+    grid-column-start: 2;
   }
 
   h2 {
