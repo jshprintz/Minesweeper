@@ -210,8 +210,9 @@ function notMineOrFlag(id, num) {
   if (
     squareArray[id + num].mine === false &&
     squareArray[id + num].flagged === false
-  )
+  ) {
     goodToClear = true;
+  }
 
   return goodToClear;
 }
@@ -220,7 +221,6 @@ function notMineOrFlag(id, num) {
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id) {
-  let testCorner = true;
   // Determine what blocks, if any, that surround the
   // current selection should be cleared by the
   // computer.
@@ -1153,9 +1153,7 @@ function casualTeachFour() {
   playerMusic.play();
 }
 
-
 function survivorTeachOne() {
-  
   changeMode();
   modeSelectEl.removeEventListener("click", changeMode);
   if (modeSelectEl.innerText === "CASUAL") {
