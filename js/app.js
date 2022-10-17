@@ -210,8 +210,9 @@ function notMineOrFlag(id, num) {
   if (
     squareArray[id + num].mine === false &&
     squareArray[id + num].flagged === false
-  )
+  ) {
     goodToClear = true;
+  }
 
   return goodToClear;
 }
@@ -220,7 +221,6 @@ function notMineOrFlag(id, num) {
 // Computer clears adjacent free squares
 //-----------------------------------------------------
 function computerClear(id) {
-  let testCorner = true;
   // Determine what blocks, if any, that surround the
   // current selection should be cleared by the
   // computer.
@@ -1156,6 +1156,15 @@ function casualTeachFour() {
 function survivorTeachOne() {
   changeMode();
   modeSelectEl.removeEventListener("click", changeMode);
+  if (modeSelectEl.innerText === "CASUAL") {
+    modeSelectEl.innerText = "SURVIVOR";
+    modeSelectEl.style.backgroundImage =
+      "radial-gradient(circle, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f2d1d7, #f5c7d0, #f8bdc9, #fab3c3, #fd9cb5, #ff83a9, #ff679d, #ff4593)";
+    timerEl.innerText = "01 : 00";
+    minutes = 1;
+    seconds = 0;
+    startMines = 5;
+  }
   dispMessageEl.innerText = `In SURVIVOR mode, you race against time to clear the squares.`;
   setTimeout(survivorTeachTwo, 5000);
 }
