@@ -241,7 +241,7 @@ function computerClear(id) {
   else if (id > 90 && id < 99) {
     if (checkCorners(id, -11) === true && notMineOrFlag(id, -11) === true)
       clearSquare(id - 11);
-    if (notMineOrFlag(id, -10) === true) clearSquare(id - 1);
+    if (notMineOrFlag(id, -10) === true) clearSquare(id - 10);
     if (checkCorners(id, -9) === true && notMineOrFlag(id, -9) === true)
       clearSquare(id - 9);
     if (notMineOrFlag(id, -1) === true) clearSquare(id - 1);
