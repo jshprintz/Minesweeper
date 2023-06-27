@@ -41,7 +41,7 @@ const posHeadline = [
   `Great job! I knew you could do it!`,
   `That's the square I would have picked!`,
   `You'll get promoted for this.`,
-  `Phenominal! Keep it up!`,
+  `Phenomenal! Keep it up!`,
   `We're all counting on you!`,
   `Can you clear any faster?`,
   `We'll win this war yet!`,
